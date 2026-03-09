@@ -30,24 +30,51 @@ Claude Code는 작업 시작 시 현재 환경을 자동으로 파악하고, 아
 ## 2. 응답 언어 및 커뮤니케이션
 
 - **응답 언어**: 한국어 (코드, 명령어, 기술 용어는 영어 그대로)
-- 질문은 1회에 1개만 (여러 선택지가 필요하면 번호 목록으로 제시)
-- 확인 없이 파괴적 작업(삭제, 덮어쓰기, force push 등) 절대 불가
+- 질문은 간결하게 — 한 번에 1개 권장, 관련 맥락이 있으면 2~3개까지 가능
+- 파괴적 작업(삭제, 덮어쓰기, force push 등)은 **사전 확인 필수** — 복구 가능한 경우(git에서 되돌릴 수 있는 변경 등)는 간단히 고지 후 진행 가능
+- 선택지 제시 시 항상 **제안사항과 추천**을 포함한다
+- 작업 카테고리 완료 시 **진행 내용을 자동 정리**하여 기록한다
+- 세션 종료 또는 작업 전환 시 **인수인계 문서를 작성**하여 다음 세션에서 이어갈 수 있도록 한다
 
 ---
 
-## 3. 설계 우선 원칙 (바이브 코딩 + 지식 학습)
+## 3. 설계 우선 원칙
 
 모든 코드 작성 전, 아래 순서를 따릅니다.
 
-### 3.1 설계 의도 먼저 설명
-구현 전에 반드시 다음을 설명합니다:
+### 3.1 설계 계획서 먼저 산출
+구현 전에 반드시 **계획서를 문서로 산출**한다. 단순 설명이 아닌 검토 가능한 형식으로 작성한다.
+
+**기본 형식 (Markdown):**
+```markdown
+## [작업명] 설계 계획서
+
+### 목적
+무엇을 해결하려는가
+
+### 접근 방식
+왜 이 방법을 선택했는가
+
+### 트레이드오프
+이 방식의 장단점
+
+### 대안
+다른 방법이 있다면 함께 제시
+
+### 작업 항목
+- [ ] 구체적인 실행 단계 나열
+
+### 예상 영향 범위
+변경될 파일/모듈/시스템 목록
 ```
-[설계 의도]
-- 목적: 무엇을 해결하려는가
-- 접근 방식: 왜 이 방법을 선택했는가
-- 트레이드오프: 이 방식의 장단점
-- 대안: 다른 방법이 있다면 함께 제시
-```
+
+**워크플로우:**
+1. 계획서 초안 산출
+2. 사용자 검토 → 피드백
+3. 수정 → 재검토 (필요한 만큼 반복)
+4. 계획서 확정 후 구현 착수
+
+> 기본 형식은 Markdown이나, 별도 양식 요청 시 해당 형식으로 작성한다.
 
 ### 3.2 능동적 대안 제안
 현재 요청보다 더 나은 방법이 있을 경우:
@@ -58,8 +85,12 @@ Claude Code는 작업 시작 시 현재 환경을 자동으로 파악하고, 아
 단, 요청하신 방법으로 먼저 진행할 수도 있습니다. 어떻게 할까요?
 ```
 
+> 3.1의 "대안" 항목과 3.2는 보완 관계: 3.1은 설계 설명의 일부로 대안을 나열하고, 3.2는 더 나은 방법이 있을 때 **적극적으로 추천**하는 것이다.
+
 ### 3.3 구현 문서 자동 산출
-기능 구현 완료 후 다음 형식의 문서를 산출합니다:
+기능 구현 완료 후 다음 형식의 문서를 산출합니다.
+기본 형식은 Markdown이나, 별도 양식 요청 시 해당 형식으로 작성한다.
+프로젝트별 CLAUDE.md에서 형식을 오버라이드할 수 있습니다:
 ```markdown
 ## [기능명] 구현 요약
 
@@ -86,236 +117,20 @@ Claude Code는 작업 시작 시 현재 환경을 자동으로 파악하고, 아
 
 ---
 
-## 4. C/C++ 임베디드 코드 스타일
+## 4. 기술 표준 참조
 
-### 4.1 기본 컨벤션
-- 인덴트: 4 spaces (탭 금지)
-- 줄 길이: 100자 이하 권장, 120자 하드 제한
-- 인코딩: UTF-8, LF 줄바꿈 (CRLF 절대 금지 — WSL2 특히 주의)
+C/C++ 코딩 표준, Git 워크플로우, 빌드 환경 등의 기술 지식은 이 파일에 포함하지 않는다.
+해당 프로젝트의 기술 스택에 맞는 지침은 `~/My_AI_manual/_shared/` 디렉토리를 참조한다.
 
-### 4.2 네이밍 규칙
-```c
-// 전처리기 매크로: ALL_CAPS_SNAKE
-#define MAX_BUFFER_SIZE  256
-
-// 타입/구조체: PascalCase (typedef 포함)
-typedef struct MotorStatus { ... } MotorStatus_t;
-
-// 함수: lower_snake_case, 모듈_동사_목적어 형식
-uint8_t motor_get_speed(MotorHandle_t *handle);
-
-// 전역 변수: g_ 접두사
-static uint32_t g_tick_count = 0;
-
-// 로컬 변수: lower_snake_case
-uint8_t read_val = 0;
-
-// 상수/열거형: k_ 접두사 또는 ALL_CAPS
-const uint32_t kTimeoutMs = 1000;
-```
-
-### 4.3 헤더 가드
-```c
-#ifndef MODULE_NAME_H_
-#define MODULE_NAME_H_
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-/* 내용 */
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* MODULE_NAME_H_ */
-```
-
-### 4.4 안전한 코딩 (임베디드 필수)
-- `malloc` / `free` 동적 메모리 할당: 힙이 제한된 환경에서는 사용 금지, 사용 시 반드시 경고
-- 포인터 역참조 전 NULL 체크 필수
-- 정수 오버플로우 주의 — 명시적 캐스팅 사용
-- 인터럽트 핸들러 내: `volatile` 변수, 최소한의 코드만
-- 재진입 불가 함수는 헤더에 `/* NOT REENTRANT */` 명시
-
-### 4.5 에러 처리 패턴
-```c
-// 반환값 기반 에러 처리 (예외 없는 C 환경)
-typedef enum {
-    ERR_OK    = 0,
-    ERR_PARAM = -1,
-    ERR_TIMEOUT = -2,
-} ErrorCode_t;
-
-ErrorCode_t do_something(uint8_t *buf, size_t len) {
-    if (buf == NULL || len == 0) return ERR_PARAM;
-    /* ... */
-    return ERR_OK;
-}
-```
+| 주제 | 참조 파일 |
+|------|-----------|
+| C/C++ 코딩 표준 | `_shared/coding-standards.md` |
+| Git 워크플로우 | `_shared/git-workflow.md` |
+| 임베디드 빌드 환경 | `_shared/build-environment.md` |
 
 ---
 
-## 5. Git 워크플로우 — 자동화 및 확장
-
-### 5.1 브랜치 전략
-```
-main          → 배포/릴리즈 (직접 push 금지)
-develop       → 통합 브랜치
-feature/xxx   → 기능 개발
-fix/xxx       → 버그 수정
-refactor/xxx  → 리팩토링
-docs/xxx      → 문서
-chore/xxx     → 빌드/툴링
-```
-
-### 5.2 커밋 메시지 컨벤션 (Conventional Commits)
-```
-<type>(<scope>): <subject>
-
-[body - 선택사항]
-왜 이 변경이 필요한가? (what/why, not how)
-
-[footer - 선택사항]
-Refs: #이슈번호
-BREAKING CHANGE: 설명
-```
-**타입**: `feat` `fix` `refactor` `docs` `chore` `test` `perf` `ci`
-
-예시:
-```
-feat(motor): 속도 피드백 제어 루프 추가
-
-PI 제어기 기반으로 모터 속도 안정화 구현.
-하드코딩된 Kp/Ki 값은 추후 EEPROM 설정으로 이전 예정.
-
-TODO: EEPROM 기반 파라미터 런타임 조정 기능
-Refs: #42
-```
-
-### 5.3 Git Worktree 활용 (핵심)
-병렬 작업을 위한 worktree 사용 — 브랜치 전환 없이 여러 작업 동시 진행:
-```bash
-# worktree 생성
-git worktree add ../project-feature feature/new-feature
-
-# worktree 목록 확인
-git worktree list
-
-# worktree 제거 (브랜치 병합 후)
-git worktree remove ../project-feature
-git branch -d feature/new-feature
-```
-> ⚠️ WSL2: worktree 경로는 반드시 `/home/` 하위 — `/mnt/c/` 경로 사용 시 성능 저하 및 심볼릭 링크 문제 발생
-
-### 5.4 Git Hooks 자동화
-`.git/hooks/` 또는 프로젝트 루트 `hooks/` 디렉토리에서 관리:
-
-**pre-commit** (커밋 전 자동 검사):
-```bash
-#!/bin/sh
-# 1. CRLF 라인 엔딩 감지
-if git diff --cached --check | grep -q 'CRLF'; then
-    echo "❌ CRLF 라인 엔딩 감지. dos2unix 실행 후 재시도"
-    exit 1
-fi
-# 2. 디버그 코드 감지
-if git diff --cached | grep -qE '^\+.*(printf\s*\(|DEBUG_PRINT)'; then
-    echo "⚠️  디버그 출력 코드 감지. 의도적이면 --no-verify 사용"
-    exit 1
-fi
-```
-
-**commit-msg** (커밋 메시지 형식 검사):
-```bash
-#!/bin/sh
-MSG=$(cat "$1")
-PATTERN='^(feat|fix|refactor|docs|chore|test|perf|ci)(\(.+\))?: .{1,72}'
-if ! echo "$MSG" | grep -qE "$PATTERN"; then
-    echo "❌ 커밋 메시지 형식 오류"
-    echo "   형식: <type>(<scope>): <subject>"
-    exit 1
-fi
-```
-
-### 5.5 자동화 스크립트 패턴
-Claude Code가 생성하는 자동화 스크립트는 다음 구조를 따릅니다:
-```bash
-#!/bin/bash
-set -euo pipefail  # 에러 즉시 종료, 미정의 변수 에러, 파이프 에러 전파
-
-# 사용법 출력
-usage() {
-    echo "Usage: $0 <arg1> [arg2]"
-    exit 1
-}
-
-# 환경 체크
-check_env() {
-    command -v git >/dev/null 2>&1 || { echo "git이 필요합니다"; exit 1; }
-}
-
-main() {
-    check_env
-    # 로직
-}
-
-main "$@"
-```
-
----
-
-## 6. 임베디드 빌드 환경
-
-### 6.1 크로스 컴파일 기본 원칙
-- 호스트/타겟 툴체인 명확히 구분
-- `which arm-linux-gnueabihf-gcc` 등으로 툴체인 존재 먼저 확인
-- Makefile 변수:
-```makefile
-CROSS_COMPILE ?= arm-linux-gnueabihf-
-CC  = $(CROSS_COMPILE)gcc
-CXX = $(CROSS_COMPILE)g++
-AR  = $(CROSS_COMPILE)ar
-```
-
-### 6.2 빌드 산출물 관리
-```
-project/
-├── src/          # 소스
-├── include/      # 헤더
-├── build/        # 빌드 산출물 (git 제외)
-│   ├── debug/
-│   └── release/
-├── docs/         # 구현 문서 (자동 산출)
-└── scripts/      # 자동화 스크립트
-```
-
-### 6.3 .gitignore 필수 항목 (C/C++ 임베디드)
-```gitignore
-# 빌드 산출물
-build/
-*.o
-*.a
-*.so
-*.elf
-*.bin
-*.hex
-*.map
-
-# IDE
-.vscode/settings.json
-*.launch
-*.cproject
-
-# 디버그
-*.log
-core
-```
-
----
-
-## 7. 코드 리뷰 및 산출물 기준
+## 5. 코드 리뷰 및 산출물 기준
 
 Claude Code가 코드를 제안하거나 수정할 때 항상 충족해야 할 기준:
 

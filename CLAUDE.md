@@ -38,9 +38,9 @@ My_AI_manual/
 | `base-directives.md` | AI 도구 종류 무관 기본 지침 (응답 언어, 커뮤니케이션 규칙 등) | 미작성 |
 | `environment.md` | 환경 감지 및 적응 (WSL2, SSH, 로컬) | 미작성 (현재 `global_CLAUDE.md` 1절에 포함) |
 | `design-principles.md` | 설계 우선 원칙 (설계 의도 설명, 대안 제안, 문서 산출, 기술 부채) | 미작성 (현재 `global_CLAUDE.md` 3절에 포함) |
-| `coding-standards.md` | C/C++ 임베디드 코딩 표준 | 미작성 (현재 `global_CLAUDE.md` 4절에 포함) |
-| `git-workflow.md` | Git 브랜치/커밋/워크트리 규칙 | 미작성 (현재 `global_CLAUDE.md` 5절에 포함) |
-| `build-environment.md` | 크로스 컴파일, 빌드 산출물 구조 | 미작성 (현재 `global_CLAUDE.md` 6절에 포함) |
+| `coding-standards.md` | C/C++ 임베디드 코딩 표준 | ✅ 분리 완료 |
+| `git-workflow.md` | Git 브랜치/커밋/워크트리 규칙 | ✅ 분리 완료 |
+| `build-environment.md` | 크로스 컴파일, 빌드 산출물 구조 | ✅ 분리 완료 |
 
 **계층 2 — 도구별 디렉토리**
 | 파일 | 역할 |
