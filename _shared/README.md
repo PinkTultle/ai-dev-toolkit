@@ -13,7 +13,7 @@
 | 임베디드 빌드 환경 | `build-environment.md` | ✅ 분리 완료 |
 | 설계 원칙 | `design-principles.md` | ✅ 분리 완료 |
 | 환경 설정 (WSL2/SSH) | `environment.md` | ✅ 분리 완료 |
-| AI 공통 기본 지침 | `base-directives.md` | 미작성 |
+| AI 공통 기본 지침 | `base-directives.md` | ✅ 작성 완료 |
 
 ## 사용 방식
 

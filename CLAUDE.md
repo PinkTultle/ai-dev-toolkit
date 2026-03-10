@@ -35,7 +35,7 @@ My_AI_manual/
 **계층 1 — `_shared/` (도구 무관 공유 지식)**
 | 파일 | 역할 | 상태 |
 |------|------|------|
-| `base-directives.md` | AI 도구 종류 무관 기본 지침 (응답 언어, 커뮤니케이션 규칙 등) | 미작성 |
+| `base-directives.md` | AI 도구 종류 무관 기본 지침 (응답 언어, 커뮤니케이션 규칙 등) | ✅ 작성 완료 |
 | `environment.md` | 환경 감지 및 적응 (WSL2, SSH, 로컬) | ✅ 분리 완료 |
 | `design-principles.md` | 설계 우선 원칙 (설계 의도 설명, 대안 제안, 문서 산출, 기술 부채) | ✅ 분리 완료 |
 | `coding-standards.md` | C/C++ 임베디드 코딩 표준 | ✅ 분리 완료 |
