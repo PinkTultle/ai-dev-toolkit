@@ -11,8 +11,8 @@
 | C/C++ 코딩 표준 | `coding-standards.md` | ✅ 분리 완료 |
 | Git 워크플로우 | `git-workflow.md` | ✅ 분리 완료 |
 | 임베디드 빌드 환경 | `build-environment.md` | ✅ 분리 완료 |
-| 설계 원칙 | `design-principles.md` | 미분리 (global_CLAUDE.md 3절) |
-| 환경 설정 (WSL2/SSH) | `environment.md` | 미분리 (global_CLAUDE.md 1절) |
+| 설계 원칙 | `design-principles.md` | ✅ 분리 완료 |
+| 환경 설정 (WSL2/SSH) | `environment.md` | ✅ 분리 완료 |
 | AI 공통 기본 지침 | `base-directives.md` | 미작성 |
 
 ## 사용 방식
