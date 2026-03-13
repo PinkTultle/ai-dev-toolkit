@@ -9,14 +9,14 @@ AI 코딩 어시스턴트 지침을 중앙에서 관리하는 저장소.
 
 ```
 My_AI_manual/
-├── _shared/          # 도구 공통 지식 (향후 확장)
+├── blueprints/          # 도구 공통 지식 (향후 확장)
 ├── claude/           # Claude Code
 ├── cursor/           # Cursor
 ├── copilot/          # GitHub Copilot
 └── windsurf/         # Windsurf
 ```
 
-- **`_shared/`** — 모든 도구가 참조하는 공통 규칙 (코딩 표준, Git 워크플로우 등)
+- **`blueprints/`** — 모든 도구가 참조하는 공통 규칙 (코딩 표준, Git 워크플로우 등)
 - **도구별 디렉토리** — 해당 도구의 설정 형식에 맞춘 지침 파일
 
 ---

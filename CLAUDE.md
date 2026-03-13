@@ -16,7 +16,7 @@
 
 AI 코딩 어시스턴트(Claude Code, Cursor, Copilot, Windsurf)의 **기본 골격과 동작 방향**을 관리하는 저장소.
 각 프로젝트의 세부 규칙은 해당 프로젝트에서 정의하며, 이 저장소는 그 기반이 되는 공통 지식과 템플릿을 제공한다.
-**2계층 구조**: 공유 기반 지식(`_shared/`) 위에 도구별 지침(`claude/`, `cursor/` 등)을 쌓는다.
+**2계층 구조**: 공유 기반 지식(`blueprints/`) 위에 도구별 지침(`claude/`, `cursor/` 등)을 쌓는다.
 
 ### 디렉토리 구조
 ```
@@ -25,7 +25,7 @@ My_AI_manual/
 ├── README.md              # 저장소 소개
 ├── TOOL_REFERENCE.md      # 도구별 설정 파일 매핑 레퍼런스
 │
-├── _shared/               # ▼ 계층 1: 도구 무관 공유 지식
+├── blueprints/               # ▼ 계층 1: 도구 무관 공유 지식
 │   ├── README.md          #   이 계층의 구조와 확장 계획
 │   └── (개별 파일은 위 테이블 참조 — 순차 작성 예정)
 │
@@ -40,7 +40,7 @@ My_AI_manual/
 
 ### 계층 구조와 파일 역할
 
-**계층 1 — `_shared/` (도구 무관 공유 지식)**
+**계층 1 — `blueprints/` (도구 무관 공유 지식)**
 | 파일 | 역할 | 상태 |
 |------|------|------|
 | `base-directives.md` | AI 도구 종류 무관 기본 지침 (응답 언어, 커뮤니케이션 규칙 등) | ✅ 작성 완료 |
@@ -53,11 +53,11 @@ My_AI_manual/
 **계층 2 — 도구별 디렉토리**
 | 파일 | 역할 |
 |------|------|
-| `claude/global_CLAUDE.md` | Claude Code 글로벌 규칙 원본 (`_shared/` 내용을 Claude 형식으로 통합) |
+| `claude/global_CLAUDE.md` | Claude Code 글로벌 규칙 원본 (`blueprints/` 내용을 Claude 형식으로 통합) |
 | `claude/project_CLAUDE.md` | 프로젝트별 규칙 템플릿 (placeholder 채워서 사용) |
 | `TOOL_REFERENCE.md` | 도구별 소스→배포 위치 매핑 정보 |
 
-> **관계**: `_shared/`는 지식의 원본(Single Source of Truth). 도구별 지침은 `_shared/`를 참조하거나 도구 형식에 맞게 변환하여 사용한다. 현재는 `claude/global_CLAUDE.md`가 `_shared/` 내용을 직접 포함하고 있으며, 향후 분리 예정.
+> **관계**: `blueprints/`는 지식의 원본(Single Source of Truth). 도구별 지침은 `blueprints/`를 참조하거나 도구 형식에 맞게 변환하여 사용한다. 현재는 `claude/global_CLAUDE.md`가 `blueprints/` 내용을 직접 포함하고 있으며, 향후 분리 예정.
 
 ### 디렉토리 탐색 규칙
 새 디렉토리에 진입할 때는 다음 순서를 따른다:
@@ -85,7 +85,7 @@ My_AI_manual/
 ### 2.3 지침 파일 수정 시 주의사항
 - 글로벌 규칙(`global_CLAUDE.md`) 수정은 **모든 프로젝트에 영향** — 신중하게
 - 새 섹션 추가 시 기존 섹션 번호 체계 유지
-- 도구 공통 내용은 `_shared/`로 분리 가능성을 고려
+- 도구 공통 내용은 `blueprints/`로 분리 가능성을 고려
 - `TOOL_REFERENCE.md` 변경 시 해당 도구의 README.md도 함께 갱신
 
 ---
@@ -134,10 +134,10 @@ ln -sf ~/My_AI_manual/claude/global_CLAUDE.md ~/.claude/CLAUDE.md
 - 지침은 **방향과 원칙** 수준으로 작성한다 — 지나치게 구체적인 프로젝트별 내용은 넣지 않는다
 - 프로젝트에서 확장/오버라이드할 수 있는 여지를 남긴다
 - 예시를 포함하되, 특정 프로젝트에 종속되지 않는 범용적인 예시를 사용한다
-- 하나의 지침이 여러 도구에 공통이면 `_shared/`에, 특정 도구 전용이면 해당 도구 디렉토리에 배치한다
+- 하나의 지침이 여러 도구에 공통이면 `blueprints/`에, 특정 도구 전용이면 해당 도구 디렉토리에 배치한다
 
 ### 4.3 변경 영향 인식
-- `_shared/` 수정 → 모든 도구의 지침에 영향 가능
+- `blueprints/` 수정 → 모든 도구의 지침에 영향 가능
 - `claude/global_CLAUDE.md` 수정 → 심볼릭 링크로 **모든 프로젝트에 즉시 반영**
 - 영향 범위가 큰 변경은 사전에 변경 의도와 영향 범위를 설명한 후 진행
 - 변경 후 심볼릭 링크가 정상 동작하는지 확인한다

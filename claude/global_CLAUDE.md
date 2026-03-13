@@ -2,15 +2,15 @@
 > 모든 환경(WSL2, SSH 원격 서버)에서 일괄 적용되는 규칙입니다.
 > 위치: `~/.claude/CLAUDE.md`
 >
-> **원본 관리**: 1~3절 내용의 Single Source of Truth는 `~/My_AI_manual/_shared/`입니다.
+> **원본 관리**: 1~3절 내용의 Single Source of Truth는 `~/My_AI_manual/blueprints/`입니다.
 > 이 파일은 Claude Code가 직접 읽는 배포판이므로 내용을 인라인으로 포함합니다.
-> 내용 수정 시 `_shared/` 원본을 먼저 수정한 뒤 이 파일에 동기화하세요.
+> 내용 수정 시 `blueprints/` 원본을 먼저 수정한 뒤 이 파일에 동기화하세요.
 
 ---
 
 ## 1. 환경 감지 및 적응
 
-> 원본: `_shared/environment.md`
+> 원본: `blueprints/environment.md`
 
 작업 시작 시 현재 환경을 자동으로 파악하고, 아래 기준에 맞게 동작을 조정한다.
 
@@ -35,7 +35,7 @@
 
 ## 2. 응답 언어 및 커뮤니케이션
 
-> 원본: `_shared/base-directives.md`
+> 원본: `blueprints/base-directives.md`
 
 - **응답 언어**: 한국어 (코드, 명령어, 기술 용어는 영어 그대로)
 - 질문은 간결하게 — 한 번에 1개 권장, 관련 맥락이 있으면 2~3개까지 가능
@@ -48,7 +48,7 @@
 
 ## 3. 설계 우선 원칙
 
-> 원본: `_shared/design-principles.md`
+> 원본: `blueprints/design-principles.md`
 
 모든 코드 작성 전, 아래 순서를 따른다.
 
@@ -130,13 +130,13 @@
 ## 4. 기술 표준 참조
 
 C/C++ 코딩 표준, Git 워크플로우, 빌드 환경 등 도메인별 기술 지식은 프로젝트에 따라 선택적으로 적용한다.
-해당 프로젝트의 기술 스택에 맞는 지침은 `~/My_AI_manual/_shared/` 디렉토리를 참조한다.
+해당 프로젝트의 기술 스택에 맞는 지침은 `~/My_AI_manual/blueprints/` 디렉토리를 참조한다.
 
 | 주제 | 참조 파일 |
 |------|-----------|
-| C/C++ 코딩 표준 | `_shared/coding-standards.md` |
-| Git 워크플로우 | `_shared/git-workflow.md` |
-| 임베디드 빌드 환경 | `_shared/build-environment.md` |
+| C/C++ 코딩 표준 | `blueprints/coding-standards.md` |
+| Git 워크플로우 | `blueprints/git-workflow.md` |
+| 임베디드 빌드 환경 | `blueprints/build-environment.md` |
 
 ---
 
