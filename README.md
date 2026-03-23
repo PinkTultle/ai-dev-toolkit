@@ -43,6 +43,7 @@ My_AI_manual/
 ├── .claude/skills/        # 스킬 (이 저장소의 핵심 기능)
 ├── blueprints/            # 도구 무관 공유 지식 (Single Source of Truth)
 ├── claude/                # Claude Code 지침 및 템플릿
+├── workstations/          # 워크스테이션별 환경 상태 (defconfig 결과)
 ├── cursor/                # Cursor (추후 확장)
 ├── copilot/               # GitHub Copilot (추후 확장)
 ├── windsurf/              # Windsurf (추후 확장)

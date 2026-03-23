@@ -9,7 +9,7 @@
 ## 마지막 작업 요약
 
 **날짜**: 2026-03-23
-**작업 내용**: `project-init` 스킬 개선 — 스킬 복제 + 경로 해석 규칙
+**작업 내용**: `workstations/` 구조 추가 — defconfig 실행 결과를 구조화된 JSON으로 저장
 
 ### 방향 전환 결정 사항
 
@@ -70,7 +70,7 @@
 1. **`/project-configure` 테스트** — 복제된 프로젝트에서 직접 실행하여 흐름 검증
 2. **실제 프로젝트로 init → configure 전체 흐름 테스트**
 3. **다른 도구 지침 작성** — `cursor/`, `copilot/`, `windsurf/` (보류 중)
-4. **defconfig 설정 템플릿** — `platform/defconfig.template.json` 생성 (필요 시)
+4. ~~**defconfig 설정 템플릿**~~ → `workstations/<alias>.json`으로 대체 완료
 
 ### 현재 저장소 구조
 
@@ -94,6 +94,8 @@ My_AI_manual/
 │   ├── README.md
 │   ├── global_CLAUDE.md
 │   └── project_CLAUDE.md
+├── workstations/                              ✅ 신규
+│   └── README.md
 ├── copilot/README.md                        (보류)
 ├── cursor/README.md                         (보류)
 ├── windsurf/README.md                       (보류)
@@ -107,6 +109,8 @@ My_AI_manual/
 
 ## 워크스테이션 환경 메모
 
-| 워크스테이션 | 환경 | 심볼릭 링크 상태 | defconfig 실행일 |
-|-------------|------|-----------------|-----------------|
-| DESKTOP-0VH4H6L | WSL2 (Ubuntu-20.04) | ✅ `~/.claude/CLAUDE.md` → 저장소 연결 | 2026-03-23 |
+> 상세 환경 정보는 `workstations/<alias>.json` 참조.
+
+| 별칭 | 환경 | 상태 파일 | defconfig 최종 실행일 |
+|------|------|----------|---------------------|
+| pink-turtle | WSL2 (Ubuntu-20.04) | `workstations/pink-turtle.json` | 2026-03-23 |

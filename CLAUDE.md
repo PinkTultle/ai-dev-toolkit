@@ -59,6 +59,9 @@ My_AI_manual/
 │   ├── global_CLAUDE.md   #   글로벌 규칙 (defconfig가 심볼릭 링크 관리)
 │   ├── project_CLAUDE.md  #   프로젝트 규칙 템플릿 (project-init이 복제)
 │   └── README.md
+├── workstations/          # ▼ 워크스테이션별 환경 상태 (defconfig 결과)
+│   ├── README.md
+│   └── <alias>.json       #   워크스테이션별 상태 파일
 ├── cursor/                #   Cursor (추후 확장)
 ├── copilot/               #   GitHub Copilot (추후 확장)
 └── windsurf/              #   Windsurf (추후 확장)
