@@ -98,11 +98,6 @@ My_AI_manual/
 
 ## 워크스테이션 환경 메모
 
-| 워크스테이션 | 환경 | 심볼릭 링크 상태 |
-|-------------|------|-----------------|
-| (기록 필요) | WSL2 | `~/.claude/CLAUDE.md` — 미설정 (`/ai-platform-defconfig` 실행 필요) |
-
-> 스킬 완성 전 수동 설정이 필요하면:
-> ```bash
-> ln -sf ~/my_ai_manual/claude/global_CLAUDE.md ~/.claude/CLAUDE.md
-> ```
+| 워크스테이션 | 환경 | 심볼릭 링크 상태 | defconfig 실행일 |
+|-------------|------|-----------------|-----------------|
+| DESKTOP-0VH4H6L | WSL2 (Ubuntu-20.04) | ✅ `~/.claude/CLAUDE.md` → 저장소 연결 | 2026-03-23 |
