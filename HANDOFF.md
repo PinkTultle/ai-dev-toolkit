@@ -9,7 +9,7 @@
 ## 마지막 작업 요약
 
 **날짜**: 2026-03-23
-**작업 내용**: `workstations/` 구조 추가 — defconfig 실행 결과를 구조화된 JSON으로 저장
+**작업 내용**: 워크스테이션 상태 파일, optimize-docs 스킬, project-init 개선
 
 ### 방향 전환 결정 사항
 
@@ -57,20 +57,27 @@
 - [x] 실행 흐름에 경로 확인 단계 추가 — 복제 전 사용자에게 절대 경로 확인
 - [x] 리모트 URL 업데이트 (`My_AI_manual` → `my_ai_manual`)
 
+#### Phase 4: 이번 세션 작업
+- [x] `workstations/` 디렉토리 구조 추가 — defconfig 결과를 JSON으로 저장
+- [x] defconfig 스킬에 별칭 입력 + 상태 파일 저장 단계 추가
+- [x] `/optimize-docs` 스킬 추가 + 200줄 제한 편집 규칙(2.5절)
+- [x] `project-init`에 기존 프로젝트 갱신(Case 2) 흐름 추가
+- [x] `project-init` 경로 탐색 개선 — 프로젝트 목록 제시, 유사 경로 제안
+- [x] `~/side_project/NDT-BPE_pork`에 project-init 실행 완료
+
 ### 현재 상태
 
-- **스킬**: 3개 모두 **골격 완성**, `project-init` 실사용 피드백 반영 완료
-- **내부 지침**: 전면 갱신 완료
+- **스킬**: 4개 (`defconfig`, `project-init`, `project-configure`, `optimize-docs`)
+- **내부 지침**: 전면 갱신 완료, 200줄 제한 규칙 추가
 - **심볼릭 링크**: ✅ 정상 연결
-- **defconfig**: ✅ 2026-03-23 실행 완료 (모든 항목 정상)
-- **project-init 테스트**: `~/test/skill_test/`에 복제 테스트 완료 (CLAUDE.md + project-configure 스킬)
+- **defconfig**: ✅ 2026-03-23 실행 완료 (모든 항목 정상, JSON 상태 파일 미생성 — 재실행 필요)
+- **project-init**: `~/side_project/NDT-BPE_pork`에 복제 완료 (CLAUDE.md + project-configure 스킬)
 
 ### 다음 작업 후보
 
-1. **`/project-configure` 테스트** — 복제된 프로젝트에서 직접 실행하여 흐름 검증
-2. **실제 프로젝트로 init → configure 전체 흐름 테스트**
+1. **`~/side_project/NDT-BPE_pork`에서 `/project-configure` 실행** — placeholder 구체화
+2. **defconfig 재실행** — `workstations/pink-turtle.json` 상태 파일 생성
 3. **다른 도구 지침 작성** — `cursor/`, `copilot/`, `windsurf/` (보류 중)
-4. ~~**defconfig 설정 템플릿**~~ → `workstations/<alias>.json`으로 대체 완료
 
 ### 현재 저장소 구조
 
@@ -80,7 +87,8 @@ My_AI_manual/
 │   ├── skills/
 │   │   ├── ai-platform-defconfig/SKILL.md  ✅
 │   │   ├── project-init/SKILL.md           ✅
-│   │   └── project-configure/SKILL.md      ✅
+│   │   ├── project-configure/SKILL.md      ✅
+│   │   └── optimize-docs/SKILL.md          ✅ 신규
 │   └── settings.local.json
 ├── blueprints/                              ✅ 갱신 완료
 │   ├── README.md
