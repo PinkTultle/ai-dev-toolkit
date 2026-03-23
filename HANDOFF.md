@@ -8,12 +8,12 @@
 
 ## 마지막 작업 요약
 
-**날짜**: 2026-03-13
-**작업 내용**: 저장소 방향 전환 — "AI 플랫폼 도구"로 리팩토링 착수
+**날짜**: 2026-03-23
+**작업 내용**: 스킬 3개 골격 생성 및 내부 지침 전면 갱신 완료
 
 ### 방향 전환 결정 사항
 
-저장소를 **수동 문서 모음**에서 **3개 스킬을 갖춘 AI 플랫폼 도구**로 전환한다.
+저장소를 **수동 문서 모음**에서 **3개 스킬을 갖춘 AI 플랫폼 도구**로 전환.
 
 **스킬 3개 구조:**
 | 스킬 | 실행 시점 | 역할 |
@@ -24,66 +24,56 @@
 
 **전체 흐름:**
 ```
-워크스테이션 클론 → ai-platform-defconfig (1회)
+워크스테이션 클론 → /ai-platform-defconfig (1회)
                         ↓
-              새 프로젝트마다 → project-init → project-configure
+              새 프로젝트마다 → /project-init → /project-configure
 ```
 
-**핵심 설계 결정:**
-- 스킬은 `.claude/skills/<name>/SKILL.md` 구조 (commands/ 아닌 skills/)
-- `_shared/` → `blueprints/`로 리네이밍 (완료)
-- 심볼릭 링크는 유지하되, `defconfig`가 관리 (저장소 경로 이동 시 재실행으로 해결)
-- `global_CLAUDE.md`는 심볼릭 링크 대상으로 유지, 템플릿 변수가 필요한 파일만 생성 방식
-
-### 이번 세션에서 완료된 작업
-
-1. **`_shared/` → `blueprints/` 리네이밍** — git mv + 모든 참조 일괄 변경 완료
-   - CLAUDE.md, README.md, claude/global_CLAUDE.md, HANDOFF.md 내 참조 갱신
-
-### 진행 중 — 중단된 지점
-
-**Phase 1: 스킬 디렉토리 생성 직전에 중단**
-- `.claude/skills/` 디렉토리 및 3개 스킬 `SKILL.md` 파일 **아직 미생성**
-- 다음 세션에서 아래 디렉토리/파일 생성부터 시작:
-  ```
-  .claude/skills/
-  ├── ai-platform-defconfig/SKILL.md
-  ├── project-init/SKILL.md
-  └── project-configure/SKILL.md
-  ```
-
-### 남은 작업 (우선순위순)
+### 완료된 작업
 
 #### Phase 1: 스킬 구현
-- [ ] `.claude/skills/` 디렉토리 및 3개 스킬 SKILL.md 골격 생성
-- [ ] `ai-platform-defconfig` 스킬 내용 작성 (심볼릭 링크 관리, 패키지 확인, MCP 설정 등)
-- [ ] `project-init` 스킬 내용 작성 (타겟 경로 지정 → blueprints 복제)
-- [ ] `project-configure` 스킬 내용 작성 (대화형 프로젝트 구체화)
-- [ ] defconfig용 설정 템플릿 생성 (`platform/` 디렉토리)
+- [x] `_shared/` → `blueprints/` 리네이밍
+- [x] `.claude/skills/` 디렉토리 생성
+- [x] `ai-platform-defconfig` SKILL.md 골격 작성
+- [x] `project-init` SKILL.md 골격 작성
+- [x] `project-configure` SKILL.md 골격 작성
+- [x] `.gitignore` 수정 — `.claude/skills/` 추적 허용
 
-#### Phase 2: 내부 지침 수정 (수정할 것 많음)
-| 파일 | 수정 사항 | 우선순위 |
-|------|----------|---------|
-| `CLAUDE.md` (루트) | 스킬 3개 구조 반영, 디렉토리 구조 갱신, 배포 섹션을 defconfig 기반으로 재작성 | 높음 |
-| `README.md` (루트) | "AI 플랫폼 도구" 관점으로 재작성 — 스킬 사용법 중심 | 높음 |
-| `claude/global_CLAUDE.md` | 수동 배포 안내 제거, 실사용 피드백 반영 보강 | 높음 |
-| `claude/project_CLAUDE.md` | project-init이 복제하는 템플릿으로 재설계 | 높음 |
-| `claude/README.md` | defconfig/스킬 기반 배포로 재작성 | 중간 |
-| `TOOL_REFERENCE.md` | Claude 섹션을 defconfig 관리 방식으로 재작성 | 중간 |
-| `blueprints/README.md` | 리네이밍 반영, 스킬 참조 방식 설명 | 낮음 |
-| `blueprints/base-directives.md` | 인수인계 규칙 중복 재검토 | 낮음 |
-| `blueprints/environment.md` | defconfig와의 관계 정리 | 낮음 |
+#### Phase 2: 내부 지침 수정
+- [x] `CLAUDE.md` (루트) — 스킬 구조 반영, 디렉토리 구조 갱신
+- [x] `README.md` (루트) — AI 플랫폼 도구 관점으로 재작성
+- [x] `claude/global_CLAUDE.md` — 배포 안내를 defconfig 기반으로 갱신
+- [x] `claude/project_CLAUDE.md` — `{{...}}` placeholder 템플릿으로 재설계
+- [x] `claude/README.md` — 스킬 기반 배포 안내
+- [x] `TOOL_REFERENCE.md` — 스킬/수동 배포 병기
+- [x] `blueprints/README.md` — 리네이밍 반영, 스킬 참조 방식 설명
+- [x] `blueprints/environment.md` — defconfig 관계 명시
 
-#### Phase 3: 디렉토리 구조 최종 정리
-- `cursor/`, `copilot/`, `windsurf/` — 이번 scope 밖, 추후 확장
+### 현재 상태
 
-### 현재 저장소 구조 (변경 후)
+- **스킬**: 3개 모두 **골격 완성** — 실사용하면서 구체화 필요
+- **내부 지침**: 전면 갱신 완료
+- **심볼릭 링크**: 미설정 — `/ai-platform-defconfig` 실행으로 설정 예정
+
+### 다음 작업 후보
+
+1. **`/ai-platform-defconfig` 실제 실행** — 현재 워크스테이션 환경 구성 테스트
+2. **스킬 구체화** — 실사용 피드백 반영하여 SKILL.md 보강
+3. **`/project-init` + `/project-configure` 테스트** — 실제 프로젝트로 흐름 검증
+4. **다른 도구 지침 작성** — `cursor/`, `copilot/`, `windsurf/` (보류 중)
+5. **defconfig 설정 템플릿** — `platform/defconfig.template.json` 생성 (필요 시)
+
+### 현재 저장소 구조
 
 ```
 My_AI_manual/
 ├── .claude/
+│   ├── skills/
+│   │   ├── ai-platform-defconfig/SKILL.md  ✅
+│   │   ├── project-init/SKILL.md           ✅
+│   │   └── project-configure/SKILL.md      ✅
 │   └── settings.local.json
-├── blueprints/              ← _shared/에서 리네이밍 완료
+├── blueprints/                              ✅ 갱신 완료
 │   ├── README.md
 │   ├── base-directives.md
 │   ├── build-environment.md
@@ -91,17 +81,17 @@ My_AI_manual/
 │   ├── design-principles.md
 │   ├── environment.md
 │   └── git-workflow.md
-├── claude/
+├── claude/                                  ✅ 갱신 완료
 │   ├── README.md
 │   ├── global_CLAUDE.md
 │   └── project_CLAUDE.md
-├── copilot/README.md
-├── cursor/README.md
-├── windsurf/README.md
-├── CLAUDE.md
-├── HANDOFF.md
-├── README.md
-└── TOOL_REFERENCE.md
+├── copilot/README.md                        (보류)
+├── cursor/README.md                         (보류)
+├── windsurf/README.md                       (보류)
+├── CLAUDE.md                                ✅ 갱신 완료
+├── HANDOFF.md                               ← 이 파일
+├── README.md                                ✅ 갱신 완료
+└── TOOL_REFERENCE.md                        ✅ 갱신 완료
 ```
 
 ---
@@ -110,9 +100,8 @@ My_AI_manual/
 
 | 워크스테이션 | 환경 | 심볼릭 링크 상태 |
 |-------------|------|-----------------|
-| (기록 필요) | WSL2 | `~/.claude/CLAUDE.md` — 미설정 (defconfig로 관리 예정) |
+| (기록 필요) | WSL2 | `~/.claude/CLAUDE.md` — 미설정 (`/ai-platform-defconfig` 실행 필요) |
 
-> 심볼릭 링크는 `ai-platform-defconfig` 스킬이 관리할 예정.
 > 스킬 완성 전 수동 설정이 필요하면:
 > ```bash
 > ln -sf ~/my_ai_manual/claude/global_CLAUDE.md ~/.claude/CLAUDE.md
