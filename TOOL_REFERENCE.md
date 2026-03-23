@@ -10,12 +10,14 @@
 |-----------|-----------|------|
 | `claude/global_CLAUDE.md` | `~/.claude/CLAUDE.md` | 글로벌 규칙 (모든 프로젝트 공통) |
 | `claude/project_CLAUDE.md` | `<project-root>/CLAUDE.md` | 프로젝트별 규칙 템플릿 |
+| `.claude/skills/` | (이 저장소 내 직접 사용) | 플랫폼 스킬 |
 
 **배포 방법:**
-```bash
-cp claude/global_CLAUDE.md ~/.claude/CLAUDE.md
-cp claude/project_CLAUDE.md <project-root>/CLAUDE.md
-```
+| 대상 | 스킬 | 수동 |
+|------|------|------|
+| 글로벌 규칙 | `/ai-platform-defconfig` | `ln -sf $(pwd)/claude/global_CLAUDE.md ~/.claude/CLAUDE.md` |
+| 프로젝트 규칙 | `/project-init <path>` | `cp claude/project_CLAUDE.md <project-root>/CLAUDE.md` |
+| 프로젝트 구체화 | `/project-configure` | `{{...}}` placeholder를 수동으로 채움 |
 
 ---
 
@@ -62,3 +64,4 @@ cp claude/project_CLAUDE.md <project-root>/CLAUDE.md
 | 프로젝트 설정 | `CLAUDE.md` | `.cursor/rules/` | `.github/` | `.windsurf/rules/` |
 | 파일 형식 | Markdown | MDC | Markdown | Markdown |
 | 다중 파일 | 단일 | 다중 | 다중 | 다중 |
+| 스킬/자동화 | `.claude/skills/` | - | - | - |
