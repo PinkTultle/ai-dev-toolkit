@@ -28,7 +28,7 @@ REPO_DIR=${CLAUDE_SKILL_DIR}/../../..
 | 소스 (이 저장소) | 타겟 | 설명 |
 |-----------------|------|------|
 | `claude/project_CLAUDE.md` | `<target>/CLAUDE.md` | 프로젝트 규칙 템플릿 |
-| (향후 확장) | `<target>/.claude/skills/` | 프로젝트 레벨 스킬 |
+| `.claude/skills/project-configure/SKILL.md` | `<target>/.claude/skills/project-configure/SKILL.md` | 프로젝트 구성 스킬 |
 
 ## 실행 흐름
 
@@ -37,7 +37,15 @@ REPO_DIR=${CLAUDE_SKILL_DIR}/../../..
    - 있으면 → 덮어쓸지 병합할지 사용자에게 확인
    - 없으면 → 진행
 3. **파일 복제** — 복제 대상을 타겟으로 복사
-4. **결과 안내** — 복제된 파일 목록과 다음 단계(`/project-configure`) 안내
+4. **REPO_DIR 치환** — 복제된 `project-configure/SKILL.md` 내 `REPO_DIR`을 이 저장소의 절대 경로로 치환
+   ```
+   # 치환 전 (원본)
+   REPO_DIR=${CLAUDE_SKILL_DIR}/../../..
+
+   # 치환 후 (복제본)
+   REPO_DIR=/absolute/path/to/my_ai_manual
+   ```
+5. **결과 안내** — 복제된 파일 목록과 다음 단계(`/project-configure`) 안내
 
 ## 주의사항
 

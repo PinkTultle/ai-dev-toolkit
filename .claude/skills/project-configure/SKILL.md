@@ -13,13 +13,15 @@ allowed-tools: Read, Bash, Glob, Grep, Write, Edit
 
 - `$0` — 타겟 디렉토리 경로 (선택, 미지정 시 현재 디렉토리)
 
-## 이 저장소(blueprints) 참조
+## 매뉴얼 저장소(blueprints) 참조
 
 ```
+# 원본 (my_ai_manual 내부에서 실행 시) — project-init이 복제할 때 절대 경로로 치환됨
 REPO_DIR=${CLAUDE_SKILL_DIR}/../../..
 ```
 
-필요 시 이 저장소의 `blueprints/` 디렉토리에서 참고 자료를 검색하여 프로젝트에 적합한 내용을 제안한다.
+이 경로의 `blueprints/` 디렉토리에서 참고 자료를 검색하여 프로젝트에 적합한 내용을 제안한다.
+경로가 유효하지 않으면 사용자에게 매뉴얼 저장소 위치를 확인한다.
 
 ## 수집할 정보
 
