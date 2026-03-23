@@ -9,7 +9,7 @@
 ## 마지막 작업 요약
 
 **날짜**: 2026-03-23
-**작업 내용**: `/ai-platform-defconfig` 실행 — 환경 검증 완료
+**작업 내용**: `project-init` 스킬 개선 — 스킬 복제 + 경로 해석 규칙
 
 ### 방향 전환 결정 사항
 
@@ -49,17 +49,26 @@
 - [x] `blueprints/README.md` — 리네이밍 반영, 스킬 참조 방식 설명
 - [x] `blueprints/environment.md` — defconfig 관계 명시
 
+#### Phase 3: project-init 스킬 개선
+- [x] `project-init`이 `project-configure` 스킬을 타겟에 복제하도록 확장
+- [x] 복제 시 `REPO_DIR`을 매뉴얼 저장소 절대 경로로 치환
+- [x] `project-configure` SKILL.md — 경로 치환 메커니즘 및 폴백 설명 추가
+- [x] 경로 해석 규칙 추가 — 홈 디렉토리 기준 (예: `my_project` → `~/my_project`)
+- [x] 실행 흐름에 경로 확인 단계 추가 — 복제 전 사용자에게 절대 경로 확인
+- [x] 리모트 URL 업데이트 (`My_AI_manual` → `my_ai_manual`)
+
 ### 현재 상태
 
-- **스킬**: 3개 모두 **골격 완성** — 실사용하면서 구체화 필요
+- **스킬**: 3개 모두 **골격 완성**, `project-init` 실사용 피드백 반영 완료
 - **내부 지침**: 전면 갱신 완료
 - **심볼릭 링크**: ✅ 정상 연결
 - **defconfig**: ✅ 2026-03-23 실행 완료 (모든 항목 정상)
+- **project-init 테스트**: `~/test/skill_test/`에 복제 테스트 완료 (CLAUDE.md + project-configure 스킬)
 
 ### 다음 작업 후보
 
-1. **스킬 구체화** — 실사용 피드백 반영하여 SKILL.md 보강
-2. **`/project-init` + `/project-configure` 테스트** — 실제 프로젝트로 흐름 검증
+1. **`/project-configure` 테스트** — 복제된 프로젝트에서 직접 실행하여 흐름 검증
+2. **실제 프로젝트로 init → configure 전체 흐름 테스트**
 3. **다른 도구 지침 작성** — `cursor/`, `copilot/`, `windsurf/` (보류 중)
 4. **defconfig 설정 템플릿** — `platform/defconfig.template.json` 생성 (필요 시)
 
