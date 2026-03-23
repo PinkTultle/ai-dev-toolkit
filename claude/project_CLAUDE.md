@@ -1,4 +1,6 @@
 # {{PROJECT_NAME}} — Claude Code 프로젝트 규칙
+> 기반: my_ai_manual v{{BASE_VERSION}}.0
+>
 > 위치: `<프로젝트 루트>/CLAUDE.md`
 > 글로벌 규칙(`~/.claude/CLAUDE.md`)을 상속하며, 이 파일에서 오버라이드/추가합니다.
 >
@@ -91,15 +93,18 @@ OS/RTOS     : {{OS_RTOS}}
 
 ---
 
-## 7. 구현 문서 산출 위치
+## 7. 산출물 디렉토리
 
 ```
-docs/impl/
-├── YYYYMMDD_기능명.md     # 구현 완료 후 자동 산출
-└── README.md              # 문서 인덱스
+docs/artifacts/
+├── ideation/        ← 아이디어 구체화
+├── design/          ← 설계 계획서
+├── review/          ← 설계 검토 기록
+├── summary/         ← 구현 요약
+└── test-report/     ← 테스트 결과
 ```
 
-문서 형식은 글로벌 규칙 **3.3절** 형식을 따릅니다.
+파일명: `<번호>.<작업명>.md` — 상세 규칙은 글로벌 규칙 **3.2절** 참조.
 
 ---
 

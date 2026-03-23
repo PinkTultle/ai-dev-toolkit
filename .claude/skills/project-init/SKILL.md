@@ -66,7 +66,12 @@ REPO_DIR=${CLAUDE_SKILL_DIR}/../../..
    # 치환 후 (복제본)
    REPO_DIR=/absolute/path/to/my_ai_manual
    ```
-6. **결과 안내** — 복제된 파일 목록과 다음 단계(`/project-configure`) 안내
+6. **버전 기록** — 배포 추적 정보를 기록한다:
+   a. `VERSION` 파일을 읽어 현재 라이브러리 버전 확인
+   b. 복제된 `CLAUDE.md` 헤더의 `{{BASE_VERSION}}`을 현재 버전으로 치환
+   c. `workstations/<alias>.deploy.json`에 프로젝트 항목 추가/갱신
+   d. `workstations/registry.md`에 현황 갱신
+7. **결과 안내** — 복제된 파일 목록과 다음 단계(`/project-configure`) 안내
 
 ## 주의사항
 

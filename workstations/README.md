@@ -3,11 +3,19 @@
 워크스테이션별 환경 상태 파일을 저장한다.
 `/ai-platform-defconfig` 스킬이 실행 시 이 디렉토리에 JSON 파일을 생성/갱신한다.
 
+## 파일 구조
+
+| 파일 | 역할 |
+|------|------|
+| `registry.md` | 전체 워크스테이션 + 배포 프로젝트 현황 인덱스 |
+| `<alias>.json` | 워크스테이션 환경 상태 (defconfig 결과) |
+| `<alias>.deploy.json` | 해당 워크스테이션에 배포된 프로젝트 목록 |
+
 ## 파일 명명 규칙
 
-- `<alias>.json` — 별칭은 사용자 지정 (기본값: hostname의 kebab-case 변환)
+- 별칭은 사용자 지정 (기본값: hostname의 kebab-case 변환)
 - 영문 소문자, 숫자, 하이픈만 허용
-- 예: `pink-turtle.json`, `office-server.json`
+- 예: `pink-turtle.json`, `pink-turtle.deploy.json`
 
 ## JSON 스키마 (v1)
 
@@ -69,7 +77,34 @@
 | `defconfig_history` | 실행 이력 (누적) |
 | `last_updated` | 파일 최종 갱신일 |
 
+## deploy.json 스키마
+
+```json
+{
+  "workstation": "<alias>",
+  "projects": [
+    {
+      "name": "프로젝트명",
+      "path": "/absolute/path",
+      "base_version": "0.1.0",
+      "local_version": 0,
+      "deployed_date": "YYYY-MM-DD",
+      "last_synced": "YYYY-MM-DD"
+    }
+  ]
+}
+```
+
+| 필드 | 설명 |
+|------|------|
+| `base_version` | 배포 시점의 라이브러리 버전 (3자리) |
+| `local_version` | 프로젝트에서 지침 수정 횟수 |
+| `deployed_date` | 최초 배포일 |
+| `last_synced` | 라이브러리 버전과 마지막 동기화일 |
+
 ## 갱신 규칙
 
 - defconfig 재실행 시 `defconfig_history`에 항목을 추가하고, 나머지 필드는 최신 값으로 갱신한다
+- `/project-init` 실행 시 `deploy.json`에 프로젝트 항목을 추가/갱신한다
+- `registry.md`는 위 변경 시 함께 갱신한다
 - 기존 이력은 보존한다

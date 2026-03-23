@@ -39,6 +39,9 @@ My_AI_manual/
 ├── README.md              # 저장소 소개 및 사용법
 ├── HANDOFF.md             # 세션 간 인수인계
 ├── TOOL_REFERENCE.md      # 도구별 설정 파일 매핑
+├── VERSION                # 현재 라이브러리 버전
+├── VERSIONING.md          # 버전 정책 정의
+├── CHANGELOG.md           # 버전별 변경 이력
 │
 ├── .claude/
 │   ├── skills/            # ▼ 스킬 (이 저장소의 핵심 기능)
@@ -61,9 +64,11 @@ My_AI_manual/
 │   ├── global_CLAUDE.md   #   글로벌 규칙 (defconfig가 심볼릭 링크 관리)
 │   ├── project_CLAUDE.md  #   프로젝트 규칙 템플릿 (project-init이 복제)
 │   └── README.md
-├── workstations/          # ▼ 워크스테이션별 환경 상태 (defconfig 결과)
+├── workstations/          # ▼ 워크스테이션별 환경 상태 + 배포 추적
 │   ├── README.md
-│   └── <alias>.json       #   워크스테이션별 상태 파일
+│   ├── registry.md        #   전체 현황 인덱스
+│   ├── <alias>.json       #   워크스테이션 환경 상태
+│   └── <alias>.deploy.json #  배포된 프로젝트 목록
 ├── cursor/                #   Cursor (추후 확장)
 ├── copilot/               #   GitHub Copilot (추후 확장)
 └── windsurf/              #   Windsurf (추후 확장)
@@ -170,12 +175,17 @@ cp claude/project_CLAUDE.md <project-root>/CLAUDE.md
 - `.claude/skills/` 수정 → 이 저장소에서 실행하는 스킬에 즉시 반영
 - 영향 범위가 큰 변경은 사전에 변경 의도와 영향 범위를 설명한 후 진행
 
-### 4.4 커밋 규칙
+### 4.4 버전 정책
+- 상세 정책: [`VERSIONING.md`](VERSIONING.md), 변경 이력: [`CHANGELOG.md`](CHANGELOG.md)
+- 의미 있는 변경 묶음 완료 시 `VERSION` 파일 갱신 + git tag
+- 배포된 프로젝트 추적: `workstations/registry.md` + `<alias>.deploy.json`
+
+### 4.5 커밋 규칙
 - Conventional Commits 형식 준수
 - 타입: `docs` (지침 내용 변경), `chore` (구조/배포 변경), `feat` (새 스킬/새 지침 파일 추가)
 - 예시: `feat(skills): ai-platform-defconfig 스킬 추가`
 
-### 4.5 일관성 유지
+### 4.6 일관성 유지
 - 새 지침 파일 작성 시 기존 파일의 톤, 구조, 형식을 따른다
 - 도구 디렉토리 추가 시 `README.md`를 반드시 포함한다
 - `TOOL_REFERENCE.md`와 각 도구 `README.md`의 정보를 동기화 상태로 유지한다
