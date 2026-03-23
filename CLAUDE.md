@@ -14,50 +14,64 @@
 
 ## 1. 저장소 개요
 
-AI 코딩 어시스턴트(Claude Code, Cursor, Copilot, Windsurf)의 **기본 골격과 동작 방향**을 관리하는 저장소.
-각 프로젝트의 세부 규칙은 해당 프로젝트에서 정의하며, 이 저장소는 그 기반이 되는 공통 지식과 템플릿을 제공한다.
-**2계층 구조**: 공유 기반 지식(`blueprints/`) 위에 도구별 지침(`claude/`, `cursor/` 등)을 쌓는다.
+AI 코딩 어시스턴트의 **지침 라이브러리이자 플랫폼 도구**.
+워크스테이션 세팅부터 프로젝트 초기화까지 3개 스킬로 자동화된 흐름을 제공한다.
+
+### 핵심 흐름
+```
+워크스테이션 클론 → /ai-platform-defconfig (1회)
+                        ↓
+              새 프로젝트마다 → /project-init → /project-configure
+```
+
+### 스킬
+| 스킬 | 위치 | 역할 |
+|------|------|------|
+| `/ai-platform-defconfig` | `.claude/skills/ai-platform-defconfig/` | 워크스테이션 환경 구성 (심볼릭 링크, 패키지, MCP 등) |
+| `/project-init` | `.claude/skills/project-init/` | 타겟 디렉토리에 AI 설정 골격 복제 |
+| `/project-configure` | `.claude/skills/project-configure/` | 대화형으로 프로젝트 설정 구체화 |
 
 ### 디렉토리 구조
 ```
 My_AI_manual/
 ├── CLAUDE.md              ← 이 파일 (프로젝트 규칙)
-├── README.md              # 저장소 소개
-├── TOOL_REFERENCE.md      # 도구별 설정 파일 매핑 레퍼런스
+├── README.md              # 저장소 소개 및 사용법
+├── HANDOFF.md             # 세션 간 인수인계
+├── TOOL_REFERENCE.md      # 도구별 설정 파일 매핑
 │
-├── blueprints/               # ▼ 계층 1: 도구 무관 공유 지식
-│   ├── README.md          #   이 계층의 구조와 확장 계획
-│   └── (개별 파일은 위 테이블 참조 — 순차 작성 예정)
+├── .claude/
+│   ├── skills/            # ▼ 스킬 (이 저장소의 핵심 기능)
+│   │   ├── ai-platform-defconfig/SKILL.md
+│   │   ├── project-init/SKILL.md
+│   │   └── project-configure/SKILL.md
+│   └── settings.local.json
 │
-├── claude/                # ▼ 계층 2: 도구별 지침
-│   ├── global_CLAUDE.md   #   → ~/.claude/CLAUDE.md (심볼릭 링크)
-│   ├── project_CLAUDE.md  #   → <project>/CLAUDE.md (템플릿)
+├── blueprints/            # ▼ 도구 무관 공유 지식 (Single Source of Truth)
+│   ├── base-directives.md #   AI 공통 기본 지침
+│   ├── environment.md     #   환경 감지 및 적응
+│   ├── design-principles.md # 설계 우선 원칙
+│   ├── coding-standards.md  # C/C++ 코딩 표준
+│   ├── git-workflow.md    #   Git 워크플로우
+│   ├── build-environment.md # 빌드 환경
 │   └── README.md
-├── cursor/                #   Cursor (.mdc 형식)
-├── copilot/               #   GitHub Copilot
-└── windsurf/              #   Windsurf
+│
+├── claude/                # ▼ Claude Code 도구별 지침
+│   ├── global_CLAUDE.md   #   글로벌 규칙 (defconfig가 심볼릭 링크 관리)
+│   ├── project_CLAUDE.md  #   프로젝트 규칙 템플릿 (project-init이 복제)
+│   └── README.md
+├── cursor/                #   Cursor (추후 확장)
+├── copilot/               #   GitHub Copilot (추후 확장)
+└── windsurf/              #   Windsurf (추후 확장)
 ```
 
-### 계층 구조와 파일 역할
+### 계층 구조
 
-**계층 1 — `blueprints/` (도구 무관 공유 지식)**
-| 파일 | 역할 | 상태 |
-|------|------|------|
-| `base-directives.md` | AI 도구 종류 무관 기본 지침 (응답 언어, 커뮤니케이션 규칙 등) | ✅ 작성 완료 |
-| `environment.md` | 환경 감지 및 적응 (WSL2, SSH, 로컬) | ✅ 분리 완료 |
-| `design-principles.md` | 설계 우선 원칙 (설계 의도 설명, 대안 제안, 문서 산출, 기술 부채) | ✅ 분리 완료 |
-| `coding-standards.md` | C/C++ 임베디드 코딩 표준 | ✅ 분리 완료 |
-| `git-workflow.md` | Git 브랜치/커밋/워크트리 규칙 | ✅ 분리 완료 |
-| `build-environment.md` | 크로스 컴파일, 빌드 산출물 구조 | ✅ 분리 완료 |
+**blueprints/** — 도구 무관 공유 지식의 원본(Single Source of Truth)
+- 모든 도구의 지침이 여기서 파생됨
+- `project-configure` 스킬이 프로젝트 특성에 맞는 blueprint를 선택하여 적용
 
-**계층 2 — 도구별 디렉토리**
-| 파일 | 역할 |
-|------|------|
-| `claude/global_CLAUDE.md` | Claude Code 글로벌 규칙 원본 (`blueprints/` 내용을 Claude 형식으로 통합) |
-| `claude/project_CLAUDE.md` | 프로젝트별 규칙 템플릿 (placeholder 채워서 사용) |
-| `TOOL_REFERENCE.md` | 도구별 소스→배포 위치 매핑 정보 |
-
-> **관계**: `blueprints/`는 지식의 원본(Single Source of Truth). 도구별 지침은 `blueprints/`를 참조하거나 도구 형식에 맞게 변환하여 사용한다. 현재는 `claude/global_CLAUDE.md`가 `blueprints/` 내용을 직접 포함하고 있으며, 향후 분리 예정.
+**도구별 디렉토리** — blueprints를 도구 형식에 맞게 변환한 배포판
+- `claude/global_CLAUDE.md`는 blueprints 1~3절을 인라인 포함
 
 ### 디렉토리 탐색 규칙
 새 디렉토리에 진입할 때는 다음 순서를 따른다:
@@ -77,7 +91,7 @@ My_AI_manual/
 - 인코딩: UTF-8, LF 줄바꿈 (CRLF 금지)
 - Markdown 형식 준수
 - 각 도구의 지침 파일은 해당 도구가 요구하는 형식을 따름:
-  - Claude Code: 표준 Markdown
+  - Claude Code: 표준 Markdown (스킬은 YAML frontmatter 포함)
   - Cursor: MDC (Markdown + YAML frontmatter)
   - Copilot: Markdown (glob 패턴 frontmatter)
   - Windsurf: Markdown (파일당 12,000자 제한)
@@ -88,31 +102,32 @@ My_AI_manual/
 - 도구 공통 내용은 `blueprints/`로 분리 가능성을 고려
 - `TOOL_REFERENCE.md` 변경 시 해당 도구의 README.md도 함께 갱신
 
+### 2.4 스킬 수정 시 주의사항
+- 스킬 파일은 `.claude/skills/<name>/SKILL.md`에 위치
+- YAML frontmatter의 `allowed-tools`, `description` 변경은 동작에 직접 영향
+- 스킬이 참조하는 템플릿 파일(`claude/project_CLAUDE.md` 등)과 동기화 유지
+
 ---
 
 ## 3. 배포 및 동기화
 
-이 저장소는 **기본 골격과 동작 방향**을 제공한다.
-각 프로젝트의 세부 규칙은 해당 프로젝트 워크스페이스에서 정의하며, 여기서는 그 기반만 잡아준다.
+이 저장소는 **스킬을 통해 배포를 자동화**한다.
 
-### 3.1 현재 배포 상태
-| 소스 | 배포 위치 | 방식 | 상태 |
-|------|-----------|------|------|
-| `claude/global_CLAUDE.md` | `~/.claude/CLAUDE.md` | 심볼릭 링크 | ✅ 활성 |
-| `claude/project/` | 각 프로젝트 `<root>/.claude/` | 골격 복사 후 프로젝트별 확장 | 구조 설계 중 |
+### 3.1 배포 방식
+| 대상 | 스킬 | 방식 |
+|------|------|------|
+| 글로벌 규칙 (`~/.claude/CLAUDE.md`) | `/ai-platform-defconfig` | 심볼릭 링크 생성/갱신 |
+| 프로젝트 규칙 (`<project>/CLAUDE.md`) | `/project-init` | 템플릿 복제 |
+| 프로젝트 구체화 | `/project-configure` | 대화형 placeholder 채움 |
 
-### 3.2 Claude Code 배포
-
-**글로벌 규칙** — 동작 방향의 기본 배경 (설정 완료):
+### 3.2 수동 배포 (스킬 미사용 시)
 ```bash
-ln -sf ~/My_AI_manual/claude/global_CLAUDE.md ~/.claude/CLAUDE.md
-```
+# 글로벌 규칙 심볼릭 링크
+ln -sf $(pwd)/claude/global_CLAUDE.md ~/.claude/CLAUDE.md
 
-**프로젝트 규칙** — 골격 제공, 세부는 프로젝트에서 정의:
-프로젝트별 Claude 설정은 `.claude/` 하위 계층 구조로 배포한다.
-이 저장소에서는 시작점이 되는 골격 구조(서브에이전트 기본 구조, 코드 컨벤션 템플릿 등)를 제공하고,
-프로젝트 고유 내용(타겟 보드, 모듈 구조, 서브에이전트 구체화, 프로젝트별 컨벤션 확장 등)은 각 프로젝트에서 채운다.
-구체적 구조는 `claude/README.md`에서 정의한다.
+# 프로젝트 규칙 복제
+cp claude/project_CLAUDE.md <project-root>/CLAUDE.md
+```
 
 ### 3.3 다른 도구 배포
 각 도구 디렉토리의 `README.md`에 배포 방법이 기재되어 있다.
@@ -126,9 +141,10 @@ ln -sf ~/My_AI_manual/claude/global_CLAUDE.md ~/.claude/CLAUDE.md
 ## 4. 이 저장소에서의 작업 원칙
 
 ### 4.1 역할 인식
-이 저장소는 코드 프로젝트가 아니라 **AI 동작의 기반 골격을 관리하는 지식 저장소**다.
-- 글로벌 규칙의 임베디드 C/C++ 관련 섹션(4~6절)은 이 저장소 자체에는 적용하지 않는다
+이 저장소는 **AI 도구 지침의 라이브러리이자 플랫폼 도구**다.
+- 글로벌 규칙의 임베디드 C/C++ 관련 섹션은 이 저장소 자체에는 적용하지 않는다
 - 여기서 작성하는 지침은 **다른 프로젝트에서 AI가 참조할 기반**이 된다는 점을 항상 의식한다
+- 스킬은 **실제 사용하면서 점진적으로 구체화**한다 — 완벽하게 만들고 배포하는 방식이 아님
 
 ### 4.2 골격 유지 원칙
 - 지침은 **방향과 원칙** 수준으로 작성한다 — 지나치게 구체적인 프로젝트별 내용은 넣지 않는다
@@ -139,13 +155,13 @@ ln -sf ~/My_AI_manual/claude/global_CLAUDE.md ~/.claude/CLAUDE.md
 ### 4.3 변경 영향 인식
 - `blueprints/` 수정 → 모든 도구의 지침에 영향 가능
 - `claude/global_CLAUDE.md` 수정 → 심볼릭 링크로 **모든 프로젝트에 즉시 반영**
+- `.claude/skills/` 수정 → 이 저장소에서 실행하는 스킬에 즉시 반영
 - 영향 범위가 큰 변경은 사전에 변경 의도와 영향 범위를 설명한 후 진행
-- 변경 후 심볼릭 링크가 정상 동작하는지 확인한다
 
 ### 4.4 커밋 규칙
 - Conventional Commits 형식 준수
-- 타입: `docs` (지침 내용 변경), `chore` (구조/배포 변경), `feat` (새 도구/새 지침 파일 추가)
-- 예시: `docs(claude): 글로벌 규칙 Git 섹션 보강`
+- 타입: `docs` (지침 내용 변경), `chore` (구조/배포 변경), `feat` (새 스킬/새 지침 파일 추가)
+- 예시: `feat(skills): ai-platform-defconfig 스킬 추가`
 
 ### 4.5 일관성 유지
 - 새 지침 파일 작성 시 기존 파일의 톤, 구조, 형식을 따른다

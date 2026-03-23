@@ -5,23 +5,34 @@
 | 파일 | 배포 위치 | 설명 |
 |------|-----------|------|
 | `global_CLAUDE.md` | `~/.claude/CLAUDE.md` | 모든 프로젝트에 적용되는 글로벌 규칙 |
-| `project_CLAUDE.md` | `<project-root>/CLAUDE.md` | 프로젝트별 규칙 템플릿 (placeholder 채워서 사용) |
+| `project_CLAUDE.md` | `<project-root>/CLAUDE.md` | 프로젝트별 규칙 템플릿 (`{{...}}` placeholder) |
 
 ## 배포 방법
 
-### 글로벌 규칙
-```bash
-# 심볼릭 링크 (권장 — 원본 수정 시 자동 반영)
-ln -sf ~/My_AI_manual/claude/global_CLAUDE.md ~/.claude/CLAUDE.md
+### 스킬을 통한 배포 (권장)
 
-# 또는 복사
-cp ~/My_AI_manual/claude/global_CLAUDE.md ~/.claude/CLAUDE.md
+**글로벌 규칙:**
+```
+/ai-platform-defconfig
+→ 심볼릭 링크 자동 생성: global_CLAUDE.md → ~/.claude/CLAUDE.md
 ```
 
-### 프로젝트 규칙
+**프로젝트 규칙:**
+```
+/project-init <target-path>
+→ project_CLAUDE.md를 타겟에 복제
+
+/project-configure
+→ placeholder를 대화형으로 채움
+```
+
+### 수동 배포
 ```bash
-# 새 프로젝트에 템플릿 복사 후 placeholder 수정
-cp ~/My_AI_manual/claude/project_CLAUDE.md <project-root>/CLAUDE.md
+# 글로벌 규칙 (심볼릭 링크)
+ln -sf $(realpath global_CLAUDE.md) ~/.claude/CLAUDE.md
+
+# 프로젝트 규칙 (복사)
+cp project_CLAUDE.md <project-root>/CLAUDE.md
 ```
 
 ## 우선순위
