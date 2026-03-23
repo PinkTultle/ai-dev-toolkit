@@ -30,6 +30,7 @@ AI 코딩 어시스턴트의 **지침 라이브러리이자 플랫폼 도구**.
 | `/ai-platform-defconfig` | `.claude/skills/ai-platform-defconfig/` | 워크스테이션 환경 구성 (심볼릭 링크, 패키지, MCP 등) |
 | `/project-init` | `.claude/skills/project-init/` | 타겟 디렉토리에 AI 설정 골격 복제 |
 | `/project-configure` | `.claude/skills/project-configure/` | 대화형으로 프로젝트 설정 구체화 |
+| `/optimize-docs` | `.claude/skills/optimize-docs/` | 지침 파일 200줄 제한 검사 및 최적화 |
 
 ### 디렉토리 구조
 ```
@@ -43,7 +44,8 @@ My_AI_manual/
 │   ├── skills/            # ▼ 스킬 (이 저장소의 핵심 기능)
 │   │   ├── ai-platform-defconfig/SKILL.md
 │   │   ├── project-init/SKILL.md
-│   │   └── project-configure/SKILL.md
+│   │   ├── project-configure/SKILL.md
+│   │   └── optimize-docs/SKILL.md
 │   └── settings.local.json
 │
 ├── blueprints/            # ▼ 도구 무관 공유 지식 (Single Source of Truth)
@@ -109,6 +111,13 @@ My_AI_manual/
 - 스킬 파일은 `.claude/skills/<name>/SKILL.md`에 위치
 - YAML frontmatter의 `allowed-tools`, `description` 변경은 동작에 직접 영향
 - 스킬이 참조하는 템플릿 파일(`claude/project_CLAUDE.md` 등)과 동기화 유지
+
+### 2.5 지침 파일 줄 수 제한
+- 지침 성격의 파일(SKILL.md, blueprints/*.md, CLAUDE.md, 도구별 지침)은 **200줄 이내** 유지
+- 초과 시: 섹션 분리, 중복 제거, 표현 압축으로 줄인다
+- 의미 보존이 우선 — 줄 수를 맞추기 위해 핵심 내용을 삭제하지 않는다
+- 구조적으로 분리가 자연스러운 경우 별도 파일로 분리한다 (blueprints/ 활용)
+- 일괄 최적화가 필요하면 `/optimize-docs` 스킬을 사용한다
 
 ---
 
