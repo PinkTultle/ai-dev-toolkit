@@ -36,11 +36,12 @@ REPO_DIR=${CLAUDE_SKILL_DIR}/../../..
 ## 실행 흐름
 
 1. **경로 검증** — 타겟 디렉토리가 존재하는지, git 저장소인지 확인
-2. **충돌 확인** — 타겟에 이미 `CLAUDE.md`나 `.claude/`가 있는지 확인
+2. **경로 확인** — 해석된 절대 경로를 사용자에게 보여주고 맞는지 확인받은 후 진행
+3. **충돌 확인** — 타겟에 이미 `CLAUDE.md`나 `.claude/`가 있는지 확인
    - 있으면 → 덮어쓸지 병합할지 사용자에게 확인
    - 없으면 → 진행
-3. **파일 복제** — 복제 대상을 타겟으로 복사
-4. **REPO_DIR 치환** — 복제된 `project-configure/SKILL.md` 내 `REPO_DIR`을 이 저장소의 절대 경로로 치환
+4. **파일 복제** — 복제 대상을 타겟으로 복사
+5. **REPO_DIR 치환** — 복제된 `project-configure/SKILL.md` 내 `REPO_DIR`을 이 저장소의 절대 경로로 치환
    ```
    # 치환 전 (원본)
    REPO_DIR=${CLAUDE_SKILL_DIR}/../../..
@@ -48,7 +49,7 @@ REPO_DIR=${CLAUDE_SKILL_DIR}/../../..
    # 치환 후 (복제본)
    REPO_DIR=/absolute/path/to/my_ai_manual
    ```
-5. **결과 안내** — 복제된 파일 목록과 다음 단계(`/project-configure`) 안내
+6. **결과 안내** — 복제된 파일 목록과 다음 단계(`/project-configure`) 안내
 
 ## 주의사항
 
