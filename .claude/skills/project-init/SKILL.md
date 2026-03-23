@@ -1,7 +1,7 @@
 ---
 name: project-init
 description: 타겟 디렉토리에 AI 도구 설정 골격(CLAUDE.md, .claude/ 등)을 복제하여 초기 구성을 준비
-argument-hint: <target-directory-path>
+argument-hint: "[target-directory-path]"
 allowed-tools: Read, Bash, Glob, Grep, Write, Edit
 ---
 
@@ -11,9 +11,12 @@ allowed-tools: Read, Bash, Glob, Grep, Write, Edit
 
 ## 인자
 
-- `$0` — 타겟 디렉토리 경로 (필수)
+- `$0` — 타겟 디렉토리 경로 (미지정 시 사용자에게 물어본다)
 
-타겟 경로가 제공되지 않으면 사용자에게 물어본다.
+### 경로 해석 규칙
+- 사용자가 입력한 경로는 **홈 디렉토리(`~`)를 기준**으로 해석한다
+- 예: `my_project` → `~/my_project`, `test/foo` → `~/test/foo`
+- 절대 경로(`/`로 시작)가 입력된 경우에만 그대로 사용
 
 ## 이 저장소 경로
 
