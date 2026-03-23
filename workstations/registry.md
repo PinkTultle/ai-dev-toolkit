@@ -16,4 +16,4 @@
 | 워크스테이션 | 프로젝트 | 기반 버전 | Local | 배포일 | 비고 |
 |-------------|---------|----------|-------|--------|------|
 | pink-turtle | NDT-BPE_pork | v0.1.0 | 0 | 2026-03-23 | |
-| pink-turtle | aralm_program | v0.1.0 | 0 | 2026-03-23 | update 필요 (v0.1.0 이전 수동 설정) |
+| pink-turtle | aralm_program | v0.1.0 | 0 | 2026-03-23 | update 적용 완료 |
