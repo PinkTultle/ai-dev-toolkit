@@ -35,6 +35,8 @@ AI 코딩 어시스턴트의 지침 라이브러리이자 플랫폼 도구.
 | `/ai-platform-defconfig` | 워크스테이션 환경 구성 (사용자 정보, 경로, 패키지, MCP, 심볼릭 링크) |
 | `/project-init` | 타겟 디렉토리에 CLAUDE.md, .claude/ 등 골격 복제 + 배포 추적 기록 |
 | `/project-configure` | 복제된 템플릿을 대화형(1문 1답)으로 프로젝트에 맞게 구체화 |
+| `/project-update` | 라이브러리 최신 버전을 배포된 프로젝트에 적용 (diff 비교, 커스텀 보존) |
+| `/project-absorb` | 프로젝트에서 발전한 지침을 라이브러리로 흡수 (항목별 채택) |
 | `/optimize-docs` | 지침 파일 200줄 제한 검사 및 최적화 |
 
 ---

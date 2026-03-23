@@ -28,8 +28,10 @@ AI 코딩 어시스턴트의 **지침 라이브러리이자 플랫폼 도구**.
 | 스킬 | 위치 | 역할 |
 |------|------|------|
 | `/ai-platform-defconfig` | `.claude/skills/ai-platform-defconfig/` | 워크스테이션 환경 구성 (심볼릭 링크, 패키지, MCP 등) |
-| `/project-init` | `.claude/skills/project-init/` | 타겟 디렉토리에 AI 설정 골격 복제 |
+| `/project-init` | `.claude/skills/project-init/` | 타겟 디렉토리에 AI 설정 골격 복제 + 배포 추적 |
 | `/project-configure` | `.claude/skills/project-configure/` | 대화형으로 프로젝트 설정 구체화 |
+| `/project-update` | `.claude/skills/project-update/` | 라이브러리 최신 버전을 프로젝트에 적용 |
+| `/project-absorb` | `.claude/skills/project-absorb/` | 프로젝트에서 발전한 지침을 라이브러리로 흡수 |
 | `/optimize-docs` | `.claude/skills/optimize-docs/` | 지침 파일 200줄 제한 검사 및 최적화 |
 
 ### 디렉토리 구조
@@ -48,6 +50,8 @@ My_AI_manual/
 │   │   ├── ai-platform-defconfig/SKILL.md
 │   │   ├── project-init/SKILL.md
 │   │   ├── project-configure/SKILL.md
+│   │   ├── project-update/SKILL.md
+│   │   ├── project-absorb/SKILL.md
 │   │   └── optimize-docs/SKILL.md
 │   └── settings.local.json
 │
