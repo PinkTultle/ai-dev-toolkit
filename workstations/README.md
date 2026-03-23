@@ -22,19 +22,19 @@
 ```json
 {
   "$schema": "workstation-state-v1",
-  "alias": "pink-turtle",
-  "hostname": "Pink-turtle",
+  "alias": "<alias>",
+  "hostname": "<hostname>",
 
   "environment": {
-    "os": "Linux 6.6.87.2-microsoft-standard-WSL2 x86_64",
+    "os": "Linux ...",
     "platform": "WSL2",
     "wsl_distro": "Ubuntu-20.04",
     "is_ssh": false,
-    "user": "innn",
-    "home": "/home/innn"
+    "user": "<user>",
+    "home": "~"
   },
 
-  "repo_path": "/home/innn/My_AI_manual",
+  "repo_path": "~/my_ai_manual",
 
   "packages": {
     "git": "2.25.1",
@@ -85,7 +85,7 @@
   "projects": [
     {
       "name": "프로젝트명",
-      "path": "/absolute/path",
+      "path": "~/project/path",
       "base_version": "0.1.0",
       "local_version": 0,
       "deployed_date": "YYYY-MM-DD",
@@ -101,6 +101,11 @@
 | `local_version` | 프로젝트에서 지침 수정 횟수 |
 | `deployed_date` | 최초 배포일 |
 | `last_synced` | 라이브러리 버전과 마지막 동기화일 |
+
+## 경로 기록 규칙
+
+- 경로는 **`~`(홈 디렉토리) 기준 상대 경로**로 기록한다 — 절대 경로(`/home/user/...`) 금지
+- 스킬에서 읽을 때 `~`를 `$HOME`으로 확장하여 사용
 
 ## 갱신 규칙
 

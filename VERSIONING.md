@@ -88,7 +88,7 @@ workstations/
   "projects": [
     {
       "name": "프로젝트명",
-      "path": "/absolute/path",
+      "path": "~/project/path",
       "base_version": "0.1.0",
       "local_version": 0,
       "deployed_date": "YYYY-MM-DD",
