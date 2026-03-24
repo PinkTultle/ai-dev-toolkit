@@ -1,0 +1,33 @@
+{
+  "$schema": "workstation-state-v1",
+  "alias": "pink-turtle-rt",
+
+  "environment": {
+    "platform": "WSL2",
+    "wsl_distro": "Ubuntu-20.04",
+    "is_ssh": false
+  },
+
+  "packages": {
+    "git": "2.25.1",
+    "jq": "1.6",
+    "dos2unix": "7.4.0"
+  },
+
+  "symlinks": {
+    "~/.claude/CLAUDE.md": {
+      "target": "~/my_ai_manual/claude/global_CLAUDE.md",
+      "status": "ok"
+    }
+  },
+
+  "mcp_servers": [],
+
+  "claude_settings_path": "~/.claude/settings.json",
+
+  "defconfig_history": [
+    { "date": "2026-03-24", "result": "ok", "notes": "초기 세팅" }
+  ],
+
+  "last_updated": "2026-03-24"
+}
