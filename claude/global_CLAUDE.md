@@ -81,6 +81,11 @@ docs/artifacts/
 - 문서 헤더: 작업번호, 작업명, 날짜, 작업 개요
 - Small은 `summary/`만, Medium은 `ideation/` + `design/` + `summary/`(+ 선택 `test-report/`)
 
+코드 구현 시 `docs/source/`에 소스 트리와 동일한 구조로 코드 설명 문서를 생성/갱신한다:
+- 파일명: 소스 확장자를 `.md`로 변경 (예: `uart.c` → `docs/source/src/drivers/uart.md`)
+- 내용: 모듈 목적, 주요 함수/클래스 역할, 의존 관계, 주의사항
+- 코드 주석과 중복하지 않는다 — 주석은 "왜(why)", 문서는 "전체 그림(what/how)"
+
 ### 3.3 서브에이전트 파이프라인
 
 각 단계를 **서브에이전트(별도 컨텍스트)**가 실행한다.
@@ -100,7 +105,7 @@ docs/artifacts/
 
 ## 4. 기술 표준 참조
 
-C/C++ 코딩 표준, Git 워크플로우, 빌드 환경 등 도메인별 기술 지식은 프로젝트에 따라 선택적으로 적용한다.
+도메인별 기술 지식은 프로젝트에 따라 선택적으로 적용한다.
 해당 프로젝트의 기술 스택에 맞는 지침은 `~/My_AI_manual/blueprints/` 디렉토리를 참조한다.
 
 | 주제 | 참조 파일 |
@@ -108,6 +113,9 @@ C/C++ 코딩 표준, Git 워크플로우, 빌드 환경 등 도메인별 기술 
 | C/C++ 코딩 표준 | `blueprints/coding-standards.md` |
 | Git 워크플로우 | `blueprints/git-workflow.md` |
 | 임베디드 빌드 환경 | `blueprints/build-environment.md` |
+
+도구에 종속되지 않는 범용 기술 지식(언어 표준, 아키텍처 패턴 등)은 blueprint에 바로 작성한다.
+상세 기준과 절차는 `blueprints/README.md`의 "새 blueprint 추가" 참조.
 
 ---
 

@@ -55,6 +55,9 @@ My_AI_manual/
 │   │   └── optimize-docs/SKILL.md
 │   └── settings.local.json
 │
+├── docs/                  # ▼ 사용 가이드 및 산출물
+│   └── usage-guide.md     #   스킬별 상세 사용법 + FAQ
+│
 ├── blueprints/            # ▼ 도구 무관 공유 지식 (Single Source of Truth)
 │   ├── base-directives.md #   AI 공통 기본 지침
 │   ├── environment.md     #   환경 감지 및 적응
