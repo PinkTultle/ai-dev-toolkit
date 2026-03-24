@@ -179,17 +179,25 @@ cp claude/project_CLAUDE.md <project-root>/CLAUDE.md
 - `.claude/skills/` 수정 → 이 저장소에서 실행하는 스킬에 즉시 반영
 - 영향 범위가 큰 변경은 사전에 변경 의도와 영향 범위를 설명한 후 진행
 
-### 4.4 버전 정책
+### 4.4 브랜치 전략
+- **main** — 안정 브랜치. `~/.claude/CLAUDE.md` 심볼릭 링크가 여기를 가리킴
+- **작업 브랜치** — `<type>/<설명>` 형식으로 생성 → PR → squash merge → main
+  - 접두사: `feat/`, `fix/`, `docs/`, `chore/`
+  - 예: `feat/add-cursor-rules`, `fix/symlink-path`
+- main 직접 push 금지 — 반드시 PR을 통해 머지
+- `develop` 브랜치 없음 — 이 저장소 규모에 불필요
+
+### 4.5 버전 정책
 - 상세 정책: [`VERSIONING.md`](VERSIONING.md), 변경 이력: [`CHANGELOG.md`](CHANGELOG.md)
 - 의미 있는 변경 묶음 완료 시 `VERSION` 파일 갱신 + git tag
-- 배포된 프로젝트 추적: `workstations/registry.md` + `<alias>.deploy.json`
+- 배포된 프로젝트 추적: `workstations/registry.md` + `<alias>.local.json`
 
-### 4.5 커밋 규칙
+### 4.6 커밋 규칙
 - Conventional Commits 형식 준수
 - 타입: `docs` (지침 내용 변경), `chore` (구조/배포 변경), `feat` (새 스킬/새 지침 파일 추가)
 - 예시: `feat(skills): ai-platform-defconfig 스킬 추가`
 
-### 4.6 일관성 유지
+### 4.7 일관성 유지
 - 새 지침 파일 작성 시 기존 파일의 톤, 구조, 형식을 따른다
 - 도구 디렉토리 추가 시 `README.md`를 반드시 포함한다
 - `TOOL_REFERENCE.md`와 각 도구 `README.md`의 정보를 동기화 상태로 유지한다
