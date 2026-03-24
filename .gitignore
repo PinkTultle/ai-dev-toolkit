@@ -2,3 +2,6 @@
 .claude/*
 !.claude/skills/
 !.claude/settings.local.json
+
+# 워크스테이션 로컬 정보 (hostname, 사용자, 경로 등)
+workstations/*.local.json

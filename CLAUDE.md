@@ -71,8 +71,8 @@ My_AI_manual/
 ├── workstations/          # ▼ 워크스테이션별 환경 상태 + 배포 추적
 │   ├── README.md
 │   ├── registry.md        #   전체 현황 인덱스
-│   ├── <alias>.json       #   워크스테이션 환경 상태
-│   └── <alias>.deploy.json #  배포된 프로젝트 목록
+│   ├── <alias>.json       #   공개 환경 상태 (커밋)
+│   └── <alias>.local.json #   로컬 전용: hostname, 경로, 배포 목록 (gitignore)
 ├── cursor/                #   Cursor (추후 확장)
 ├── copilot/               #   GitHub Copilot (추후 확장)
 └── windsurf/              #   Windsurf (추후 확장)

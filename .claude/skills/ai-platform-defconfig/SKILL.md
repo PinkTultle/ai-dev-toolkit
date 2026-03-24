@@ -68,10 +68,10 @@ allowed-tools: Read, Bash, Glob, Grep, Write, Edit
 4. **패키지 확인** — 3번 항목 체크, 미설치 목록 안내
 5. **심볼릭 링크** — 4번 항목 확인/생성
 6. **MCP/설정** — 5~6번 항목 확인/안내
-7. **상태 파일 저장** — `workstations/<alias>.json` 생성/갱신
+7. **상태 파일 저장** — 2개 파일 생성/갱신 (스키마: `workstations/README.md` 참조)
+   - `workstations/<alias>.json` (공개) — 패키지, 링크, MCP, 이력
+   - `workstations/<alias>.local.json` (gitignore) — hostname, 사용자, 경로, 배포 프로젝트
    - 기존 파일이 있으면 `defconfig_history`에 항목 추가, 나머지 필드 갱신
-   - 새 파일이면 전체 생성
-   - JSON 스키마는 `workstations/README.md` 참조
 8. **결과 요약** — 수행된 작업과 현재 상태를 정리하여 출력
    - HANDOFF.md 워크스테이션 테이블도 갱신
 
@@ -79,6 +79,6 @@ allowed-tools: Read, Bash, Glob, Grep, Write, Edit
 
 - 파괴적 작업(기존 파일 덮어쓰기 등)은 반드시 사전 확인
 - 패키지 설치는 직접 수행하지 않고, 설치 명령어를 안내만 한다
-- 상태 파일(`workstations/<alias>.json`)은 이 저장소에 커밋한다 — 다른 워크스테이션에서 참조 가능
+- 공개 상태 파일(`<alias>.json`)은 커밋, 로컬 파일(`<alias>.local.json`)은 gitignore
 - 기존 상태 파일이 있는 경우 `defconfig_history`를 보존하며 갱신한다
 - 실행 결과를 HANDOFF.md의 워크스테이션 환경 메모에 기록한다

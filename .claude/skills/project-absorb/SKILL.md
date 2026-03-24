@@ -30,7 +30,7 @@ REPO_DIR=${CLAUDE_SKILL_DIR}/../../..
 ### 1. 대상 선정
 
 인자가 없으면:
-1. `workstations/` 디렉토리에서 현재 워크스테이션의 `<alias>.deploy.json`을 찾는다
+1. `workstations/` 디렉토리에서 현재 워크스테이션의 `<alias>.local.json`을 찾는다
 2. Local > 0인 프로젝트만 필터링하여 번호 목록 제시
 3. 사용자가 선택
 

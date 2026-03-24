@@ -72,8 +72,10 @@ My_AI_manual/
 ├── claude/
 ├── workstations/
 │   ├── README.md
-│   ├── registry.md                    ← 신규
-│   └── pink-turtle.deploy.json        ← 신규
+│   ├── registry.md
+│   ├── pink-turtle-rt.json            ← 공개 상태
+│   ├── pink-turtle-rt.local.json      ← gitignore (로컬 전용)
+│   └── pink-turtle.local.json         ← gitignore (로컬 전용)
 ├── VERSION                            ← 신규
 ├── VERSIONING.md                      ← 신규
 ├── CHANGELOG.md                       ← 신규
@@ -92,3 +94,4 @@ My_AI_manual/
 | 별칭 | 환경 | 상태 파일 | defconfig 최종 실행일 |
 |------|------|----------|---------------------|
 | pink-turtle | WSL2 (Ubuntu-20.04) | `workstations/pink-turtle.json` (미생성) | 2026-03-23 |
+| pink-turtle-rt | WSL2 (Ubuntu-20.04) | `workstations/pink-turtle-rt.json` | 2026-03-24 |

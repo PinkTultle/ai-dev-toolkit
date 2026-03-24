@@ -30,8 +30,8 @@ REPO_DIR=${CLAUDE_SKILL_DIR}/../../..
 ### 1. 대상 선정
 
 인자가 없으면:
-1. `workstations/` 디렉토리에서 현재 워크스테이션의 `<alias>.deploy.json`을 찾는다
-2. 배포된 프로젝트 목록을 번호로 제시 (현재 버전 함께 표시)
+1. `workstations/` 디렉토리에서 현재 워크스테이션의 `<alias>.local.json`을 찾는다
+2. `deployed_projects`에서 배포된 프로젝트 목록을 번호로 제시 (현재 버전 함께 표시)
 3. 사용자가 선택
 
 ### 2. 버전 비교
@@ -67,7 +67,7 @@ REPO_DIR=${CLAUDE_SKILL_DIR}/../../..
 1. 선택한 방식으로 파일 갱신
 2. 프로젝트 `CLAUDE.md` 헤더의 기반 버전을 새 버전으로 갱신, Local을 0으로 리셋
    - 예: `v0.1.0.3` → `v0.2.0.0`
-3. `deploy.json`의 `base_version`, `last_synced` 갱신
+3. `local.json`의 `deployed_projects`에서 `base_version`, `last_synced` 갱신
 4. `registry.md` 갱신
 
 ### 6. 결과 안내
