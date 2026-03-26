@@ -16,7 +16,7 @@ allowed-tools: Read, Bash, Glob, Grep, Write, Edit
 ## 매뉴얼 저장소(blueprints) 참조
 
 ```
-# 원본 (my_ai_manual 내부에서 실행 시) — project-init이 복제할 때 절대 경로로 치환됨
+# 원본 (ai-dev-toolkit 내부에서 실행 시) — project-init이 복제할 때 절대 경로로 치환됨
 REPO_DIR=${CLAUDE_SKILL_DIR}/../../..
 ```
 
@@ -101,7 +101,7 @@ REPO_DIR=${CLAUDE_SKILL_DIR}/../../..
 ```markdown
 <!-- docs/stack/ 파일 헤더 -->
 # C/C++ 코딩 표준
-> 원본: my_ai_manual blueprints/coding-standards.md (v0.1.0)
+> 원본: ai-dev-toolkit blueprints/coding-standards.md (v0.1.0)
 > 마이그레이션: 프로젝트 고유 네이밍 규칙 추가, MISRA 섹션 제거
 ```
 

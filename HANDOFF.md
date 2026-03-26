@@ -48,7 +48,7 @@
 ### 현재 저장소 구조
 
 ```
-My_AI_manual/
+ai-dev-toolkit/
 ├── .claude/skills/
 │   ├── ai-platform-defconfig/SKILL.md
 │   ├── project-init/SKILL.md
@@ -80,3 +80,4 @@ My_AI_manual/
 |------|------|----------|---------------------|
 | pink-turtle | WSL2 (Ubuntu-20.04) | `workstations/pink-turtle.json` (미생성) | 2026-03-23 |
 | pink-turtle-rt | WSL2 (Ubuntu-20.04) | `workstations/pink-turtle-rt.json` | 2026-03-24 |
+| pink-turtle-win | MINGW64 (Git Bash, Win11) | `workstations/pink-turtle-win.json` | 2026-03-26 |

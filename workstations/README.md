@@ -40,8 +40,9 @@
 
   "symlinks": {
     "~/.claude/CLAUDE.md": {
-      "target": "~/my_ai_manual/claude/global_CLAUDE.md",
-      "status": "ok"
+      "target": "~/ai-dev-toolkit/claude/global_CLAUDE.md",
+      "status": "ok",
+      "method": "symlink"
     }
   },
 
@@ -67,7 +68,7 @@
   "hostname": "<hostname>",
   "user": "<user>",
   "home": "~",
-  "repo_path": "~/my_ai_manual",
+  "repo_path": "~/ai-dev-toolkit",
 
   "deployed_projects": [
     {
@@ -90,9 +91,9 @@
 |------|------|
 | `$schema` | 스키마 버전 (`workstation-state-v1`) |
 | `alias` | 사용자 지정 별칭 (파일명과 동일) |
-| `environment` | 플랫폼, WSL 배포판, SSH 여부 (식별 정보 제외) |
+| `environment` | 플랫폼(`WSL2`, `Windows`, `Linux`, `macOS`), WSL 배포판, SSH 여부 |
 | `packages` | 필수 패키지 버전 |
-| `symlinks` | 심볼릭 링크 상태 |
+| `symlinks` | 심볼릭 링크 상태 (`method`: `symlink` 또는 `copy`) |
 | `mcp_servers` | 설정된 MCP 서버 목록 |
 | `defconfig_history` | 실행 이력 (누적) |
 | `last_updated` | 파일 최종 갱신일 |
@@ -118,8 +119,8 @@
 
 ## 경로 기록 규칙
 
-- 경로는 **`~`(홈 디렉토리) 기준 상대 경로**로 기록한다 — 절대 경로(`/home/user/...`) 금지
-- 스킬에서 읽을 때 `~`를 `$HOME`으로 확장하여 사용
+- 경로는 **`~`(홈 디렉토리) 기준 상대 경로**로 기록한다 — 절대 경로(`/home/user/...`, `C:\Users\...`) 금지
+- 스킬에서 읽을 때 `~`를 `$HOME`으로 확장하여 사용 (Windows Git Bash에서도 동일)
 
 ## 갱신 규칙
 

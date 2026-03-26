@@ -7,7 +7,7 @@ allowed-tools: Read, Bash, Glob, Grep, Write, Edit
 
 # AI Platform Defconfig
 
-이 저장소(`My_AI_manual`)가 위치한 워크스테이션의 AI 개발 환경을 구성한다.
+이 저장소(`ai-dev-toolkit`)가 위치한 워크스테이션의 AI 개발 환경을 구성한다.
 워크스테이션당 최초 1회 실행하며, 환경 변경 시 재실행한다.
 
 ## 수집할 정보
@@ -31,6 +31,8 @@ allowed-tools: Read, Bash, Glob, Grep, Write, Edit
 
 ### 2. 환경 감지
 - OS/플랫폼: !`uname -a`
+  - `MINGW64_NT*` 또는 `MSYS_NT*` → **Windows 네이티브 (Git Bash)**
+  - `uname` 실패 → Windows에서 Git Bash 미설치. 설치 안내 출력 후 중단
 - WSL2 여부: !`echo ${WSL_DISTRO_NAME:-"not WSL"}`
 - SSH 여부: !`echo ${SSH_CLIENT:-"not SSH"}`
 
@@ -38,7 +40,8 @@ allowed-tools: Read, Bash, Glob, Grep, Write, Edit
 아래 패키지들의 설치 여부를 확인하고, 미설치 시 설치 안내를 제공한다:
 - `git` — 버전 관리
 - `jq` — JSON 처리 (MCP 설정 등)
-- `dos2unix` — WSL2 환경 CRLF 방지
+  - Windows 미설치 시: `scoop install jq` 또는 `choco install jq` 안내
+- `dos2unix` — WSL2 환경 CRLF 방지 (**Windows 네이티브에서는 스킵**)
 
 ### 4. 심볼릭 링크 설정
 현재 상태를 확인하고, 필요 시 생성/갱신한다:
@@ -51,6 +54,10 @@ allowed-tools: Read, Bash, Glob, Grep, Write, Edit
 - 심볼릭 링크가 이미 올바르게 연결 → 스킵
 - 일반 파일이 존재 → 백업 후 심볼릭 링크 생성
 - 없음 → 새로 생성
+
+**Windows 네이티브**: `ln -sf` 시도 → 실패 시(Developer Mode 미활성) `cp`로 fallback
+- fallback 사용 시 사용자에게 안내: "파일 복사로 대체합니다. 원본 변경 시 수동 동기화 또는 defconfig 재실행이 필요합니다."
+- 상태 파일에 `"method": "copy"` 기록 (symlink과 구분)
 
 ### 5. MCP 서버 설정
 `~/.claude/settings.json`의 MCP 서버 설정을 확인한다.

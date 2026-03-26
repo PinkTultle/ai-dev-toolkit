@@ -1,6 +1,6 @@
 # 버전 정책
 
-> My_AI_manual 지침 라이브러리의 버전 관리 정책을 정의한다.
+> ai-dev-toolkit 지침 라이브러리의 버전 관리 정책을 정의한다.
 
 ---
 
@@ -64,7 +64,7 @@ commit: docs: 표현 개선
 | `VERSION` (루트) | 현재 라이브러리 버전 (`0.1.0`) |
 | git tag | 릴리스 태그 (`v0.1.0`) |
 | `CHANGELOG.md` | 버전별 변경 이력 |
-| 프로젝트 `CLAUDE.md` 헤더 | `기반: my_ai_manual v0.1.0.0` |
+| 프로젝트 `CLAUDE.md` 헤더 | `기반: ai-dev-toolkit v0.1.0.0` |
 | `workstations/<alias>.deploy.json` | 워크스테이션별 배포 프로젝트 버전 현황 |
 
 ---

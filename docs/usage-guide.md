@@ -1,6 +1,6 @@
 # 사용 가이드
 
-이 문서는 My AI Manual의 스킬별 상세 사용법과 시나리오를 설명한다.
+이 문서는 AI Dev Toolkit의 스킬별 상세 사용법과 시나리오를 설명한다.
 기본 개요는 [README.md](../README.md)를 참조한다.
 
 ---
@@ -61,10 +61,11 @@
 ```
 
 **수행 내용**:
-1. 환경 자동 감지 (OS, WSL2/SSH/Native)
+1. 환경 자동 감지 (Windows/WSL2/SSH/Linux/macOS)
 2. 워크스테이션 별칭 설정 (예: `pink-turtle`)
-3. 필수 패키지 확인 (`git`, `jq`, `dos2unix`)
+3. 필수 패키지 확인 (`git`, `jq`, Windows에서는 `dos2unix` 스킵)
 4. 심볼릭 링크 생성: `~/.claude/CLAUDE.md` → `claude/global_CLAUDE.md`
+   - Windows: Developer Mode 미활성 시 파일 복사로 fallback
 5. MCP 서버 및 Claude Code 설정 확인
 6. 상태 파일 생성: `workstations/<alias>.json`
 
@@ -249,6 +250,16 @@ blueprints/coding-standards.md에 해당 규칙 반영
 
 가능하지만, blueprints 변경은 모든 도구의 지침에 영향을 줄 수 있다.
 프로젝트 고유 규칙은 프로젝트 `CLAUDE.md`에서 오버라이드하는 것을 권장한다.
+
+### Q: Windows에서 사용할 수 있나?
+
+가능하다. Claude Code Desktop(Windows)은 Git for Windows의 **Git Bash**를 셸로 사용하므로, bash 기반 스킬이 대부분 동작한다.
+주의사항:
+- **Git for Windows 필수** — 미설치 시 스킬이 동작하지 않음
+- **심볼릭 링크**: Windows Developer Mode 활성화 필요. 미활성 시 파일 복사로 fallback
+- **`jq`**: 별도 설치 필요 (`scoop install jq` 또는 `choco install jq`)
+- **`dos2unix`**: 불필요 (Windows 네이티브에서는 자동 스킵)
+- **클론 경로**: `~/Documents/ai-dev-toolkit` 권장
 
 ### Q: 버전이 뒤처진 프로젝트를 한꺼번에 업데이트할 수 있나?
 

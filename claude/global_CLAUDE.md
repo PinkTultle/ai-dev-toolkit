@@ -1,8 +1,8 @@
 # Claude Code 글로벌 규칙 매뉴얼
-> 모든 환경(WSL2, SSH 원격 서버)에서 일괄 적용되는 규칙입니다.
+> 모든 환경(Windows, WSL2, SSH 원격 서버)에서 일괄 적용되는 규칙입니다.
 > 위치: `~/.claude/CLAUDE.md` (심볼릭 링크 — `/ai-platform-defconfig`가 관리)
 >
-> **원본 관리**: 1~3절의 Single Source of Truth는 `My_AI_manual/blueprints/`입니다.
+> **원본 관리**: 1~3절의 Single Source of Truth는 `ai-dev-toolkit/blueprints/`입니다.
 > 이 파일은 Claude Code가 직접 읽는 배포판이므로 내용을 인라인으로 포함합니다.
 > 내용 수정 시 `blueprints/` 원본을 먼저 수정한 뒤 이 파일에 동기화하세요.
 
@@ -16,10 +16,16 @@
 
 ```
 환경 판별 우선순위:
-1. $WSL_DISTRO_NAME 존재 → WSL2 환경
-2. $SSH_CLIENT 또는 $SSH_TTY 존재 → 원격 SSH 환경
-3. 그 외 → 로컬 Linux Native
+1. uname 출력이 MINGW64_NT* 또는 MSYS_NT* → Windows 네이티브 (Git Bash)
+2. $WSL_DISTRO_NAME 존재 → WSL2 환경
+3. $SSH_CLIENT 또는 $SSH_TTY 존재 → 원격 SSH 환경
+4. 그 외 → 로컬 Linux/macOS Native
 ```
+
+### Windows 네이티브 환경 주의사항
+- Git Bash 셸 기반 — bash 명령어 대부분 동작
+- 심볼릭 링크: Developer Mode 필요, 불가 시 파일 복사 fallback
+- `dos2unix` 불필요, `jq` 미설치 시 Scoop/Chocolatey 안내
 
 ### WSL2 환경 주의사항
 - Windows 경로(`C:\...`)와 Linux 경로(`/mnt/c/...`) 혼용 금지 — 항상 Linux 경로 사용
@@ -106,7 +112,7 @@ docs/artifacts/
 ## 4. 기술 표준 참조
 
 도메인별 기술 지식은 프로젝트에 따라 선택적으로 적용한다.
-해당 프로젝트의 기술 스택에 맞는 지침은 `~/My_AI_manual/blueprints/` 디렉토리를 참조한다.
+해당 프로젝트의 기술 스택에 맞는 지침은 `~/ai-dev-toolkit/blueprints/` 디렉토리를 참조한다.
 
 | 주제 | 참조 파일 |
 |------|-----------|

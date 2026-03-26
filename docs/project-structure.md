@@ -21,7 +21,7 @@ AI가 저장소 탐색 시 오리엔테이션용으로 사용한다.
 ## 디렉토리 구조
 
 ```
-My_AI_manual/
+ai-dev-toolkit/
 ├── CLAUDE.md              ← 이 파일 (프로젝트 규칙)
 ├── README.md              # 저장소 소개 및 사용법
 ├── HANDOFF.md             # 세션 간 인수인계
