@@ -46,11 +46,12 @@
 
 ### 다음 작업 후보
 
-1. **배포 프로젝트 업데이트** — 2개 프로젝트에 v0.2.0 적용 (`/project-update`)
-2. **두 프로젝트에서 `/project-configure` 실행** — placeholder 구체화 + blueprint 마이그레이션
-3. **defconfig 재실행** — `pink-turtle` 상태 파일 생성 (현재 미생성)
-4. **실사용 피드백 수집** — v0.x.y 기간 동안 스킬/워크플로우 검증
-5. **다른 도구 지침 작성** — `cursor/`, `copilot/`, `windsurf/` (보류 중)
+1. **`/project-init` 복제 대상 확장** — CLAUDE.md 외에 docs/ 스켈레톤, .gitattributes, blueprints, 다른 도구 지침 등 추가 복제 항목 구체화 및 구현
+2. **배포 프로젝트 업데이트** — 2개 프로젝트에 v0.2.0 적용 (`/project-update`)
+3. **두 프로젝트에서 `/project-configure` 실행** — placeholder 구체화 + blueprint 마이그레이션
+4. **defconfig 재실행** — `pink-turtle` 상태 파일 생성 (현재 미생성)
+5. **실사용 피드백 수집** — v0.x.y 기간 동안 스킬/워크플로우 검증
+6. **다른 도구 지침 작성** — `cursor/`, `copilot/`, `windsurf/` (보류 중)
 
 ### 현재 저장소 구조
 
