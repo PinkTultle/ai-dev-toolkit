@@ -11,10 +11,16 @@
 
 ```
 환경 판별 우선순위:
-1. $WSL_DISTRO_NAME 존재 → WSL2 환경
-2. $SSH_CLIENT 또는 $SSH_TTY 존재 → 원격 SSH 환경
-3. 그 외 → 로컬 Linux Native
+1. uname 출력이 MINGW64_NT* 또는 MSYS_NT* → Windows 네이티브 (Git Bash)
+2. $WSL_DISTRO_NAME 존재 → WSL2 환경
+3. $SSH_CLIENT 또는 $SSH_TTY 존재 → 원격 SSH 환경
+4. 그 외 → 로컬 Linux/macOS Native
 ```
+
+**Git Bash 미감지 시** (Windows에서 `uname` 실패 또는 PowerShell/cmd 환경):
+> ⚠ Git Bash가 감지되지 않았습니다.
+> Git for Windows를 설치해 주세요: https://git-scm.com/download/win
+> 설치 후 Claude Code를 재시작하면 Git Bash가 기본 셸로 설정됩니다.
 
 ---
 
@@ -26,7 +32,18 @@
 
 ---
 
-## 3. SSH 원격 환경 주의사항
+## 3. Windows 네이티브 환경 주의사항
+
+- Claude Code Desktop은 Git for Windows의 **Git Bash**를 셸로 사용 — bash 명령어 대부분 동작
+- 심볼릭 링크: Windows Developer Mode 활성화 필요, 불가 시 **파일 복사로 fallback**
+  - 복사 fallback 시 원본 변경이 자동 반영되지 않음 — 수동 동기화 필요
+- `dos2unix` 불필요 (네이티브 Windows는 CRLF가 기본이나, Git이 `core.autocrlf`로 관리)
+- `jq` 미설치 시: Scoop(`scoop install jq`) 또는 Chocolatey(`choco install jq`) 안내
+- 경로: Git Bash가 `/c/Users/...` ↔ `C:\Users\...` 자동 변환
+
+---
+
+## 4. SSH 원격 환경 주의사항
 
 - 툴체인 경로는 절대경로 사용 (환경변수 의존 최소화)
 - 세션 종료 시 소실될 수 있는 작업은 반드시 커밋 또는 stash 후 진행

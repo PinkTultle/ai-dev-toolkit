@@ -1,4 +1,4 @@
-# My_AI_manual — 프로젝트 규칙
+# ai-dev-toolkit — 프로젝트 규칙
 > 이 파일은 Claude Code가 이 저장소에서 작업할 때 참조하는 프로젝트 규칙입니다.
 > 글로벌 규칙(`~/.claude/CLAUDE.md`)을 상속하며, 이 파일의 규칙이 우선합니다.
 
@@ -144,4 +144,4 @@ cp claude/project_CLAUDE.md <project-root>/CLAUDE.md
 
 ---
 
-*이 파일은 `My_AI_manual` 저장소 루트에 위치하며, Claude Code가 이 저장소 작업 시 자동 참조합니다.*
+*이 파일은 `ai-dev-toolkit` 저장소 루트에 위치하며, Claude Code가 이 저장소 작업 시 자동 참조합니다.*

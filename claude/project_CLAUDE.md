@@ -1,5 +1,5 @@
 # {{PROJECT_NAME}} — Claude Code 프로젝트 규칙
-> 기반: my_ai_manual v{{BASE_VERSION}}.0
+> 기반: ai-dev-toolkit v{{BASE_VERSION}}.0
 >
 > 위치: `<프로젝트 루트>/CLAUDE.md`
 > 글로벌 규칙(`~/.claude/CLAUDE.md`)을 상속하며, 이 파일에서 오버라이드/추가합니다.

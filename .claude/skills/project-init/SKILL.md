@@ -17,7 +17,7 @@ allowed-tools: Read, Bash, Glob, Grep, Write, Edit
 ### 경로 미지정 시 프로젝트 탐색
 인자 없이 실행된 경우 프로젝트 디렉토리를 탐색하여 목록을 제시한다:
 1. `~/` 하위 1~2단계 폴더를 탐색 (git 여부 무관, `~/side_project/` 등 프로젝트 디렉토리 우선)
-2. 이 저장소(`My_AI_manual`) 자신은 제외
+2. 이 저장소(`ai-dev-toolkit`) 자신은 제외
 3. 발견된 프로젝트를 번호 목록으로 제시
 4. 사용자가 번호를 선택하거나 직접 경로를 입력
 
@@ -64,7 +64,7 @@ REPO_DIR=${CLAUDE_SKILL_DIR}/../../..
    REPO_DIR=${CLAUDE_SKILL_DIR}/../../..
 
    # 치환 후 (복제본)
-   REPO_DIR=/absolute/path/to/my_ai_manual
+   REPO_DIR=/absolute/path/to/ai-dev-toolkit
    ```
 6. **버전 기록** — 배포 추적 정보를 기록한다:
    a. `VERSION` 파일을 읽어 현재 라이브러리 버전 확인

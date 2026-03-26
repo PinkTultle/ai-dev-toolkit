@@ -48,7 +48,7 @@
 ### 현재 저장소 구조
 
 ```
-My_AI_manual/
+ai-dev-toolkit/
 ├── .claude/skills/
 │   ├── ai-platform-defconfig/SKILL.md
 │   ├── project-init/SKILL.md
