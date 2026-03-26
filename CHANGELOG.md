@@ -5,6 +5,23 @@
 
 ---
 
+## [0.2.0] - 2026-03-26
+
+Windows 네이티브(Git Bash/MINGW64) 환경 지원 추가.
+
+### Added
+- **Windows 네이티브 지원**: MINGW64(Git Bash) 환경에서 전 스킬 동작 검증 완료
+- **`.gitattributes`**: `eol=lf` 강제로 Windows CRLF 혼입 방지
+- **`pink-turtle-win` 워크스테이션**: Windows 환경 상태 파일 추가
+- **`blueprints/environment.md`**: Windows(MINGW64) 환경 섹션 추가
+
+### Changed
+- 저장소명 `My_AI_manual` → `ai-dev-toolkit`으로 통일
+- 스킬/문서 내 경로 참조를 새 저장소명으로 갱신
+- `workstations/README.md` 경로 기록 규칙에 Windows 환경 고려 추가
+
+---
+
 ## [0.1.0] - 2026-03-23
 
 첫 번째 릴리스. 스킬 기반 AI 플랫폼 도구 구조 확립.
