@@ -78,16 +78,32 @@ REPO_DIR=${CLAUDE_SKILL_DIR}/../../..
   - N은 이전 답변에 따라 동적으로 조정된다
 - 관련 맥락이 있는 경우 2개까지 묶을 수 있으나, **3개 이상은 금지**
 
-## blueprints 참조 규칙
+## blueprints 마이그레이션
 
-수집된 기술 스택에 따라 이 저장소의 blueprints에서 적절한 내용을 참조한다:
+대화형 수집 과정에서 프로젝트 기술 스택이 파악되면, 관련 blueprint를 읽고 **대화를 통해 프로젝트에 맞게 마이그레이션**한다.
 
-| 조건 | 참조할 blueprint |
-|------|-----------------|
+### 관련 blueprint 판별
+
+| 조건 | blueprint |
+|------|-----------|
 | C/C++ 프로젝트 | `blueprints/coding-standards.md` |
 | 임베디드 프로젝트 | `blueprints/build-environment.md` |
 | Git 사용 | `blueprints/git-workflow.md` |
-| 모든 프로젝트 | `blueprints/base-directives.md`, `blueprints/design-principles.md` |
+| 모든 프로젝트 | `blueprints/design-principles.md` |
+
+### 마이그레이션 흐름
+
+대화 중 기술 스택이 확정되면:
+1. 관련 blueprint를 읽고 프로젝트 맥락에 맞춰 조정이 필요한 부분을 파악
+2. 대화 질문에 blueprint 내용을 자연스럽게 반영 — 예: "blueprint에 MISRA 규칙이 있는데, 이 프로젝트에도 적용할까요?"
+3. 사용자 답변을 반영하여 `docs/stack/<주제>.md`에 프로젝트 버전을 생성
+
+```markdown
+<!-- docs/stack/ 파일 헤더 -->
+# C/C++ 코딩 표준
+> 원본: my_ai_manual blueprints/coding-standards.md (v0.1.0)
+> 마이그레이션: 프로젝트 고유 네이밍 규칙 추가, MISRA 섹션 제거
+```
 
 ## 주의사항
 
