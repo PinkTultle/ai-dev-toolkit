@@ -1,0 +1,33 @@
+{
+  "$schema": "workstation-state-v1",
+  "alias": "pink-turtle-win",
+
+  "environment": {
+    "platform": "MINGW64 (Git Bash on Windows 11)",
+    "wsl_distro": null,
+    "is_ssh": false
+  },
+
+  "packages": {
+    "git": "2.46.0",
+    "jq": null,
+    "dos2unix": "7.5.2"
+  },
+
+  "symlinks": {
+    "~/.claude/CLAUDE.md": {
+      "target": "/c/Tools/ai-dev-toolkit/claude/global_CLAUDE.md",
+      "status": "ok"
+    }
+  },
+
+  "mcp_servers": [],
+
+  "claude_settings_path": "~/.claude/settings.json",
+
+  "defconfig_history": [
+    { "date": "2026-03-26", "result": "ok", "notes": "초기 세팅 (Win MINGW64). jq 미설치" }
+  ],
+
+  "last_updated": "2026-03-26"
+}
