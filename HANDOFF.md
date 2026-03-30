@@ -8,32 +8,28 @@
 
 ## 마지막 작업 요약
 
-**날짜**: 2026-03-26
-**작업 내용**: PR 리뷰/머지 워크플로우, Windows 네이티브 지원, 저장소명 통일
+**날짜**: 2026-03-30
+**작업 내용**: 로컬 main 동기화, 브랜치 정리, gitlab-slack-webhook 프로젝트 신규 배포
 **버전**: v0.2.0
 **브랜치**: `main` (작업 브랜치 모두 정리 완료)
 
 ### 이번 세션 완료 작업
 
-#### PR 리뷰 및 머지 워크플로우
-- [x] PR #1 리뷰 — 테스트 플랜 3항목 검증 (링크, 200줄, 동기화)
-- [x] CLAUDE.md 200줄 준수 — 스킬·구조 섹션을 `docs/project-structure.md`로 추출
-- [x] 200줄 규칙에 `docs/` 하위 문서 제외 명시
-- [x] GitHub Ruleset 정리 — `update`, `creation`, `deletion` 제거 (PR 머지 차단 해소)
-- [x] PR #1 squash 머지 완료
+#### 로컬 동기화 및 정리
+- [x] `origin/main`으로 fast-forward (4커밋 반영 — v0.2.0, Windows 지원, 저장소명 통일)
+- [x] `docs/usage-guide-and-conventions` 브랜치 삭제 (이미 squash merge 완료)
+- [x] `master` 브랜치 삭제 (초기 커밋 잔재)
 
-#### Windows 네이티브 지원 (PR #2)
-- [x] 환경 감지에 MINGW64_NT(Git Bash) 판별 추가
-- [x] defconfig 플랫폼 분기: `dos2unix` 스킵, 심볼릭 링크 copy fallback, `jq` 설치 안내
-- [x] Git Bash 미감지 시 Git for Windows 설치 안내
-- [x] README/usage-guide에 Windows 전제조건 + 클론 경로 분기 + FAQ
-- [x] Windows에서 `/ai-platform-defconfig` 실행 검증 완료 (`pink-turtle-win`)
-
-#### 저장소 정비
-- [x] 저장소명 `My_AI_manual` → `ai-dev-toolkit` 전체 문서 통일 (13개 파일)
-- [x] 리모트 URL 업데이트
-- [x] `master` 원격 브랜치 삭제, `main`만 유지
-- [x] v0.2.0 태그 생성
+#### gitlab-slack-webhook 프로젝트 배포
+- [x] `/project-init` 실행 — CLAUDE.md + project-configure 스킬 복제
+- [x] `/project-configure` 수동 실행 — placeholder 전체 채움
+- [x] Version 0.3.0 소스 추출 → 플랫 구조로 재구성
+- [x] `.gitignore` 생성 (config.json, __pycache__)
+- [x] `config.example.json` 템플릿 분리
+- [x] `docs/artifacts/` 구조 생성
+- [x] 브랜치 전략: `main` (배포) + `dev` (개발/테스트)
+- [x] git init → initial commit → 사내 GitLab 원격 연결 및 push 완료
+- [x] 배포 추적: `pink-turtle-rt.local.json` + `registry.md` 기록
 
 ### 현재 상태
 
@@ -41,40 +37,52 @@
 - **브랜치**: `main`만 존재 (원격/로컬 모두 정리됨)
 - **스킬**: 6개 (변경 없음)
 - **워크스테이션**: 3개 (pink-turtle, pink-turtle-rt, pink-turtle-win)
-- **배포 프로젝트**: 2개 (NDT-BPE_pork, aralm_program) — v0.1.0 기반
+- **배포 프로젝트**: 3개
+  - NDT-BPE_pork (pink-turtle, v0.1.0)
+  - aralm_program (pink-turtle, v0.1.0)
+  - **gitlab-slack-webhook** (pink-turtle-rt, v0.2.0) ← 신규
 - **Ruleset**: `pull_request` + `required_linear_history` + `non_fast_forward` (3개)
+
+### gitlab-slack-webhook 프로젝트 상태
+
+- **원격**: http://10.10.20.32/inseuk1007/gitlab-slack-webhook.git (사내 GitLab)
+- **로컬**: `~/test/web_hook_server/`
+- **브랜치**: `main` + `dev` (push 완료)
+- **소스 기반**: v0.3.0 압축 해제
+- **배포 대상**: WSL2 테스트 → 사내 Linux 서버 systemd
 
 ### 다음 작업 후보
 
-1. **`/project-init` 복제 대상 확장** — CLAUDE.md 외에 docs/ 스켈레톤, .gitattributes, blueprints, 다른 도구 지침 등 추가 복제 항목 구체화 및 구현
-2. **배포 프로젝트 업데이트** — 2개 프로젝트에 v0.2.0 적용 (`/project-update`)
+1. **gitlab-slack-webhook 개발** — dev 브랜치에서 기능 개발/테스트
+2. **기존 프로젝트 업데이트** — NDT-BPE_pork, aralm_program에 v0.2.0 적용 (`/project-update`)
 3. **두 프로젝트에서 `/project-configure` 실행** — placeholder 구체화 + blueprint 마이그레이션
-4. **defconfig 재실행** — `pink-turtle` 상태 파일 생성 (현재 미생성)
-5. **실사용 피드백 수집** — v0.x.y 기간 동안 스킬/워크플로우 검증
-6. **다른 도구 지침 작성** — `cursor/`, `copilot/`, `windsurf/` (보류 중)
+4. **`/project-init` 복제 대상 확장** — .gitattributes, docs/ 스켈레톤 등 추가 복제 항목
+5. **defconfig 재실행** — `pink-turtle` 상태 파일 생성 (현재 미생성)
+6. **실사용 피드백 수집** — v0.x.y 기간 동안 스킬/워크플로우 검증
+7. **다른 도구 지침 작성** — `cursor/`, `copilot/`, `windsurf/` (보류 중)
 
 ### 현재 저장소 구조
 
 ```
 ai-dev-toolkit/
 ├── .claude/skills/
-│   ├── ai-platform-defconfig/SKILL.md   ← Windows 분기 추가
+│   ├── ai-platform-defconfig/SKILL.md
 │   ├── project-init/SKILL.md
 │   ├── project-configure/SKILL.md
 │   ├── project-update/SKILL.md
 │   ├── project-absorb/SKILL.md
 │   └── optimize-docs/SKILL.md
 ├── blueprints/
-│   └── environment.md                   ← Windows 환경 감지 추가
 ├── claude/
 ├── docs/
-│   ├── usage-guide.md                   ← Windows FAQ 추가
-│   └── project-structure.md             ← CLAUDE.md에서 분리
+│   ├── usage-guide.md
+│   └── project-structure.md
 ├── workstations/
-│   ├── pink-turtle-win.json             ← 신규 (Windows)
-│   └── pink-turtle-rt.json
-├── .gitattributes                       ← 신규 (eol=lf)
-├── VERSION                              ← 0.2.0
+│   ├── pink-turtle-rt.json
+│   ├── pink-turtle-win.json
+│   └── registry.md              ← gitlab-slack-webhook 추가됨
+├── .gitattributes
+├── VERSION                       ← 0.2.0
 ├── CHANGELOG.md
 ├── CLAUDE.md
 ├── HANDOFF.md

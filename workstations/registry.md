@@ -18,3 +18,4 @@
 |-------------|---------|----------|-------|--------|------|
 | pink-turtle | NDT-BPE_pork | v0.1.0 | 0 | 2026-03-23 | |
 | pink-turtle | aralm_program | v0.1.0 | 0 | 2026-03-23 | update 적용 완료 |
+| pink-turtle-rt | web_hook_server | v0.2.0 | 0 | 2026-03-30 | 신규 배포 |
