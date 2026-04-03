@@ -47,6 +47,28 @@ git worktree remove ../project-feature
 
 > WSL2: worktree 경로는 반드시 `/home/` 하위 — `/mnt/c/` 경로 사용 시 성능 저하 및 심볼릭 링크 문제
 
-## 4. Git Hooks
+## 4. Git Hooks 자동화
 
-상세 hook 예시(pre-commit, commit-msg)는 `blueprints/git-workflow.md` 4~5절 참조.
+**pre-commit** (커밋 전 자동 검사):
+```bash
+#!/bin/sh
+# CRLF 라인 엔딩 감지
+if git diff --cached --check | grep -q 'CRLF'; then
+    echo "CRLF 감지. dos2unix 실행 후 재시도"; exit 1
+fi
+# 디버그 코드 감지
+if git diff --cached | grep -qE '^\+.*(printf\s*\(|DEBUG_PRINT)'; then
+    echo "디버그 출력 감지. 의도적이면 --no-verify"; exit 1
+fi
+```
+
+**commit-msg** (메시지 형식 검사):
+```bash
+#!/bin/sh
+PATTERN='^(feat|fix|refactor|docs|chore|test|perf|ci)(\(.+\))?: .{1,72}'
+if ! grep -qE "$PATTERN" "$1"; then
+    echo "형식 오류: <type>(<scope>): <subject>"; exit 1
+fi
+```
+
+상세 자동화 스크립트 패턴은 `blueprints/git-workflow.md` 5절 참조.
