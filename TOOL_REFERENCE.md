@@ -8,16 +8,20 @@
 
 | 소스 파일 | 배포 위치 | 용도 |
 |-----------|-----------|------|
-| `claude/global_CLAUDE.md` | `~/.claude/CLAUDE.md` | 글로벌 규칙 (모든 프로젝트 공통) |
+| `claude/global_CLAUDE.md` | `~/.claude/CLAUDE.md` | 글로벌 규칙 인덱스 |
+| `.claude/rules/global-*.md` | `~/.claude/rules/*.md` | 글로벌 세부 규칙 (자동 로드) |
 | `claude/project_CLAUDE.md` | `<project-root>/CLAUDE.md` | 프로젝트별 규칙 템플릿 |
+| `.claude/rules/project-*.md` | `<project>/.claude/rules/*.md` | 프로젝트 세부 규칙 (선택 복제) |
 | `.claude/skills/` | (이 저장소 내 직접 사용) | 플랫폼 스킬 |
 
 **배포 방법:**
 | 대상 | 스킬 | 수동 |
 |------|------|------|
-| 글로벌 규칙 | `/ai-platform-defconfig` | `ln -sf $(pwd)/claude/global_CLAUDE.md ~/.claude/CLAUDE.md` |
+| 글로벌 규칙 | `/ai-platform-defconfig` | 심볼릭 링크 생성 |
+| 글로벌 rules | `/ai-platform-defconfig` | `ln -sf .claude/rules/global-*.md ~/.claude/rules/` (접두사 제거) |
 | 프로젝트 규칙 | `/project-init <path>` | `cp claude/project_CLAUDE.md <project-root>/CLAUDE.md` |
-| 프로젝트 구체화 | `/project-configure` | `{{...}}` placeholder를 수동으로 채움 |
+| 프로젝트 rules | `/project-configure` | 기술 스택에 맞는 파일만 복제 |
+| 프로젝트 구체화 | `/project-configure` | `{{...}}` placeholder를 대화형으로 채움 |
 
 ---
 
@@ -60,8 +64,8 @@
 
 | 항목 | Claude Code | Cursor | Copilot | Windsurf |
 |------|-------------|--------|---------|----------|
-| 글로벌 설정 | `~/.claude/CLAUDE.md` | Settings UI | - | `~/.windsurf/rules/` |
-| 프로젝트 설정 | `CLAUDE.md` | `.cursor/rules/` | `.github/` | `.windsurf/rules/` |
+| 글로벌 설정 | `~/.claude/CLAUDE.md` + `rules/` | Settings UI | - | `~/.windsurf/rules/` |
+| 프로젝트 설정 | `CLAUDE.md` + `.claude/rules/` | `.cursor/rules/` | `.github/` | `.windsurf/rules/` |
 | 파일 형식 | Markdown | MDC | Markdown | Markdown |
-| 다중 파일 | 단일 | 다중 | 다중 | 다중 |
+| 다중 파일 | 다중 (`CLAUDE.md` + `rules/`) | 다중 | 다중 | 다중 |
 | 스킬/자동화 | `.claude/skills/` | - | - | - |

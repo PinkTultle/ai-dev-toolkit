@@ -78,7 +78,9 @@ AI 코딩 어시스턴트의 **지침 라이브러리이자 플랫폼 도구**.
 | 대상 | 스킬 | 방식 |
 |------|------|------|
 | 글로벌 규칙 (`~/.claude/CLAUDE.md`) | `/ai-platform-defconfig` | 심볼릭 링크 생성/갱신 |
+| 글로벌 rules (`~/.claude/rules/`) | `/ai-platform-defconfig` | 파일별 심볼릭 링크 (접두사 제거) |
 | 프로젝트 규칙 (`<project>/CLAUDE.md`) | `/project-init` | 템플릿 복제 |
+| 프로젝트 rules (`<project>/.claude/rules/`) | `/project-configure` | 기술 스택에 맞는 파일 선택 복제 |
 | 프로젝트 구체화 | `/project-configure` | 대화형 placeholder 채움 |
 
 ### 3.2 수동 배포 (스킬 미사용 시)

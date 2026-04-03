@@ -106,6 +106,7 @@ ai-dev-toolkit/
 ├── .claude/skills/        # 스킬 (이 저장소의 핵심 기능)
 ├── blueprints/            # 도구 무관 공유 지식 (Single Source of Truth)
 ├── claude/                # Claude Code 지침 및 템플릿
+│   └── rules/             #   세부 규칙 파일 (paths 기반 조건부 로드)
 ├── docs/                  # 사용 가이드 및 산출물
 ├── workstations/          # 워크스테이션 환경 상태 + 배포 추적
 ├── cursor/                # Cursor (추후 확장)
@@ -117,6 +118,7 @@ ai-dev-toolkit/
 ```
 
 - **`blueprints/`** — 코딩 표준, Git 워크플로우, 설계 원칙 등 모든 도구가 참조하는 공통 지식
+- **`.claude/rules/`** — blueprints를 Claude Code `paths` frontmatter 형태로 변환한 세부 규칙
 - **도구별 디렉토리** — blueprints를 해당 도구 형식에 맞게 변환한 지침
 
 ---
@@ -125,7 +127,7 @@ ai-dev-toolkit/
 
 | 도구 | 상태 | 글로벌 설정 | 프로젝트 설정 |
 |------|------|------------|--------------|
-| Claude Code | **활성** | `~/.claude/CLAUDE.md` | `CLAUDE.md` |
+| Claude Code | **활성** | `~/.claude/CLAUDE.md` + `rules/` | `CLAUDE.md` + `.claude/rules/` |
 | Cursor | 예정 | Settings UI | `.cursor/rules/` |
 | GitHub Copilot | 예정 | — | `.github/` |
 | Windsurf | 예정 | `~/.windsurf/rules/` | `.windsurf/rules/` |

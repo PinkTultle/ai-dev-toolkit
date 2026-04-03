@@ -64,7 +64,9 @@
 1. 환경 자동 감지 (Windows/WSL2/SSH/Linux/macOS)
 2. 워크스테이션 별칭 설정 (예: `pink-turtle`)
 3. 필수 패키지 확인 (`git`, `jq`, Windows에서는 `dos2unix` 스킵)
-4. 심볼릭 링크 생성: `~/.claude/CLAUDE.md` → `claude/global_CLAUDE.md`
+4. 심볼릭 링크 생성:
+   - `~/.claude/CLAUDE.md` → `claude/global_CLAUDE.md`
+   - `~/.claude/rules/*.md` → `.claude/rules/global-*.md` (접두사 제거)
    - Windows: Developer Mode 미활성 시 파일 복사로 fallback
 5. MCP 서버 및 Claude Code 설정 확인
 6. 상태 파일 생성: `workstations/<alias>.json`
@@ -78,6 +80,10 @@
 **수동 대체**:
 ```bash
 ln -sf $(pwd)/claude/global_CLAUDE.md ~/.claude/CLAUDE.md
+mkdir -p ~/.claude/rules
+for f in .claude/rules/global-*.md; do
+  ln -sf $(realpath "$f") ~/.claude/rules/${f#.claude/rules/global-}
+done
 ```
 
 ---
@@ -140,8 +146,9 @@ AI: Git 브랜치 전략은?
 1. 현재 프로젝트 코드 자동 분석 (언어, 구조 감지)
 2. 대화형으로 기술 스택, 모듈 구조, 컨벤션 수집
 3. 기술 스택 확정 시 관련 blueprint를 읽고, 대화를 통해 프로젝트에 맞게 마이그레이션
-4. 구성 플랜 작성 → 사용자 검토
-5. 승인 후 placeholder를 실제 값으로 치환 + `docs/stack/`에 마이그레이션된 지침 생성
+4. 기술 스택에 맞는 프로젝트 rules 선택 복제 → `.claude/rules/`에 배포
+5. 구성 플랜 작성 → 사용자 검토
+6. 승인 후 placeholder를 실제 값으로 치환 + `docs/stack/`에 마이그레이션된 지침 생성
 
 **blueprint 마이그레이션**: 대화 과정에서 자연스럽게 진행된다.
 blueprint의 각 항목을 프로젝트 맥락에 비추어 질문하고, 답변을 반영하여 프로젝트 버전을 생성한다.
@@ -245,6 +252,12 @@ blueprints/coding-standards.md에 해당 규칙 반영
 
 가능하다. 각 워크스테이션에서 클론 후 `/ai-platform-defconfig`를 실행하면 된다.
 워크스테이션별 상태는 `workstations/<alias>.json`으로 독립 관리된다.
+
+### Q: rules 파일과 CLAUDE.md의 관계는?
+
+`CLAUDE.md`는 글로벌 인덱스 역할이고, 세부 규칙은 `.claude/rules/*.md`에 분산되어 자동 로드된다.
+rules 파일은 `paths` frontmatter로 특정 파일(예: C/C++)에서만 로드할 수 있어 컨텍스트를 절약한다.
+blueprints가 도구 무관 원본이고, rules는 Claude Code 전용 파생물이다.
 
 ### Q: blueprints를 직접 수정해도 되나?
 

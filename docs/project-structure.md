@@ -31,6 +31,9 @@ ai-dev-toolkit/
 ├── CHANGELOG.md           # 버전별 변경 이력
 │
 ├── .claude/
+│   ├── rules/             # ▼ 세부 규칙 파일 (Claude Code 자동 로드)
+│   │   ├── global-*.md    #     글로벌 rules (defconfig이 ~/.claude/rules/에 배포)
+│   │   └── project-*.md   #     프로젝트 rules 템플릿 (project-configure가 선택 복제)
 │   ├── skills/            # ▼ 스킬 (이 저장소의 핵심 기능)
 │   │   ├── ai-platform-defconfig/SKILL.md
 │   │   ├── project-init/SKILL.md
@@ -54,7 +57,7 @@ ai-dev-toolkit/
 │   └── README.md
 │
 ├── claude/                # ▼ Claude Code 도구별 지침
-│   ├── global_CLAUDE.md   #   글로벌 규칙 (defconfig가 심볼릭 링크 관리)
+│   ├── global_CLAUDE.md   #   글로벌 규칙 인덱스 (defconfig가 심볼릭 링크 관리)
 │   ├── project_CLAUDE.md  #   프로젝트 규칙 템플릿 (project-init이 복제)
 │   └── README.md
 ├── workstations/          # ▼ 워크스테이션별 환경 상태 + 배포 추적
@@ -76,4 +79,5 @@ ai-dev-toolkit/
 - `project-configure` 스킬이 프로젝트 특성에 맞는 blueprint를 선택하여 적용
 
 **도구별 디렉토리** — blueprints를 도구 형식에 맞게 변환한 배포판
-- `claude/global_CLAUDE.md`는 blueprints 1~3절을 인라인 포함
+- `claude/global_CLAUDE.md`는 rules 인덱스 + 기술 표준 참조 테이블
+- `.claude/rules/`는 blueprints를 Claude Code `paths` frontmatter 포함 형태로 변환한 파생물

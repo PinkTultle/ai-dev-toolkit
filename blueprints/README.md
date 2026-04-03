@@ -16,12 +16,12 @@
 ## 사용 방식
 
 ### 도구별 지침에서 참조
-- `claude/global_CLAUDE.md`는 1~3절 내용을 인라인 포함
-- 4절(기술 표준)은 경로 참조 방식으로 사용
+- `.claude/rules/` 파일은 blueprints를 Claude Code 형식(`paths` frontmatter)으로 변환한 파생물
+- `claude/global_CLAUDE.md`는 rules 인덱스 + 기술 표준 참조 테이블
 
 ### 스킬에서 참조
-- `/project-configure` 스킬이 프로젝트 기술 스택에 맞는 blueprint를 선택하여 적용
-- `/ai-platform-defconfig`는 `environment.md`의 환경 감지 기준을 활용
+- `/project-configure` 스킬이 프로젝트 기술 스택에 맞는 blueprint를 선택하여 rules + `docs/stack/`에 적용
+- `/ai-platform-defconfig`는 `environment.md`의 환경 감지 기준을 활용 + 글로벌 rules 배포
 
 ## 새 blueprint 추가
 
@@ -46,5 +46,6 @@
 ## 수정 규칙
 
 이 디렉토리의 파일은 **모든 도구의 지침에 영향**을 준다.
-- 수정 후 `claude/global_CLAUDE.md`에 동기화 필요 (1~3절 인라인 포함분)
+- 수정 후 `.claude/rules/` 파생 파일에 동기화 필요 (글로벌 rules 4개 + 프로젝트 rules 3개)
+- `global_CLAUDE.md`는 인덱스만 포함하므로 별도 동기화 불필요
 - 향후 다른 도구 지침이 추가되면 해당 도구에도 동기화
