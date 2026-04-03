@@ -15,7 +15,7 @@
 | **1. 아이디어 구체화** | `ideation/` | 목적·범위·제약조건을 사용자와 1문 1답으로 명확화 |
 | **2. 설계** | `design/` | 접근 방식, 트레이드오프, 대안, 영향 범위 문서화 |
 | **3. 설계 검토** | `review/` | 사용자 피드백 → 수정 → 재검토 반복, 승인 기록 |
-| **4. 구현** | (코드) | 확정된 설계에 따라 구현 |
+| **4. 구현** | `implementation/` + 코드 | 확정된 설계에 따라 구현, 구현 로그 기록 |
 | **5. 검증** | `summary/` | 설계 의도 대비 구현 결과 확인, 기술 부채 명시 |
 | **6. 테스트** | `test-report/` | 빌드·단위·통합 테스트 실행 및 결과 보고 |
 
@@ -52,7 +52,8 @@
     │   ├── ideation/           ← 단계 1: 아이디어 구체화
     │   ├── design/             ← 단계 2: 설계 계획서
     │   ├── review/             ← 단계 3: 설계 검토 기록
-    │   ├── summary/            ← 단계 5: 구현 요약
+    │   ├── implementation/     ← 단계 4: 구현 로그
+    │   ├── summary/            ← 단계 5: 구현 검증
     │   └── test-report/        ← 단계 6: 테스트 결과
     └── stack/                  ← 기술 스택별 지침 (누적)
 ```
@@ -131,7 +132,7 @@ docs/source/          ← 소스 트리와 동일한 구조
 | 아이디어 구체화 | Explore | sonnet | - | ideation/ — 목적, 범위, 제약조건 |
 | 설계 | Plan | **opus** | - | design/ — 접근 방식, 트레이드오프, 대안 |
 | 설계 검토 | Plan | **opus** | - | review/ — 피드백 이력, 승인 기록 |
-| 구현 | general-purpose | **opus** | **worktree** | (코드) |
+| 구현 | general-purpose | **opus** | **worktree** | implementation/ + 코드 |
 | 검증 | Explore | sonnet | - | summary/ — 설계 대비 구현 비교, 한계/개선점 |
 | 테스트 | general-purpose | sonnet | - | test-report/ — 실행 결과, 실패 분석 |
 

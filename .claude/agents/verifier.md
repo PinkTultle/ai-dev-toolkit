@@ -21,6 +21,7 @@ tools:
 # 입력
 
 - `docs/artifacts/design/<번호>.<작업명>.md` (설계 의도)
+- `docs/artifacts/implementation/<번호>.<작업명>.md` (구현 로그)
 - 구현된 코드 (git diff 또는 변경 파일 목록)
 - `.claude/rules/` (품질 기준)
 

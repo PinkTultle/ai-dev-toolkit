@@ -30,6 +30,7 @@ docs/artifacts/
 ├── ideation/        ← 단계 1
 ├── design/          ← 단계 2
 ├── review/          ← 단계 3
+├── implementation/  ← 단계 4
 ├── summary/         ← 단계 5
 └── test-report/     ← 단계 6
 ```
@@ -57,7 +58,7 @@ docs/artifacts/
 | 아이디어 구체화 | Explore | sonnet | - | ideation/ |
 | 설계 | Plan | **opus** | - | design/ |
 | 설계 검토 | Plan | **opus** | - | review/ |
-| 구현 | general-purpose | **opus** | **worktree** | (코드) |
+| 구현 | general-purpose | **opus** | **worktree** | implementation/ + 코드 |
 | 검증 | Explore | sonnet | - | summary/ |
 | 테스트 | general-purpose | sonnet | - | test-report/ |
 
