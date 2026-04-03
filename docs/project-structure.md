@@ -31,6 +31,13 @@ ai-dev-toolkit/
 ├── CHANGELOG.md           # 버전별 변경 이력
 │
 ├── .claude/
+│   ├── agents/            # ▼ 단계별 서브에이전트 정의
+│   │   ├── ideation.md    #     1단계: 아이디어 구체화 (sonnet)
+│   │   ├── designer.md    #     2단계: 설계 (opus)
+│   │   ├── reviewer.md    #     3단계: 설계 검토 (opus)
+│   │   ├── implementer.md #     4단계: 구현 (opus, worktree)
+│   │   ├── verifier.md    #     5단계: 검증 (sonnet)
+│   │   └── tester.md      #     6단계: 테스트 (sonnet)
 │   ├── rules/             # ▼ 세부 규칙 파일 (Claude Code 자동 로드)
 │   │   ├── global-*.md    #     글로벌 rules (defconfig이 ~/.claude/rules/에 배포)
 │   │   └── project-*.md   #     프로젝트 rules 템플릿 (project-configure가 선택 복제)
