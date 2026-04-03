@@ -8,81 +8,83 @@
 
 ## 마지막 작업 요약
 
-**날짜**: 2026-03-30
-**작업 내용**: 로컬 main 동기화, 브랜치 정리, gitlab-slack-webhook 프로젝트 신규 배포
-**버전**: v0.2.0
-**브랜치**: `main` (작업 브랜치 모두 정리 완료)
+**날짜**: 2026-04-03
+**작업 내용**: `.claude/rules/` 디렉토리 도입 — blueprints 기반 세부 규칙 파일 분리
+**버전**: v0.2.0 (버전 갱신 미실행 — 다음 릴리즈 시 v0.3.0 예정)
+**브랜치**: `main` (PR #3 squash merge 완료, `feat/claude-rules` 삭제됨)
 
 ### 이번 세션 완료 작업
 
-#### 로컬 동기화 및 정리
-- [x] `origin/main`으로 fast-forward (4커밋 반영 — v0.2.0, Windows 지원, 저장소명 통일)
-- [x] `docs/usage-guide-and-conventions` 브랜치 삭제 (이미 squash merge 완료)
-- [x] `master` 브랜치 삭제 (초기 커밋 잔재)
+#### .claude/rules/ 도입 (PR #3)
+- [x] `.claude/rules/` 디렉토리 신설 — 7개 rule 파일 + README
+  - 글로벌 rules 4개: environment, communication, workflow, code-review
+  - 프로젝트 rules 템플릿 3개: coding-standards, git-workflow, build-environment
+  - `paths` frontmatter로 C/C++ 파일, 빌드 파일에서만 조건부 로드
+- [x] `global_CLAUDE.md` 경량화 (143줄 → 41줄) — 인덱스 + 참조 테이블만 잔존
+- [x] 스킬 3개 갱신
+  - `ai-platform-defconfig` — rules 심볼릭 링크 배포 추가
+  - `project-configure` — rules 배포 섹션 + 역할 분리 추가
+  - `project-update` — rules 변경 감지 추가
+- [x] `.gitignore` 개선 — `.claude/*` 전체 무시 → 로컬 전용만 명시적 제외
+- [x] 문서 7개 갱신 (TOOL_REFERENCE, README, usage-guide 등)
 
-#### gitlab-slack-webhook 프로젝트 배포
-- [x] `/project-init` 실행 — CLAUDE.md + project-configure 스킬 복제
-- [x] `/project-configure` 수동 실행 — placeholder 전체 채움
-- [x] Version 0.3.0 소스 추출 → 플랫 구조로 재구성
-- [x] `.gitignore` 생성 (config.json, __pycache__)
-- [x] `config.example.json` 템플릿 분리
-- [x] `docs/artifacts/` 구조 생성
-- [x] 브랜치 전략: `main` (배포) + `dev` (개발/테스트)
-- [x] git init → initial commit → 사내 GitLab 원격 연결 및 push 완료
-- [x] 배포 추적: `pink-turtle-rt.local.json` + `registry.md` 기록
+#### 환경 설정
+- [x] `gh auth login` — GitHub CLI 인증 (WSL2 브라우저 인증)
+- [x] `~/.bashrc`에 `GH_TOKEN` 환경변수 추가 (keyring 불안정 대비)
 
 ### 현재 상태
 
-- **버전**: v0.2.0
-- **브랜치**: `main`만 존재 (원격/로컬 모두 정리됨)
-- **스킬**: 6개 (변경 없음)
-- **워크스테이션**: 3개 (pink-turtle, pink-turtle-rt, pink-turtle-win)
-- **배포 프로젝트**: 3개
+- **버전**: v0.2.0 (다음 릴리즈 시 v0.3.0 — rules 도입은 Minor 변경)
+- **브랜치**: `main`만 존재
+- **스킬**: 6개 (변경 없음, 내용만 갱신)
+- **워크스테이션**: 3개 (변경 없음)
+- **배포 프로젝트**: 3개 (변경 없음)
   - NDT-BPE_pork (pink-turtle, v0.1.0)
   - aralm_program (pink-turtle, v0.1.0)
-  - **gitlab-slack-webhook** (pink-turtle-rt, v0.2.0) ← 신규
+  - gitlab-slack-webhook (pink-turtle-rt, v0.2.0)
 - **Ruleset**: `pull_request` + `required_linear_history` + `non_fast_forward` (3개)
 
-### gitlab-slack-webhook 프로젝트 상태
+### 주의사항
 
-- **원격**: http://10.10.20.32/inseuk1007/gitlab-slack-webhook.git (사내 GitLab)
-- **로컬**: `~/test/web_hook_server/`
-- **브랜치**: `main` + `dev` (push 완료)
-- **소스 기반**: v0.3.0 압축 해제
-- **배포 대상**: WSL2 테스트 → 사내 Linux 서버 systemd
+- `~/.claude/rules/`에 심볼릭 링크가 아직 생성되지 않음 — `/ai-platform-defconfig` 재실행 필요
+- `GH_TOKEN`의 `gho_` 토큰은 OAuth 디바이스 플로우 토큰으로 만료될 수 있음
+  - 만료 시 GitHub Settings > Tokens에서 PAT(`ghp_`) 발급 후 `~/.bashrc` 교체
 
 ### 다음 작업 후보
 
-1. **gitlab-slack-webhook 개발** — dev 브랜치에서 기능 개발/테스트
-2. **기존 프로젝트 업데이트** — NDT-BPE_pork, aralm_program에 v0.2.0 적용 (`/project-update`)
-3. **두 프로젝트에서 `/project-configure` 실행** — placeholder 구체화 + blueprint 마이그레이션
-4. **`/project-init` 복제 대상 확장** — .gitattributes, docs/ 스켈레톤 등 추가 복제 항목
-5. **defconfig 재실행** — `pink-turtle` 상태 파일 생성 (현재 미생성)
-6. **실사용 피드백 수집** — v0.x.y 기간 동안 스킬/워크플로우 검증
+1. **defconfig 재실행** — `~/.claude/rules/` 심볼릭 링크 생성 (rules 실배포)
+2. **버전 릴리즈** — v0.3.0 (rules 도입, CHANGELOG 갱신, git tag)
+3. **기존 프로젝트 업데이트** — NDT-BPE_pork, aralm_program에 v0.3.0 적용 (`/project-update`)
+4. **두 프로젝트에서 `/project-configure` 실행** — rules 복제 + placeholder 구체화
+5. **gitlab-slack-webhook 개발** — dev 브랜치에서 기능 개발/테스트
+6. **실사용 피드백 수집** — rules 구조가 실제 작업에서 잘 동작하는지 검증
 7. **다른 도구 지침 작성** — `cursor/`, `copilot/`, `windsurf/` (보류 중)
 
 ### 현재 저장소 구조
 
 ```
 ai-dev-toolkit/
-├── .claude/skills/
-│   ├── ai-platform-defconfig/SKILL.md
-│   ├── project-init/SKILL.md
-│   ├── project-configure/SKILL.md
-│   ├── project-update/SKILL.md
-│   ├── project-absorb/SKILL.md
-│   └── optimize-docs/SKILL.md
+├── .claude/
+│   ├── rules/                          ← 신규: 세부 규칙 파일
+│   │   ├── global-environment.md       #   환경 감지 (항상 로드)
+│   │   ├── global-communication.md     #   응답 언어 (항상 로드)
+│   │   ├── global-workflow.md          #   워크플로우 (항상 로드)
+│   │   ├── global-code-review.md       #   코드 리뷰 (C/C++ 파일만)
+│   │   ├── project-coding-standards.md #   C/C++ 표준 템플릿
+│   │   ├── project-git-workflow.md     #   Git 규칙 템플릿
+│   │   ├── project-build-environment.md#   빌드 환경 템플릿
+│   │   └── README.md
+│   └── skills/ (6개, 내용 갱신됨)
 ├── blueprints/
 ├── claude/
+│   ├── global_CLAUDE.md                ← 경량화: 인덱스만 (41줄)
+│   ├── project_CLAUDE.md
+│   └── README.md
 ├── docs/
-│   ├── usage-guide.md
-│   └── project-structure.md
 ├── workstations/
-│   ├── pink-turtle-rt.json
-│   ├── pink-turtle-win.json
-│   └── registry.md              ← gitlab-slack-webhook 추가됨
 ├── .gitattributes
-├── VERSION                       ← 0.2.0
+├── .gitignore                          ← 개선: 로컬 전용만 제외
+├── VERSION                             ← 0.2.0
 ├── CHANGELOG.md
 ├── CLAUDE.md
 ├── HANDOFF.md
