@@ -9,87 +9,104 @@
 ## 마지막 작업 요약
 
 **날짜**: 2026-04-03
-**작업 내용**: `.claude/rules/` 디렉토리 도입 — blueprints 기반 세부 규칙 파일 분리
-**버전**: v0.2.0 (버전 갱신 미실행 — 다음 릴리즈 시 v0.3.0 예정)
-**브랜치**: `main` (PR #3 squash merge 완료, `feat/claude-rules` 삭제됨)
+**작업 내용**: rules 도입 + 서브에이전트 파이프라인 구축 + defconfig 재실행
+**버전**: v0.2.0 (다음 릴리즈 시 v0.3.0 예정)
+**브랜치**: `main`
 
 ### 이번 세션 완료 작업
 
 #### .claude/rules/ 도입 (PR #3)
 - [x] `.claude/rules/` 디렉토리 신설 — 7개 rule 파일 + README
-  - 글로벌 rules 4개: environment, communication, workflow, code-review
-  - 프로젝트 rules 템플릿 3개: coding-standards, git-workflow, build-environment
+  - 글로벌 4개: environment, communication, workflow, code-review
+  - 프로젝트 템플릿 3개: coding-standards, git-workflow, build-environment
   - `paths` frontmatter로 C/C++ 파일, 빌드 파일에서만 조건부 로드
-- [x] `global_CLAUDE.md` 경량화 (143줄 → 41줄) — 인덱스 + 참조 테이블만 잔존
-- [x] 스킬 3개 갱신
-  - `ai-platform-defconfig` — rules 심볼릭 링크 배포 추가
-  - `project-configure` — rules 배포 섹션 + 역할 분리 추가
-  - `project-update` — rules 변경 감지 추가
-- [x] `.gitignore` 개선 — `.claude/*` 전체 무시 → 로컬 전용만 명시적 제외
-- [x] 문서 7개 갱신 (TOOL_REFERENCE, README, usage-guide 등)
+- [x] `global_CLAUDE.md` 경량화 (143줄 → 41줄) — 인덱스 + 참조 테이블
+- [x] 스킬 3개 갱신 (defconfig, project-configure, project-update)
+- [x] `.gitignore` 개선 — 로컬 전용만 명시적 제외
+- [x] 문서 7개 갱신 + rules 자기검토 보완 (Git Hooks 추가, code-review 제목 정정)
+
+#### 서브에이전트 파이프라인 (PR #4, #5)
+- [x] `blueprints/design-principles.md` 확장 — 단계별 에이전트 구성표, 팀 패턴, 품질 루프
+- [x] `.claude/agents/` 디렉토리 신설 — 6개 에이전트 정의
+  - ideation (sonnet): 요구사항 분석, 범위/제약조건 명확화
+  - designer (opus): 접근 방식 설계, 트레이드오프 분석
+  - reviewer (opus): 설계 검토, 품질 루프 검토자
+  - implementer (opus): 코드 구현 + 구현 로그, worktree 격리
+  - verifier (sonnet): 설계 대비 구현 검증
+  - tester (sonnet): 빌드/단위/통합/회귀 테스트
+- [x] `docs/artifacts/implementation/` 추가 — 구현 단계 산출물
 
 #### 환경 설정
-- [x] `gh auth login` — GitHub CLI 인증 (WSL2 브라우저 인증)
-- [x] `~/.bashrc`에 `GH_TOKEN` 환경변수 추가 (keyring 불안정 대비)
+- [x] `gh auth login` + `~/.bashrc`에 `GH_TOKEN` (파일 참조 방식)
+- [x] `/ai-platform-defconfig` 재실행 — `~/.claude/rules/` 심볼릭 링크 배포
+- [x] `workstations/pink-turtle.json` 생성
+- [x] 컨텍스트 사용량 프로그레스 바 설정 (`~/.claude/statusline-command.sh`)
 
 ### 현재 상태
 
-- **버전**: v0.2.0 (다음 릴리즈 시 v0.3.0 — rules 도입은 Minor 변경)
+- **버전**: v0.2.0
 - **브랜치**: `main`만 존재
-- **스킬**: 6개 (변경 없음, 내용만 갱신)
-- **워크스테이션**: 3개 (변경 없음)
+- **스킬**: 6개
+- **에이전트**: 6개 (신규)
+- **Rules**: 글로벌 4개 + 프로젝트 3개, `~/.claude/rules/` 배포 완료
+- **워크스테이션**: 3개 (pink-turtle에 rules 배포됨)
 - **배포 프로젝트**: 3개 (변경 없음)
-  - NDT-BPE_pork (pink-turtle, v0.1.0)
-  - aralm_program (pink-turtle, v0.1.0)
-  - gitlab-slack-webhook (pink-turtle-rt, v0.2.0)
-- **Ruleset**: `pull_request` + `required_linear_history` + `non_fast_forward` (3개)
 
 ### 주의사항
 
-- `~/.claude/rules/`에 심볼릭 링크가 아직 생성되지 않음 — `/ai-platform-defconfig` 재실행 필요
-- `GH_TOKEN`의 `gho_` 토큰은 OAuth 디바이스 플로우 토큰으로 만료될 수 있음
-  - 만료 시 GitHub Settings > Tokens에서 PAT(`ghp_`) 발급 후 `~/.bashrc` 교체
+- `GH_TOKEN`의 `gho_` 토큰은 만료 가능 — 만료 시 PAT(`ghp_`) 발급 후 `~/.config/gh/token` 교체
+- pink-turtle-rt, pink-turtle-win에는 아직 rules 미배포 — defconfig 재실행 필요
+- 에이전트는 정의만 완료, 파이프라인 오케스트레이션 스킬은 미구현
 
 ### 다음 작업 후보
 
-1. **defconfig 재실행** — `~/.claude/rules/` 심볼릭 링크 생성 (rules 실배포)
-2. **버전 릴리즈** — v0.3.0 (rules 도입, CHANGELOG 갱신, git tag)
-3. **기존 프로젝트 업데이트** — NDT-BPE_pork, aralm_program에 v0.3.0 적용 (`/project-update`)
-4. **두 프로젝트에서 `/project-configure` 실행** — rules 복제 + placeholder 구체화
-5. **gitlab-slack-webhook 개발** — dev 브랜치에서 기능 개발/테스트
-6. **실사용 피드백 수집** — rules 구조가 실제 작업에서 잘 동작하는지 검증
-7. **다른 도구 지침 작성** — `cursor/`, `copilot/`, `windsurf/` (보류 중)
+1. **파이프라인 오케스트레이터 스킬** — 에이전트를 순차 실행하는 스킬 구현
+2. **버전 릴리즈** — v0.3.0 (rules + agents 도입, CHANGELOG, git tag)
+3. **실사용 테스트** — 실제 프로젝트에서 에이전트 파이프라인 실행 검증
+4. **에이전트 팀 구성** — Large 프리셋용 팀 템플릿 (`.claude/teams/`)
+5. **기존 프로젝트 업데이트** — NDT-BPE_pork, aralm_program에 v0.3.0 적용
+6. **다른 워크스테이션 defconfig** — pink-turtle-rt, pink-turtle-win에 rules 배포
+7. **다른 도구 지침** — cursor/, copilot/, windsurf/ (보류)
 
 ### 현재 저장소 구조
 
 ```
 ai-dev-toolkit/
 ├── .claude/
-│   ├── rules/                          ← 신규: 세부 규칙 파일
-│   │   ├── global-environment.md       #   환경 감지 (항상 로드)
-│   │   ├── global-communication.md     #   응답 언어 (항상 로드)
-│   │   ├── global-workflow.md          #   워크플로우 (항상 로드)
-│   │   ├── global-code-review.md       #   코드 리뷰 (C/C++ 파일만)
-│   │   ├── project-coding-standards.md #   C/C++ 표준 템플릿
-│   │   ├── project-git-workflow.md     #   Git 규칙 템플릿
-│   │   ├── project-build-environment.md#   빌드 환경 템플릿
+│   ├── agents/                         ← 신규: 단계별 서브에이전트
+│   │   ├── ideation.md                 #   1단계 (sonnet)
+│   │   ├── designer.md                 #   2단계 (opus)
+│   │   ├── reviewer.md                 #   3단계 (opus)
+│   │   ├── implementer.md              #   4단계 (opus, worktree)
+│   │   ├── verifier.md                 #   5단계 (sonnet)
+│   │   └── tester.md                   #   6단계 (sonnet)
+│   ├── rules/                          ← 세부 규칙 파일
+│   │   ├── global-*.md (4개)           #   글로벌 rules
+│   │   ├── project-*.md (3개)          #   프로젝트 rules 템플릿
 │   │   └── README.md
-│   └── skills/ (6개, 내용 갱신됨)
-├── blueprints/
+│   └── skills/ (6개)
+├── blueprints/                         ← 서브에이전트 구성표/팀/루프 추가됨
 ├── claude/
-│   ├── global_CLAUDE.md                ← 경량화: 인덱스만 (41줄)
+│   ├── global_CLAUDE.md                ← 인덱스 (41줄)
 │   ├── project_CLAUDE.md
 │   └── README.md
 ├── docs/
 ├── workstations/
-├── .gitattributes
-├── .gitignore                          ← 개선: 로컬 전용만 제외
+│   └── pink-turtle.json                ← 신규: rules 배포 이력 포함
 ├── VERSION                             ← 0.2.0
-├── CHANGELOG.md
-├── CLAUDE.md
-├── HANDOFF.md
-├── README.md
-└── TOOL_REFERENCE.md
+└── ...
+```
+
+### 산출물 디렉토리 (프로젝트 표준)
+
+```
+docs/artifacts/
+├── ideation/        ← ideation agent
+├── design/          ← designer agent
+├── review/          ← reviewer agent
+├── implementation/  ← implementer agent
+├── summary/         ← verifier agent
+└── test-report/     ← tester agent
 ```
 
 ---
