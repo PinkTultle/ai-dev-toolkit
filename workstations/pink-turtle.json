@@ -1,0 +1,55 @@
+{
+  "$schema": "workstation-state-v1",
+  "alias": "pink-turtle",
+
+  "environment": {
+    "platform": "WSL2",
+    "wsl_distro": "Ubuntu-20.04",
+    "is_ssh": false
+  },
+
+  "packages": {
+    "git": "2.25.1",
+    "jq": "1.6",
+    "dos2unix": "7.4.0"
+  },
+
+  "symlinks": {
+    "~/.claude/CLAUDE.md": {
+      "target": "~/my_ai_manual/claude/global_CLAUDE.md",
+      "status": "ok",
+      "method": "symlink"
+    },
+    "~/.claude/rules/environment.md": {
+      "target": "~/my_ai_manual/.claude/rules/global-environment.md",
+      "status": "ok",
+      "method": "symlink"
+    },
+    "~/.claude/rules/communication.md": {
+      "target": "~/my_ai_manual/.claude/rules/global-communication.md",
+      "status": "ok",
+      "method": "symlink"
+    },
+    "~/.claude/rules/workflow.md": {
+      "target": "~/my_ai_manual/.claude/rules/global-workflow.md",
+      "status": "ok",
+      "method": "symlink"
+    },
+    "~/.claude/rules/code-review.md": {
+      "target": "~/my_ai_manual/.claude/rules/global-code-review.md",
+      "status": "ok",
+      "method": "symlink"
+    }
+  },
+
+  "mcp_servers": [],
+
+  "claude_settings_path": "~/.claude/settings.json",
+
+  "defconfig_history": [
+    { "date": "2026-03-23", "result": "ok", "notes": "초기 세팅" },
+    { "date": "2026-04-03", "result": "ok", "notes": "rules 심볼릭 링크 추가 (4개)" }
+  ],
+
+  "last_updated": "2026-04-03"
+}
