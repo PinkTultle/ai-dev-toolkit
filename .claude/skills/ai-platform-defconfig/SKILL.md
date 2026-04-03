@@ -48,7 +48,16 @@ allowed-tools: Read, Bash, Glob, Grep, Write, Edit
 
 | 소스 (이 저장소) | 타겟 | 용도 |
 |-----------------|------|------|
-| `claude/global_CLAUDE.md` | `~/.claude/CLAUDE.md` | Claude Code 글로벌 규칙 |
+| `claude/global_CLAUDE.md` | `~/.claude/CLAUDE.md` | Claude Code 글로벌 규칙 (인덱스) |
+| `.claude/rules/global-environment.md` | `~/.claude/rules/environment.md` | 환경 감지 규칙 |
+| `.claude/rules/global-communication.md` | `~/.claude/rules/communication.md` | 커뮤니케이션 규칙 |
+| `.claude/rules/global-workflow.md` | `~/.claude/rules/workflow.md` | 워크플로우 규칙 |
+| `.claude/rules/global-code-review.md` | `~/.claude/rules/code-review.md` | 코드 리뷰 기준 |
+
+rules 배포 절차:
+1. `~/.claude/rules/` 디렉토리가 없으면 `mkdir -p ~/.claude/rules/`
+2. `.claude/rules/global-*.md` 파일을 순회하며 각각 심볼릭 링크 생성
+3. 배포 파일명에서 `global-` 접두사를 제거 (예: `global-environment.md` → `environment.md`)
 
 심볼릭 링크 생성 전 타겟 파일이 이미 존재하는지 확인한다:
 - 심볼릭 링크가 이미 올바르게 연결 → 스킵

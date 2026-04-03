@@ -51,6 +51,7 @@ REPO_DIR=${CLAUDE_SKILL_DIR}/../../..
 1. `git diff v<기반버전>..HEAD` 로 변경된 파일 목록 확인
 2. 프로젝트에 영향 있는 변경만 필터링:
    - `claude/project_CLAUDE.md` 변경 → 프로젝트 CLAUDE.md에 반영
+   - `.claude/rules/project-*.md` 변경 → 프로젝트 `.claude/rules/`에 반영
    - `blueprints/` 변경 → 프로젝트에 해당 blueprint 참조가 있으면 안내
    - `.claude/skills/project-configure/` 변경 → 프로젝트의 복제본 갱신
 3. 변경 요약을 사용자에게 제시
@@ -61,6 +62,11 @@ REPO_DIR=${CLAUDE_SKILL_DIR}/../../..
 - **자동 병합** — 템플릿 골격만 갱신, 커스텀 섹션 보존 (추천)
 - **수동 검토** — 변경 항목을 하나씩 보여주고 적용 여부를 1문 1답으로 결정
 - **스킵** — 이번 업데이트에서 제외
+
+프로젝트 `.claude/rules/*.md`에 대해:
+- 프로젝트에 해당 rules 파일이 존재하는 경우만 갱신 대상
+- 프로젝트가 커스터마이즈한 부분 보존 (CLAUDE.md와 동일한 병합 로직)
+- rules 파일이 없는 경우 → 사용자에게 rules 추가 여부 안내
 
 ### 5. 적용 및 버전 갱신
 
