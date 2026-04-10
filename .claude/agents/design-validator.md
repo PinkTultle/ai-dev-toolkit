@@ -4,7 +4,7 @@ description: |
   설계 문서의 완성도와 일관성을 검증한다.
   구현 착수 전에 설계가 충분한지 판정하는 게이트 역할.
   designer와 reviewer 사이 또는 reviewer 대체로 사용 가능.
-model: sonnet
+model: opus
 tools:
   - Read
   - Glob

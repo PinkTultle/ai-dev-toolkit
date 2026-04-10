@@ -4,7 +4,7 @@ description: |
   설계 문서와 구현 코드의 일치도를 정량적으로 측정한다.
   PDCA Check 단계의 핵심 에이전트.
   verifier가 정성적 확인이라면, gap-detector는 정량적 매칭율 산출.
-model: sonnet
+model: opus
 tools:
   - Read
   - Glob
