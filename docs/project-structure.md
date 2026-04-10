@@ -43,13 +43,19 @@ ai-dev-toolkit/
 ├── CHANGELOG.md           # 버전별 변경 이력
 │
 ├── .claude/
-│   ├── agents/            # ▼ 단계별 서브에이전트 정의
-│   │   ├── ideation.md    #     1단계: 아이디어 구체화 (sonnet)
-│   │   ├── designer.md    #     2단계: 설계 (opus)
-│   │   ├── reviewer.md    #     3단계: 설계 검토 (opus)
-│   │   ├── implementer.md #     4단계: 구현 (opus, worktree)
-│   │   ├── verifier.md    #     5단계: 검증 (sonnet)
-│   │   └── tester.md      #     6단계: 테스트 (sonnet)
+│   ├── agents/            # ▼ 서브에이전트 정의 (11개)
+│   │   ├── ideation.md    #     파이프라인: 아이디어 구체화 (sonnet)
+│   │   ├── product-manager.md #  파이프라인: 요구사항 구조화 (opus)
+│   │   ├── designer.md    #     파이프라인: 설계 (opus)
+│   │   ├── design-validator.md # 검증: 설계 완성도 판정 (sonnet)
+│   │   ├── reviewer.md    #     파이프라인: 설계 검토 (opus)
+│   │   ├── implementer.md #     파이프라인: 구현 (opus, worktree)
+│   │   ├── verifier.md    #     파이프라인: 구현 검증 (sonnet)
+│   │   ├── gap-detector.md #    검증: 설계↔구현 매칭율 측정 (sonnet)
+│   │   ├── code-analyzer.md #   검증: 코드 품질 심층 분석 (sonnet)
+│   │   ├── tester.md      #     파이프라인: 테스트 (sonnet)
+│   │   ├── report-generator.md # 보고: 완료 보고서 생성 (sonnet)
+│   │   └── cto-lead.md    #     조율: Large 팀 오케스트레이션 (opus)
 │   ├── rules/             # ▼ 세부 규칙 파일 (Claude Code 자동 로드)
 │   │   ├── global-*.md    #     글로벌 rules (defconfig이 ~/.claude/rules/에 배포)
 │   │   └── project-*.md   #     프로젝트 rules 템플릿 (project-configure가 선택 복제)
