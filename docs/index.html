@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Dev Toolkit — 프로젝트 소개</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-dim: #8b949e;
+    --accent: #58a6ff;
+    --accent2: #3fb950;
+    --accent3: #d2a8ff;
+    --accent4: #f0883e;
+    --code-bg: #1c2128;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* Header */
+  .hero {
+    text-align: center;
+    padding: 5rem 2rem 3rem;
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #1a1f2b 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero h1 { font-size: 2.8rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .hero h1 span { color: var(--accent); }
+  .hero .version {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--bg);
+    padding: 0.15rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+  }
+  .hero p { color: var(--text-dim); font-size: 1.15rem; max-width: 640px; margin: 1rem auto 0; }
+
+  /* Nav */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0.7rem 2rem;
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    font-size: 0.9rem;
+  }
+  nav a { color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
+  nav a:hover { color: var(--accent); }
+
+  /* Sections */
+  .container { max-width: 960px; margin: 0 auto; padding: 3rem 2rem; }
+  section { margin-bottom: 4rem; }
+  h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  h2::before { margin-right: 0.5rem; }
+  h3 { font-size: 1.1rem; color: var(--accent); margin: 1.5rem 0 0.5rem; }
+
+  /* Cards */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.2rem;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: var(--accent); }
+  .card .label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-dim);
+    margin-bottom: 0.3rem;
+  }
+  .card .title { font-weight: 600; font-size: 1rem; margin-bottom: 0.4rem; }
+  .card .desc { color: var(--text-dim); font-size: 0.88rem; }
+
+  /* Stats */
+  .stats {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin: 1.5rem 0;
+  }
+  .stat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    text-align: center;
+    min-width: 100px;
+  }
+  .stat .num { font-size: 2rem; font-weight: 700; color: var(--accent); }
+  .stat .lbl { font-size: 0.8rem; color: var(--text-dim); }
+
+  /* Code */
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem 1.2rem;
+    overflow-x: auto;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    margin: 0.8rem 0;
+  }
+  code { font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace; }
+  .cmd { color: var(--accent2); }
+  .comment { color: var(--text-dim); }
+  .highlight { color: var(--accent4); }
+
+  /* Flow */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin: 1.5rem 0;
+  }
+  .flow-step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    font-size: 0.88rem;
+    white-space: nowrap;
+  }
+  .flow-step.active { border-color: var(--accent); color: var(--accent); }
+  .flow-arrow { color: var(--text-dim); font-size: 1.2rem; }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th, td { padding: 0.6rem 0.8rem; text-align: left; border-bottom: 1px solid var(--border); }
+  th { color: var(--text-dim); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.03em; }
+  tr:hover td { background: rgba(88, 166, 255, 0.04); }
+
+  /* Tags */
+  .tag {
+    display: inline-block;
+    padding: 0.1rem 0.5rem;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .tag.opus { background: rgba(210, 168, 255, 0.15); color: var(--accent3); }
+  .tag.sonnet { background: rgba(63, 185, 80, 0.15); color: var(--accent2); }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 1.8rem; }
+    nav { gap: 1rem; font-size: 0.8rem; }
+    .stats { gap: 0.8rem; }
+    .stat { min-width: 80px; padding: 0.7rem 1rem; }
+    .stat .num { font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<header class="hero">
+  <h1><span>AI Dev</span> Toolkit <span class="version">v0.3.0</span></h1>
+  <p>AI 코딩 어시스턴트의 지침 라이브러리이자 플랫폼 도구.<br>
+  한 곳에서 관리하고, 스킬로 자동화하고, 양방향으로 동기화한다.</p>
+</header>
+
+<!-- Nav -->
+<nav>
+  <a href="#why">왜 필요한가</a>
+  <a href="#quickstart">빠른 시작</a>
+  <a href="#features">구성 요소</a>
+  <a href="#agents">에이전트</a>
+  <a href="#commands">커맨드</a>
+  <a href="#structure">구조</a>
+</nav>
+
+<div class="container">
+
+<!-- Why -->
+<section id="why">
+  <h2>왜 필요한가</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="label">문제</div>
+      <div class="title">같은 지침을 반복 작성</div>
+      <div class="desc">AI 어시스턴트를 여러 프로젝트에서 쓰면 코딩 표준, Git 규칙 등을 매번 다시 쓰게 된다.</div>
+    </div>
+    <div class="card">
+      <div class="label">해결</div>
+      <div class="title">한 곳에서 관리 + 자동 배포</div>
+      <div class="desc">blueprints/에 공유 지식을 모으고, 스킬 명령어로 프로젝트에 자동 복제 + 구체화한다.</div>
+    </div>
+    <div class="card">
+      <div class="label">장점</div>
+      <div class="title">양방향 동기화</div>
+      <div class="desc">프로젝트에서 발전한 지침을 흡수하고, 라이브러리 업데이트를 다른 프로젝트에 전파한다.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Quick Start -->
+<section id="quickstart">
+  <h2>빠른 시작</h2>
+
+  <h3>1. 클론</h3>
+  <pre><code><span class="cmd">git clone</span> &lt;repo-url&gt; ~/ai-dev-toolkit
+<span class="cmd">cd</span> ~/ai-dev-toolkit</code></pre>
+
+  <h3>2. 워크스테이션 세팅 (최초 1회)</h3>
+  <pre><code><span class="comment"># Claude Code에서 실행</span>
+<span class="cmd">/ai-platform-defconfig</span></code></pre>
+  <p style="color:var(--text-dim); font-size:0.9rem;">심볼릭 링크, 패키지 확인, MCP 설정 등을 자동 처리합니다.</p>
+
+  <h3>3. 프로젝트에 적용</h3>
+  <pre><code><span class="cmd">/project-init</span> ~/my-project        <span class="comment"># AI 설정 골격 복제</span>
+<span class="cmd">/project-configure</span>                 <span class="comment"># 대화형으로 기술 스택 구체화</span></code></pre>
+
+  <h3>핵심 워크플로우</h3>
+  <div class="flow">
+    <div class="flow-step active">/ai-platform-defconfig</div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">/project-init</div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">/project-configure</div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">개발</div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">/project-absorb</div>
+    <div class="flow-arrow">&harr;</div>
+    <div class="flow-step">/project-update</div>
+  </div>
+</section>
+
+<!-- Features / Stats -->
+<section id="features">
+  <h2>v0.3.0 구성 요소</h2>
+
+  <div class="stats">
+    <div class="stat"><div class="num">11</div><div class="lbl">에이전트</div></div>
+    <div class="stat"><div class="num">6</div><div class="lbl">스킬</div></div>
+    <div class="stat"><div class="num">5</div><div class="lbl">커맨드</div></div>
+    <div class="stat"><div class="num">4</div><div class="lbl">템플릿</div></div>
+    <div class="stat"><div class="num">7</div><div class="lbl">Rules</div></div>
+  </div>
+
+  <h3>스킬</h3>
+  <table>
+    <thead><tr><th>스킬</th><th>역할</th><th>실행 시점</th></tr></thead>
+    <tbody>
+      <tr><td><code>/ai-platform-defconfig</code></td><td>워크스테이션 환경 구성</td><td>최초 1회</td></tr>
+      <tr><td><code>/project-init</code></td><td>AI 설정 골격 복제 + 배포 추적</td><td>프로젝트 시작</td></tr>
+      <tr><td><code>/project-configure</code></td><td>대화형 기술 스택 구체화</td><td>init 직후</td></tr>
+      <tr><td><code>/project-update</code></td><td>라이브러리 최신 버전 적용</td><td>업데이트 시</td></tr>
+      <tr><td><code>/project-absorb</code></td><td>프로젝트 지침 역흡수</td><td>지침 개선 후</td></tr>
+      <tr><td><code>/optimize-docs</code></td><td>지침 파일 200줄 제한 유지</td><td>유지보수</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Agents -->
+<section id="agents">
+  <h2>에이전트 파이프라인 (11개)</h2>
+  <p style="color:var(--text-dim); margin-bottom:1rem;">
+    생성 &rarr; 검증 &rarr; 보고 3단계 구조. 게이트 에이전트가 품질을 관리합니다.
+  </p>
+
+  <h3>파이프라인 (순차 실행)</h3>
+  <table>
+    <thead><tr><th>단계</th><th>에이전트</th><th>모델</th><th>역할</th></tr></thead>
+    <tbody>
+      <tr><td>요구사항</td><td>product-manager</td><td><span class="tag opus">opus</span></td><td>MoSCoW 우선순위 + Plan 문서</td></tr>
+      <tr><td>아이디어</td><td>ideation</td><td><span class="tag sonnet">sonnet</span></td><td>범위/제약조건 탐색</td></tr>
+      <tr><td>설계</td><td>designer</td><td><span class="tag opus">opus</span></td><td>아키텍처 + 대안 비교</td></tr>
+      <tr><td>설계 검토</td><td>reviewer</td><td><span class="tag opus">opus</span></td><td>설계 비판적 검토</td></tr>
+      <tr><td>구현</td><td>implementer</td><td><span class="tag opus">opus</span></td><td>코드 작성 (worktree)</td></tr>
+      <tr><td>테스트</td><td>tester</td><td><span class="tag sonnet">sonnet</span></td><td>빌드/단위/통합/회귀 테스트</td></tr>
+    </tbody>
+  </table>
+
+  <h3>검증 게이트</h3>
+  <table>
+    <thead><tr><th>에이전트</th><th>모델</th><th>게이트 조건</th></tr></thead>
+    <tbody>
+      <tr><td>design-validator</td><td><span class="tag opus">opus</span></td><td>설계 완성도 80% 이상 &rarr; 구현 착수</td></tr>
+      <tr><td>gap-detector</td><td><span class="tag opus">opus</span></td><td>설계&harr;구현 매칭율 90% 이상 &rarr; 보고서</td></tr>
+      <tr><td>code-analyzer</td><td><span class="tag sonnet">sonnet</span></td><td>Critical 이슈 0건</td></tr>
+    </tbody>
+  </table>
+
+  <h3>보고 + 조율</h3>
+  <table>
+    <thead><tr><th>에이전트</th><th>모델</th><th>역할</th></tr></thead>
+    <tbody>
+      <tr><td>report-generator</td><td><span class="tag sonnet">sonnet</span></td><td>PDCA 완료 보고서 자동 생성</td></tr>
+      <tr><td>cto-lead</td><td><span class="tag opus">opus</span></td><td>Large 프리셋 전체 파이프라인 조율</td></tr>
+    </tbody>
+  </table>
+
+  <h3>게이트 흐름</h3>
+  <pre><code>product-manager &rarr; designer &rarr; <span class="highlight">design-validator (80%?)</span>
+                                          &darr; 통과
+                                    reviewer (승인?)
+                                          &darr; 통과
+                                    implementer &rarr; <span class="highlight">gap-detector (90%?)</span>
+                                                            &darr; 통과
+                                                      <span class="highlight">code-analyzer (Critical 0?)</span>
+                                                            &darr; 통과
+                                                      tester (PASS?)
+                                                            &darr; 통과
+                                                      report-generator</code></pre>
+</section>
+
+<!-- Commands -->
+<section id="commands">
+  <h2>커맨드</h2>
+  <p style="color:var(--text-dim); margin-bottom:1rem;">
+    슬래시 커맨드로 반복 작업을 자동화합니다. <code>.claude/commands/</code>에 정의.
+  </p>
+  <table>
+    <thead><tr><th>커맨드</th><th>역할</th></tr></thead>
+    <tbody>
+      <tr><td><code>/handoff</code></td><td>세션 종료 시 HANDOFF.md 갱신 + 커밋 + 푸시</td></tr>
+      <tr><td><code>/sync-check</code></td><td>blueprints &harr; rules 동기화 상태 점검</td></tr>
+      <tr><td><code>/doc-gen</code></td><td>소스 파일의 코드 설명 문서 자동 생성</td></tr>
+      <tr><td><code>/review</code></td><td>변경사항 코드 리뷰 (보안/성능/가독성)</td></tr>
+      <tr><td><code>/decision</code></td><td>ADR(Architecture Decision Records) 생성/조회</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Structure -->
+<section id="structure">
+  <h2>프로젝트 구조</h2>
+  <pre><code>ai-dev-toolkit/
+├── .claude/
+│   ├── agents/       <span class="comment"># 11개 서브에이전트</span>
+│   ├── commands/     <span class="comment"># 5개 슬래시 커맨드</span>
+│   ├── hooks/        <span class="comment"># PostToolUse 자동 검사</span>
+│   ├── templates/    <span class="comment"># Plan, Design, Report, ADR 템플릿</span>
+│   ├── rules/        <span class="comment"># 글로벌 4 + 프로젝트 3 규칙</span>
+│   ├── skills/       <span class="comment"># 6개 스킬 (핵심 기능)</span>
+│   └── settings.json <span class="comment"># 팀 공유 설정 (deny + hooks)</span>
+├── blueprints/       <span class="comment"># 도구 무관 공유 지식 (Single Source of Truth)</span>
+├── claude/           <span class="comment"># Claude Code 지침 + 템플릿</span>
+├── docs/
+│   ├── decisions/    <span class="comment"># ADR 시스템</span>
+│   └── artifacts/    <span class="comment"># 단계별 산출물</span>
+├── workstations/     <span class="comment"># 환경 상태 + 배포 추적</span>
+├── VERSION           <span class="comment"># 0.3.0</span>
+└── CHANGELOG.md</code></pre>
+
+  <h3>계층 구조</h3>
+  <div class="card-grid">
+    <div class="card">
+      <div class="title">blueprints/</div>
+      <div class="desc">코딩 표준, Git 워크플로우, 설계 원칙 등 <strong>모든 도구가 참조</strong>하는 공통 지식의 원본 (Single Source of Truth)</div>
+    </div>
+    <div class="card">
+      <div class="title">.claude/rules/</div>
+      <div class="desc">blueprints를 Claude Code <code>paths</code> frontmatter 형태로 변환한 <strong>파생물</strong>. 특정 파일 작업 시에만 조건부 로드</div>
+    </div>
+    <div class="card">
+      <div class="title">.claude/templates/</div>
+      <div class="desc">에이전트와 커맨드가 참조하는 <strong>문서 템플릿</strong>. 산출물의 일관성을 보장 (rkit 패턴 채택)</div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  AI Dev Toolkit v0.3.0 &mdash; <a href="https://github.com/PinkTultle/ai-dev-toolkit">GitHub</a>
+</footer>
+
+</body>
+</html>
