@@ -13,6 +13,17 @@
     ]
   },
   "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/post-edit-check.sh $CLAUDE_FILE_PATH"
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "matcher": "",

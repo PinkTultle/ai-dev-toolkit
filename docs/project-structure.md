@@ -26,6 +26,7 @@ AI가 저장소 탐색 시 오리엔테이션용으로 사용한다.
 | `/sync-check` | `.claude/commands/sync-check.md` | blueprints ↔ rules 동기화 상태 점검 |
 | `/doc-gen` | `.claude/commands/doc-gen.md` | 소스 파일의 코드 설명 문서 자동 생성/갱신 |
 | `/review` | `.claude/commands/review.md` | 변경사항 코드 리뷰 (보안/성능/가독성/규칙) |
+| `/decision` | `.claude/commands/decision.md` | ADR 생성/조회 (아키텍처 결정 기록) |
 
 ---
 
@@ -56,7 +57,15 @@ ai-dev-toolkit/
 │   │   ├── handoff.md     #     세션 종료 인수인계 자동화
 │   │   ├── sync-check.md  #     blueprints↔rules 동기화 점검
 │   │   ├── doc-gen.md     #     코드 설명 문서 자동 생성
-│   │   └── review.md      #     코드 리뷰 (보안/성능/가독성)
+│   │   ├── review.md      #     코드 리뷰 (보안/성능/가독성)
+│   │   └── decision.md    #     ADR 생성/조회
+│   ├── templates/         # ▼ 문서 템플릿 (에이전트/커맨드가 참조)
+│   │   ├── plan.template.md      # Plan 산출물 템플릿
+│   │   ├── design.template.md    # Design 산출물 템플릿
+│   │   ├── report.template.md    # Report 산출물 템플릿
+│   │   └── decision.template.md  # ADR 템플릿
+│   ├── hooks/             # ▼ Hook 스크립트
+│   │   └── post-edit-check.sh    # 지침 파일 줄 수 검사
 │   ├── skills/            # ▼ 스킬 (이 저장소의 핵심 기능)
 │   │   ├── ai-platform-defconfig/SKILL.md
 │   │   ├── project-init/SKILL.md
@@ -69,7 +78,9 @@ ai-dev-toolkit/
 │
 ├── docs/                  # ▼ 사용 가이드 및 산출물
 │   ├── usage-guide.md     #   스킬별 상세 사용법 + FAQ
-│   └── project-structure.md # 이 파일 (구조 참조)
+│   ├── project-structure.md # 이 파일 (구조 참조)
+│   └── decisions/         # ▼ ADR (Architecture Decision Records)
+│       └── ADR-001-*.md   #   rkit 패턴 채택 결정
 │
 ├── blueprints/            # ▼ 도구 무관 공유 지식 (Single Source of Truth)
 │   ├── base-directives.md #   AI 공통 기본 지침
