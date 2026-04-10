@@ -49,6 +49,11 @@
 - [x] 권한 정리 — 프로젝트 30→12, 글로벌 69→18, deny 9개 양쪽 배포
 - [x] 환경변수 — AGENT_TEAMS, SUBPROCESS_ENV_SCRUB
 
+#### web_hook_server 흡수 + v0.3.0 업데이트
+- [x] `/project-absorb` — 아키텍처 다이어그램, 시크릿 규칙, 트러블슈팅 가이드 3건 흡수 → 템플릿 반영
+- [x] `/project-update` — web_hook_server에 v0.3.0 전체 적용 (에이전트 11개, 커맨드 5개, 템플릿 4개, hooks, rules, settings)
+- [x] registry.md 갱신 — web_hook_server v0.2.0 → v0.3.0
+
 ### 현재 상태
 
 - **버전**: v0.3.0
@@ -71,9 +76,9 @@
 
 ### 다음 작업 후보
 
-1. **실사용 테스트** — 실제 프로젝트에서 11개 에이전트 파이프라인 실행 검증
+1. **web_hook_server 에이전트 테스트** — `~/test/web_hook_server/`에서 v0.3.0 커밋 + 파이프라인 실행 검증
 2. **Claude GitHub App 설치** — PR 자동화 활성화 (ANTHROPIC_API_KEY 시크릿 추가)
-3. **기존 프로젝트 업데이트** — NDT-BPE_pork, aralm_program에 v0.3.0 적용
+3. **나머지 프로젝트 업데이트** — NDT-BPE_pork, aralm_program에 v0.3.0 적용
 4. **다른 워크스테이션 defconfig** — pink-turtle-rt, pink-turtle-win에 v0.3.0 배포
 5. **파이프라인 오케스트레이터 스킬** — cto-lead 기반 자동 실행 스킬
 6. **project-init/configure 갱신** — 템플릿, 커맨드, 에이전트를 배포 대상에 포함
