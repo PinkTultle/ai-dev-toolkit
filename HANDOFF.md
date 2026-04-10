@@ -9,75 +9,95 @@
 ## 마지막 작업 요약
 
 **날짜**: 2026-04-10
-**작업 내용**: Claude Code 학습 (Level 1~3) + 권한 정리 + 커스텀 커맨드 작성
-**버전**: v0.2.0 (다음 릴리즈 시 v0.3.0 예정)
+**작업 내용**: CC 학습 L1~5 + rkit 패턴 채택 + 에이전트 11개 + v0.3.0 릴리즈
+**버전**: v0.3.0
 **브랜치**: `main`
 
 ### 이번 세션 완료 작업
 
-#### Claude Code 학습 (Level 1~3)
-- [x] Level 1: CLAUDE.md 계층 구조, 작성 원칙, rules 조건부 로드, Plan Mode
-- [x] Level 2: 슬래시 커맨드, Hooks 이벤트, 권한 관리 패턴
-- [x] Level 3: 서브에이전트, 스킬 구조, 에이전트 vs 스킬 차이, MCP 연동
+#### Claude Code 학습 (Level 1~5 전체)
+- [x] Level 1: CLAUDE.md 계층 구조, Plan Mode
+- [x] Level 2: 커맨드, Hooks, 권한 관리 + 실습 (권한 정리, deny)
+- [x] Level 3: 에이전트, 스킬, MCP + 실습 (/handoff 커맨드)
+- [x] Level 4: PR 자동화, 팀 규칙, Agent Teams + 실습 3종 (deny 글로벌, workflow, /sync-check)
+- [x] Level 5: PDCA 방법론
 
-#### 권한 설정 정리
-- [x] `settings.local.json` 정리 — 일회성 허용 30개 → 와일드카드 패턴 12개
-- [x] `deny` 목록 추가 — 위험한 git 명령 9개 (force push, reset --hard, clean -f 등)
+#### rkit 패턴 채택 (ADR-001)
+- [x] `.claude/templates/` 도입 — Plan, Design, Report, ADR 문서 템플릿 4종
+- [x] `.claude/hooks/` 도입 — PostToolUse 지침 파일 줄 수 자동 경고
+- [x] `docs/decisions/` 도입 — ADR 시스템 + `/decision` 커맨드
+- [x] 에이전트 템플릿 참조 방식 전환 — 인라인 형식 → 템플릿 기반
 
-#### 환경 설정
-- [x] statusline 프로그레스 바 — 첫 실행 시 0% 표시되도록 수정 (`~/.claude/statusline-command.sh`)
+#### 유틸리티 에이전트 5종 추가
+- [x] product-manager (opus): 요구사항 구조화 + MoSCoW
+- [x] gap-detector (opus): 설계↔구현 매칭율 정량 측정 (90% 게이트)
+- [x] code-analyzer (sonnet): 코드 품질 SQ-001~008 심층 분석
+- [x] design-validator (opus): 설계 완성도 정량 판정 (구현 착수 게이트)
+- [x] report-generator (sonnet): PDCA 완료 보고서 자동 생성
+- [x] cto-lead (opus): Large 프리셋 전체 파이프라인 조율
 
-#### 커스텀 커맨드 실습
-- [x] `.claude/commands/handoff.md` 신규 생성 — 세션 종료 시 HANDOFF.md 자동 갱신+커밋+푸시
+#### 기존 에이전트 강화
+- [x] reviewer: 판정 기준표 + 템플릿 준수 체크
+- [x] implementer: 자기 검증 단계
+- [x] tester: PASS/PARTIAL/FAIL 판정 기준
+- [x] 게이트 모델 승격: design-validator, gap-detector → opus
+
+#### 프로젝트 업그레이드
+- [x] `.claude/settings.json` — 팀 공유 deny + PostToolUse Hook
+- [x] `.claude/commands/` — handoff, sync-check, doc-gen, review, decision (5종)
+- [x] `.github/workflows/claude.yml` — @claude PR 자동화
+- [x] 권한 정리 — 프로젝트 30→12, 글로벌 69→18, deny 9개 양쪽 배포
+- [x] 환경변수 — AGENT_TEAMS, SUBPROCESS_ENV_SCRUB
 
 ### 현재 상태
 
-- **버전**: v0.2.0
+- **버전**: v0.3.0
 - **브랜치**: `main`만 존재
+- **에이전트**: 11개 (파이프라인 6 + 검증 3 + 보고 1 + 조율 1)
+- **커맨드**: 5개 (handoff, sync-check, doc-gen, review, decision)
 - **스킬**: 6개
-- **커맨드**: 1개 (handoff) — 신규
-- **에이전트**: 6개
-- **Rules**: 글로벌 4개 + 프로젝트 4개 (README 포함), `~/.claude/rules/` 배포 완료
-- **워크스테이션**: 3개 (pink-turtle에 rules 배포됨)
-- **배포 프로젝트**: 3개 (변경 없음)
+- **템플릿**: 4개 (plan, design, report, decision)
+- **Hooks**: 1개 (post-edit-check.sh)
+- **Rules**: 글로벌 4개 + 프로젝트 3개
+- **ADR**: 1개 (ADR-001 rkit 패턴 채택)
+- **워크스테이션**: 3개 (pink-turtle에 rules+deny 배포됨)
 
 ### 주의사항
 
 - `GH_TOKEN`의 `gho_` 토큰은 만료 가능 — 만료 시 PAT(`ghp_`) 발급 후 `~/.config/gh/token` 교체
-- pink-turtle-rt, pink-turtle-win에는 아직 rules 미배포 — defconfig 재실행 필요
-- 에이전트는 정의만 완료, 파이프라인 오케스트레이션 스킬은 미구현
-- `settings.local.json`의 `deny` 목록은 **이 프로젝트 전용** — 글로벌 적용하려면 `~/.claude/settings.json`에도 추가 필요
+- pink-turtle-rt, pink-turtle-win에는 아직 v0.3.0 미배포 — defconfig 재실행 필요
+- Claude GitHub App 미설치 — workflow는 있지만 앱 + ANTHROPIC_API_KEY 시크릿 필요
+- Agent Teams 환경변수 추가했으나 현재 세션에서는 미적용 (재시작 필요)
 
 ### 다음 작업 후보
 
-1. **Claude Code 학습 계속** — Level 4 (팀 최적화), Level 5 (PDCA)
-2. **파이프라인 오케스트레이터 스킬** — 에이전트를 순차 실행하는 스킬 구현
-3. **버전 릴리즈** — v0.3.0 (rules + agents + commands 도입, CHANGELOG, git tag)
-4. **실사용 테스트** — 실제 프로젝트에서 에이전트 파이프라인 실행 검증
-5. **기존 프로젝트 업데이트** — NDT-BPE_pork, aralm_program에 v0.3.0 적용
-6. **다른 워크스테이션 defconfig** — pink-turtle-rt, pink-turtle-win에 rules 배포
-7. **deny 목록 글로벌 배포** — `~/.claude/settings.json`에 위험 git 명령 deny 추가
+1. **실사용 테스트** — 실제 프로젝트에서 11개 에이전트 파이프라인 실행 검증
+2. **Claude GitHub App 설치** — PR 자동화 활성화 (ANTHROPIC_API_KEY 시크릿 추가)
+3. **기존 프로젝트 업데이트** — NDT-BPE_pork, aralm_program에 v0.3.0 적용
+4. **다른 워크스테이션 defconfig** — pink-turtle-rt, pink-turtle-win에 v0.3.0 배포
+5. **파이프라인 오케스트레이터 스킬** — cto-lead 기반 자동 실행 스킬
+6. **project-init/configure 갱신** — 템플릿, 커맨드, 에이전트를 배포 대상에 포함
 
 ### 현재 저장소 구조
+
+> 상세 구조는 `docs/project-structure.md` 참조.
 
 ```
 ai-dev-toolkit/
 ├── .claude/
-│   ├── commands/                        ← 신규: 커스텀 슬래시 커맨드
-│   │   └── handoff.md                  #   세션 종료 인수인계 자동화
-│   ├── agents/                         ← 단계별 서브에이전트
-│   │   ├── ideation.md                 #   1단계 (sonnet)
-│   │   ├── designer.md                 #   2단계 (opus)
-│   │   ├── reviewer.md                 #   3단계 (opus)
-│   │   ├── implementer.md              #   4단계 (opus, worktree)
-│   │   ├── verifier.md                 #   5단계 (sonnet)
-│   │   └── tester.md                   #   6단계 (sonnet)
-│   ├── rules/                          ← 세부 규칙 파일
-│   │   ├── global-*.md (4개)           #   글로벌 rules
-│   │   ├── project-*.md (3개)          #   프로젝트 rules 템플릿
-│   │   └── README.md
-│   └── skills/ (6개)
-├── blueprints/                         ← 서브에이전트 구성표/팀/루프 추가됨
+│   ├── agents/ (11개)                  ← 파이프라인 6 + 검증 3 + 보고 1 + 조율 1
+│   ├── commands/ (5개)                 ← handoff, sync-check, doc-gen, review, decision
+│   ├── hooks/                          ← PostToolUse 자동 검사
+│   ├── templates/ (4개)                ← Plan, Design, Report, ADR 템플릿
+│   ├── rules/ (7개 + README)
+│   ├── skills/ (6개)
+│   ├── settings.json                   ← 팀 공유 (deny + hooks)
+│   └── settings.local.json             ← 개인 (gitignore)
+├── .github/workflows/claude.yml        ← @claude PR 자동화
+├── docs/
+│   ├── decisions/                      ← ADR 시스템
+│   └── ...
+├── blueprints/
 ├── claude/
 │   ├── global_CLAUDE.md                ← 인덱스 (41줄)
 │   ├── project_CLAUDE.md

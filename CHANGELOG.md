@@ -5,6 +5,34 @@
 
 ---
 
+## [0.3.0] - 2026-04-10
+
+에이전트 파이프라인 확장, 문서 템플릿 도입, 자동화 강화.
+rkit 패턴 분석을 통한 프로젝트 구조 성숙화.
+
+### Added
+- **에이전트 11개 체계**: 기존 파이프라인 6개 + 유틸리티 5개 (product-manager, gap-detector, code-analyzer, design-validator, report-generator, cto-lead)
+- **`.claude/templates/`**: Plan, Design, Report, ADR 문서 템플릿 4종 — 에이전트가 참조하여 일관된 산출물 생성
+- **`.claude/commands/`**: handoff, sync-check, doc-gen, review, decision 커맨드 5종
+- **`.claude/hooks/`**: PostToolUse Hook — 지침 파일 200줄 초과 자동 경고
+- **`.claude/settings.json`**: 팀 공유 설정 — deny 목록 + Hook 정의
+- **`docs/decisions/`**: ADR(Architecture Decision Records) 시스템 도입
+- **`.github/workflows/claude.yml`**: @claude PR 자동화 워크플로우
+- **`.claude/rules/`**: 글로벌 4개 + 프로젝트 3개 세부 규칙 파일 (#3)
+- **게이트 모델 전략**: design-validator, gap-detector를 opus로 승격 (오판 방지)
+
+### Changed
+- 에이전트 산출물 형식: 인라인 마크다운 → **템플릿 참조** 방식으로 전환
+- reviewer: 판정 기준표 + 템플릿 준수 체크 추가
+- implementer: 자기 검증 단계 추가
+- tester: PASS/PARTIAL/FAIL 판정 기준 명확화
+- `global_CLAUDE.md`: 경량화 (143줄 → 41줄 인덱스)
+- `settings.local.json`: 일회성 허용 정리 (69→18 패턴) + deny 9개
+- `~/.claude/settings.json`: 글로벌 권한 정리 + deny 배포
+- `~/.bashrc`: AGENT_TEAMS + SUBPROCESS_ENV_SCRUB 환경변수
+
+---
+
 ## [0.2.0] - 2026-03-26
 
 Windows 네이티브(Git Bash/MINGW64) 환경 지원 추가.
