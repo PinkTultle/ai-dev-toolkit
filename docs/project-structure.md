@@ -18,6 +18,17 @@ AI가 저장소 탐색 시 오리엔테이션용으로 사용한다.
 
 ---
 
+## 커맨드
+
+| 커맨드 | 위치 | 역할 |
+|--------|------|------|
+| `/handoff` | `.claude/commands/handoff.md` | 세션 종료 시 HANDOFF.md 갱신 + 커밋 + 푸시 |
+| `/sync-check` | `.claude/commands/sync-check.md` | blueprints ↔ rules 동기화 상태 점검 |
+| `/doc-gen` | `.claude/commands/doc-gen.md` | 소스 파일의 코드 설명 문서 자동 생성/갱신 |
+| `/review` | `.claude/commands/review.md` | 변경사항 코드 리뷰 (보안/성능/가독성/규칙) |
+
+---
+
 ## 디렉토리 구조
 
 ```
@@ -41,6 +52,11 @@ ai-dev-toolkit/
 │   ├── rules/             # ▼ 세부 규칙 파일 (Claude Code 자동 로드)
 │   │   ├── global-*.md    #     글로벌 rules (defconfig이 ~/.claude/rules/에 배포)
 │   │   └── project-*.md   #     프로젝트 rules 템플릿 (project-configure가 선택 복제)
+│   ├── commands/          # ▼ 커스텀 슬래시 커맨드
+│   │   ├── handoff.md     #     세션 종료 인수인계 자동화
+│   │   ├── sync-check.md  #     blueprints↔rules 동기화 점검
+│   │   ├── doc-gen.md     #     코드 설명 문서 자동 생성
+│   │   └── review.md      #     코드 리뷰 (보안/성능/가독성)
 │   ├── skills/            # ▼ 스킬 (이 저장소의 핵심 기능)
 │   │   ├── ai-platform-defconfig/SKILL.md
 │   │   ├── project-init/SKILL.md
@@ -48,7 +64,8 @@ ai-dev-toolkit/
 │   │   ├── project-update/SKILL.md
 │   │   ├── project-absorb/SKILL.md
 │   │   └── optimize-docs/SKILL.md
-│   └── settings.local.json
+│   ├── settings.json      #   팀 공유 설정 (deny, hooks)
+│   └── settings.local.json #  로컬 전용 설정 (gitignore)
 │
 ├── docs/                  # ▼ 사용 가이드 및 산출물
 │   ├── usage-guide.md     #   스킬별 상세 사용법 + FAQ
@@ -72,6 +89,9 @@ ai-dev-toolkit/
 │   ├── registry.md        #   전체 현황 인덱스
 │   ├── <alias>.json       #   공개 환경 상태 (커밋)
 │   └── <alias>.local.json #   로컬 전용: hostname, 경로, 배포 목록 (gitignore)
+├── .github/
+│   └── workflows/
+│       └── claude.yml     #   @claude PR 자동화 워크플로우
 ├── cursor/                #   Cursor (추후 확장)
 ├── copilot/               #   GitHub Copilot (추후 확장)
 └── windsurf/              #   Windsurf (추후 확장)
