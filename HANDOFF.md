@@ -9,91 +9,99 @@
 ## 마지막 작업 요약
 
 **날짜**: 2026-04-12
-**작업 내용**: pink-turtle 워크스테이션 최신화 — defconfig 재실행 + 프로젝트 3개 v0.3.0 업데이트
-**버전**: v0.3.0
+**작업 내용**: Claude Code 플러그인(adt) 전환 — v0.3.0 → v0.4.0
+**버전**: v0.4.0
 **브랜치**: `main`
 
 ### 이번 세션 완료 작업
 
-#### pink-turtle defconfig 재실행
-- [x] `~/.claude/rules/` 심볼릭 링크 4개 생성 (environment, communication, workflow, code-review)
-- [x] `~/.claude/settings.json`에 deny 규칙 9개 추가
-- [x] `workstations/pink-turtle.json` 갱신 (경로 수정 My_AI_manual, 이력 추가)
+#### Claude Code 플러그인 전환 (PDCA 전체 사이클 완료)
+- [x] **Plan**: `docs/01-plan/features/plugin-migration.plan.md`
+- [x] **Design**: `docs/02-design/features/plugin-migration.design.md`
+- [x] **Do**: 플러그인 구조 구현 (7단계)
+  - `.claude-plugin/plugin.json`, `marketplace.json`, `package.json` 생성
+  - `skills/` 11개 (기존 6 이전 + 커맨드 5 변환)
+  - `agents/` 12개 이전, 경로 참조 갱신
+  - `templates/` 4개 이전
+  - `hooks/hooks.json` + `post-edit-check.sh`
+  - 경로 참조: `CLAUDE_SKILL_DIR` → `CLAUDE_PLUGIN_ROOT`
+  - `.claude/{skills,agents,commands,templates,hooks,settings.json}` 삭제
+- [x] **Check**: Gap Analysis 91.9% (불일치 3건은 설계 문서 뒤처짐, 실제 버그 0)
+- [x] **Report**: `docs/04-report/plugin-migration.report.md`
 
-#### 배포 프로젝트 v0.3.0 업데이트
-- [x] **NDT-BPE_pork** (v0.1.0 → v0.3.0) — 에이전트 12개, 커맨드 5개, 템플릿 4개, hooks, rules(C++), settings.json
-- [x] **aralm_program** (v0.1.0 → v0.3.0) — 동일 구성, rules는 git-workflow만 (Rust/TS)
-- [x] **mr-noti-bot** (없음 → v0.3.0 신규) — clone 상태에서 init + 기본 정보 채움 (Go)
+#### 문서 갱신
+- [x] README.md — 마켓플레이스 등록용으로 전면 재작성
+- [x] CLAUDE.md — 플러그인 흐름 반영
+- [x] docs/project-structure.md — 플러그인 구조 반영
+- [x] CHANGELOG.md — v0.4.0 항목 추가
+- [x] VERSION — 0.4.0
 
 ### 현재 상태
 
-- **버전**: v0.3.0
+- **버전**: v0.4.0
 - **브랜치**: `main`만 존재
-- **에이전트**: 12개 (파이프라인 6 + 검증 3 + 보고 1 + 조율 1 + PM 1)
-- **커맨드**: 5개 (handoff, sync-check, doc-gen, review, decision)
-- **스킬**: 6개
-- **템플릿**: 4개 (plan, design, report, decision)
-- **Hooks**: 1개 (post-edit-check.sh)
-- **Rules**: 글로벌 4개 + 프로젝트 3개
-- **ADR**: 1개 (ADR-001 rkit 패턴 채택)
-- **배포 프로젝트**: 4개 (모두 v0.3.0)
+- **플러그인 이름**: `adt` (AI Development Toolkit)
+- **설치 명령**: `claude plugin install PinkTultle/ai-dev-toolkit`
+- **스킬**: 11개 (`skills/`)
+- **에이전트**: 12개 (`agents/`)
+- **템플릿**: 4개 (`templates/`)
+- **훅**: 1개 (`hooks/hooks.json` — PostToolUse 줄 수 검사)
+- **Rules**: `.claude/rules/`에 글로벌 4 + 프로젝트 3 (이 저장소 자체 규칙)
+- **배포 프로젝트**: 4개 (모두 v0.3.0 — 아직 v0.4.0 미배포)
 
 ### 주의사항
 
-- pink-turtle-rt, pink-turtle-win에는 아직 v0.3.0 미배포 — defconfig 재실행 필요
-- mr-noti-bot CLAUDE.md는 기본 정보만 채움 — `/project-configure`로 상세 구체화 권장
-- Claude GitHub App 미설치 — workflow는 있지만 앱 + ANTHROPIC_API_KEY 시크릿 필요
+- **플러그인 실설치 미검증**: 구조는 완성했지만 실제 `claude plugin install`로 설치 테스트 미완료
+- **배포 프로젝트 미갱신**: NDT-BPE_pork, aralm_program, mr-noti-bot은 아직 v0.3.0 (`.claude/` 구조)
+- **SessionStart 훅 미구현**: Design Phase 3의 blueprints 컨텍스트 주입 훅은 향후 과제
+- **다른 워크스테이션 미배포**: pink-turtle-rt, pink-turtle-win에 v0.4.0 미적용
 
 ### 다음 작업 후보
 
-1. **mr-noti-bot `/project-configure`** — CLAUDE.md 상세 구체화 (아키텍처, 규칙 등)
-2. **다른 워크스테이션 defconfig** — pink-turtle-rt, pink-turtle-win에 v0.3.0 배포
-3. **에이전트 파이프라인 실전 테스트** — 실제 프로젝트에서 Medium/Large 프리셋 실행 검증
-4. **Claude GitHub App 설치** — PR 자동화 활성화
-5. **project-init/configure 갱신** — 에이전트 12개, 커맨드를 배포 대상에 포함
+1. **플러그인 실설치 테스트** — 깨끗한 환경에서 `claude plugin install` 검증
+2. **배포 프로젝트 v0.4.0 업데이트** — `/adt:project-update`로 기존 프로젝트 갱신
+3. **SessionStart 훅 구현** — blueprints 핵심 규칙을 세션 시작 시 컨텍스트 주입
+4. **다른 워크스테이션 defconfig 재실행** — pink-turtle-rt, pink-turtle-win
+5. **rkit 동시 사용 테스트** — 두 플러그인 병행 시 충돌 여부 실검증
 
 ### 현재 저장소 구조
 
 > 상세 구조는 `docs/project-structure.md` 참조.
 
 ```
-ai-dev-toolkit/
-├── .claude/
-│   ├── agents/ (12개)                 ← 파이프라인 6 + 검증 3 + 보고 1 + 조율 1 + PM 1
-│   ├── commands/ (5개)                ← handoff, sync-check, doc-gen, review, decision
-│   ├── hooks/                         ← PostToolUse 자동 검사
-│   ├── templates/ (4개)               ← Plan, Design, Report, ADR 템플릿
-│   ├── rules/ (7개 + README)
-│   ├── skills/ (6개)
-│   ├── settings.json                  ← 팀 공유 (deny + hooks)
-│   └── settings.local.json            ← 개인 (gitignore)
-├── .github/workflows/claude.yml       ← @claude PR 자동화
-├── blueprints/
-├── claude/
-│   ├── global_CLAUDE.md               ← 인덱스 (41줄)
-│   ├── project_CLAUDE.md
-│   └── README.md
+ai-dev-toolkit/                     ← Claude Code 플러그인 (adt)
+├── .claude-plugin/
+│   ├── plugin.json                 ← 매니페스트 (v0.4.0)
+│   └── marketplace.json
+├── package.json
+├── skills/ (11개)                  ← 스킬 (adt: 접두사)
+├── agents/ (12개)                  ← 에이전트 파이프라인
+├── templates/ (4개)                ← 문서 템플릿
+├── hooks/                          ← 플러그인 훅
+│   ├── hooks.json
+│   └── post-edit-check.sh
+├── blueprints/                     ← 공유 지식 (유지)
+├── claude/                         ← 배포용 템플릿 (하위 호환)
+├── .claude/rules/                  ← 이 프로젝트 자체 규칙
 ├── docs/
-│   ├── decisions/                     ← ADR 시스템
+│   ├── 01-plan/features/           ← PDCA Plan
+│   ├── 02-design/features/         ← PDCA Design
+│   ├── 03-analysis/                ← PDCA Gap Analysis
+│   ├── 04-report/                  ← PDCA Report
 │   └── ...
 ├── workstations/
-│   ├── pink-turtle.json               ← defconfig 2026-04-12
-│   ├── pink-turtle-rt.json
-│   └── pink-turtle-win.json
-├── VERSION                            ← 0.3.0
-└── ...
+├── VERSION                         ← 0.4.0
+└── CHANGELOG.md
 ```
 
-### 산출물 디렉토리 (프로젝트 표준)
+### 산출물 디렉토리 (PDCA)
 
 ```
-docs/artifacts/
-├── ideation/        ← ideation agent
-├── design/          ← designer agent
-├── review/          ← reviewer agent
-├── implementation/  ← implementer agent
-├── summary/         ← verifier agent
-└── test-report/     ← tester agent
+docs/
+├── 01-plan/features/plugin-migration.plan.md
+├── 02-design/features/plugin-migration.design.md
+├── 03-analysis/plugin-migration.analysis.md
+└── 04-report/plugin-migration.report.md
 ```
 
 ---
