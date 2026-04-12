@@ -16,27 +16,27 @@
 
   "symlinks": {
     "~/.claude/CLAUDE.md": {
-      "target": "~/my_ai_manual/claude/global_CLAUDE.md",
+      "target": "~/My_AI_manual/claude/global_CLAUDE.md",
       "status": "ok",
       "method": "symlink"
     },
     "~/.claude/rules/environment.md": {
-      "target": "~/my_ai_manual/.claude/rules/global-environment.md",
+      "target": "~/My_AI_manual/.claude/rules/global-environment.md",
       "status": "ok",
       "method": "symlink"
     },
     "~/.claude/rules/communication.md": {
-      "target": "~/my_ai_manual/.claude/rules/global-communication.md",
+      "target": "~/My_AI_manual/.claude/rules/global-communication.md",
       "status": "ok",
       "method": "symlink"
     },
     "~/.claude/rules/workflow.md": {
-      "target": "~/my_ai_manual/.claude/rules/global-workflow.md",
+      "target": "~/My_AI_manual/.claude/rules/global-workflow.md",
       "status": "ok",
       "method": "symlink"
     },
     "~/.claude/rules/code-review.md": {
-      "target": "~/my_ai_manual/.claude/rules/global-code-review.md",
+      "target": "~/My_AI_manual/.claude/rules/global-code-review.md",
       "status": "ok",
       "method": "symlink"
     }
@@ -48,8 +48,9 @@
 
   "defconfig_history": [
     { "date": "2026-03-23", "result": "ok", "notes": "초기 세팅" },
-    { "date": "2026-04-03", "result": "ok", "notes": "rules 심볼릭 링크 추가 (4개)" }
+    { "date": "2026-04-03", "result": "ok", "notes": "rules 심볼릭 링크 추가 (4개)" },
+    { "date": "2026-04-12", "result": "ok", "notes": "rules 재생성, deny 규칙 추가, 경로 수정 (My_AI_manual)" }
   ],
 
-  "last_updated": "2026-04-03"
+  "last_updated": "2026-04-12"
 }

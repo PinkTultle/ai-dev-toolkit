@@ -16,7 +16,7 @@
 
 | 워크스테이션 | 프로젝트 | 기반 버전 | Local | 배포일 | 비고 |
 |-------------|---------|----------|-------|--------|------|
-| pink-turtle | NDT-BPE_pork | v0.1.0 | 0 | 2026-03-23 | |
-| pink-turtle | aralm_program | v0.1.0 | 0 | 2026-03-23 | update 필요 (v0.3.0) |
+| pink-turtle | NDT-BPE_pork | v0.3.0 | 0 | 2026-04-12 | v0.3.0 업데이트 — 에이전트 12개, 커맨드 5개, 템플릿, hooks, rules |
+| pink-turtle | aralm_program | v0.3.0 | 0 | 2026-04-12 | v0.3.0 업데이트 — 에이전트 12개, 커맨드 5개, 템플릿, hooks, rules(git만) |
 | pink-turtle | web_hook_server | v0.3.0 | 0 | 2026-04-10 | v0.3.0 업데이트 — 에이전트 11개, 템플릿, hooks, rules |
 | pink-turtle | mr-noti-bot | v0.3.0 | 0 | 2026-04-10 | 신규 배포 (Go, GitLab MR→Slack 알림) |
