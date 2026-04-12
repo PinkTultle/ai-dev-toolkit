@@ -5,6 +5,33 @@
 
 ---
 
+## [0.4.0] - 2026-04-12
+
+Claude Code 플러그인(`adt`)으로 전환. 스킬/에이전트/훅을 플러그인 구조로 재배치.
+
+### Added
+- **`.claude-plugin/`**: `plugin.json`, `marketplace.json` — 플러그인 매니페스트
+- **`package.json`**: NPM 메타데이터
+- **`hooks/hooks.json`**: 플러그인 훅 정의 (PostToolUse 줄 수 검사)
+- **커맨드→스킬 변환 5개**: handoff, sync-check, doc-gen, review, decision
+
+### Changed
+- **`skills/`**: `.claude/skills/` → 최상위 `skills/`로 이전 (11개)
+- **`agents/`**: `.claude/agents/` → 최상위 `agents/`로 이전 (12개)
+- **`templates/`**: `.claude/templates/` → 최상위 `templates/`로 이전 (4개)
+- **경로 참조**: `CLAUDE_SKILL_DIR` → `CLAUDE_PLUGIN_ROOT`, `.claude/templates/` → `templates/`
+- **VERSION**: 0.3.0 → 0.4.0
+
+### Removed
+- `.claude/skills/`, `.claude/agents/`, `.claude/commands/`, `.claude/templates/`, `.claude/hooks/`
+- `.claude/settings.json` (훅은 `hooks/hooks.json`으로 이전)
+
+### Kept (변경 없음)
+- `.claude/rules/` — 이 프로젝트 자체의 규칙 (플러그인 범위 밖)
+- `blueprints/`, `claude/`, `workstations/`, `docs/`
+
+---
+
 ## [0.3.0] - 2026-04-10
 
 에이전트 파이프라인 확장, 문서 템플릿 도입, 자동화 강화.

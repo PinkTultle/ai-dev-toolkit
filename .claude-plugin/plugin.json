@@ -1,0 +1,9 @@
+{
+  "name": "adt",
+  "version": "0.4.0",
+  "displayName": "adt — AI Development Toolkit",
+  "description": "AI 개발 파이프라인 — 12 에이전트, 11 스킬, 문서 템플릿, blueprints 지식 체계",
+  "engines": {
+    "claude-code": ">=2.1.78"
+  }
+}

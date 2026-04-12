@@ -1,87 +1,56 @@
-# AI Dev Toolkit
+# adt — AI Development Toolkit
 
-AI 코딩 어시스턴트(Claude Code, Cursor, Copilot 등)의 **지침 라이브러리이자 플랫폼 도구**.
+AI 코딩 어시스턴트의 **지침 라이브러리이자 Claude Code 플러그인**.
 
-> **현재 버전**: [`VERSION`](VERSION) 참조 | **변경 이력**: [`CHANGELOG.md`](CHANGELOG.md)
-
----
-
-## 왜 필요한가?
-
-AI 코딩 어시스턴트를 여러 프로젝트에서 사용하다 보면 같은 지침을 반복 작성하게 된다.
-이 저장소는 그 문제를 해결한다:
-
-- **한 곳에서 관리** — 코딩 표준, Git 워크플로우, 설계 원칙 등을 `blueprints/`에 모아두고 모든 프로젝트가 참조
-- **스킬로 자동화** — 워크스테이션 세팅, 프로젝트 초기화, 설정 구체화를 대화형 명령 하나로 완료
-- **양방향 동기화** — 프로젝트에서 발전한 지침을 라이브러리로 흡수하고, 업데이트를 다른 프로젝트에 전파
+> **버전**: [`VERSION`](VERSION) | **변경 이력**: [`CHANGELOG.md`](CHANGELOG.md)
 
 ---
 
-## 전제 조건
+## 설치
 
-| 항목 | 요구사항 |
-|------|----------|
-| OS | Linux / WSL2 / macOS / **Windows** (Git for Windows 필수) |
-| Git | 2.20 이상 |
-| Claude Code | CLI 또는 Desktop 설치 완료 ([설치 가이드](https://docs.anthropic.com/en/docs/claude-code)) |
-| 패키지 | `jq` (필수), `dos2unix` (WSL2만) |
+```bash
+claude plugin install PinkTultle/ai-dev-toolkit
+```
+
+Claude Code >= 2.1.78 필요.
+
+---
+
+## 무엇을 제공하는가?
+
+| 구분 | 수량 | 역할 |
+|------|------|------|
+| **스킬** | 11개 | 워크스테이션 세팅, 프로젝트 초기화, 코드 리뷰, 문서 자동화 |
+| **에이전트** | 12개 | 개발 파이프라인 (아이디어 → 설계 → 검토 → 구현 → 검증 → 테스트) |
+| **템플릿** | 4개 | Plan, Design, Report, ADR 문서 |
+| **Blueprints** | 6개 | 코딩 표준, Git 워크플로우, 설계 원칙 등 공유 지식 |
 
 ---
 
 ## 빠른 시작
 
-### 1. 클론
-
-**Linux / WSL2 / macOS:**
-```bash
-git clone <repo-url> ~/ai-dev-toolkit
-cd ~/ai-dev-toolkit
-```
-
-**Windows (Git Bash):**
-```bash
-git clone <repo-url> ~/Documents/ai-dev-toolkit
-cd ~/Documents/ai-dev-toolkit
-```
-
-### 2. 워크스테이션 환경 구성 (최초 1회)
-
-Claude Code에서 실행:
-```
-/ai-platform-defconfig
-```
-심볼릭 링크, 패키지 확인, MCP 설정 등을 자동으로 처리한다.
-
-### 3. 프로젝트에 적용
+### 1. 워크스테이션 환경 구성 (최초 1회)
 
 ```
-/project-init ~/my-project        # AI 설정 골격 복제
-/project-configure                 # 대화형으로 기술 스택·컨벤션 구체화
+/adt:ai-platform-defconfig
 ```
 
-> 상세 사용법은 [사용 가이드](docs/usage-guide.md)를 참조한다.
+글로벌 규칙, deny 설정, MCP 등을 자동 구성한다.
 
----
-
-## 워크플로우
+### 2. 프로젝트에 적용
 
 ```
-┌─────────────────────────────────────────────────────┐
-│                    최초 1회                           │
-│  워크스테이션 클론 → /ai-platform-defconfig           │
-└────────────────────────┬────────────────────────────┘
-                         ▼
-┌─────────────────────────────────────────────────────┐
-│                 프로젝트마다                          │
-│  /project-init → /project-configure                  │
-└────────────────────────┬────────────────────────────┘
-                         ▼
-┌─────────────────────────────────────────────────────┐
-│                   유지보수                            │
-│  /project-absorb ← 프로젝트에서 발전한 지침 흡수       │
-│  /project-update → 라이브러리 최신 버전 전파           │
-│  /optimize-docs  → 지침 파일 200줄 제한 유지           │
-└─────────────────────────────────────────────────────┘
+/adt:project-init ~/my-project
+/adt:project-configure
+```
+
+### 3. 개발 중 활용
+
+```
+/adt:review                   # 코드 리뷰
+/adt:doc-gen src/main.c       # 코드 설명 문서 생성
+/adt:decision "API 인증 방식"  # ADR 생성
+/adt:handoff                  # 세션 종료 시 인수인계
 ```
 
 ---
@@ -90,12 +59,51 @@ Claude Code에서 실행:
 
 | 스킬 | 역할 | 실행 시점 |
 |------|------|----------|
-| `/ai-platform-defconfig` | 워크스테이션 환경 구성 (심볼릭 링크, 패키지, MCP) | 최초 1회 |
-| `/project-init` | 타겟 디렉토리에 AI 설정 골격 복제 + 배포 추적 | 프로젝트 시작 시 |
-| `/project-configure` | 대화형으로 기술 스택, 모듈 구조, 컨벤션 구체화 | init 직후 |
-| `/project-update` | 라이브러리 최신 버전을 프로젝트에 적용 (커스텀 보존) | 라이브러리 업데이트 시 |
-| `/project-absorb` | 프로젝트에서 발전한 지침을 라이브러리로 흡수 | 프로젝트 지침 개선 후 |
-| `/optimize-docs` | 지침 파일 줄 수 검사 및 200줄 이내 최적화 | 정기 유지보수 |
+| `adt:ai-platform-defconfig` | 워크스테이션 환경 구성 (심볼릭 링크, 패키지, MCP) | 최초 1회 |
+| `adt:project-init` | 타겟 디렉토리에 AI 설정 골격 복제 + 배포 추적 | 프로젝트 시작 시 |
+| `adt:project-configure` | 대화형으로 기술 스택, 모듈 구조, 컨벤션 구체화 | init 직후 |
+| `adt:project-update` | 라이브러리 최신 버전을 프로젝트에 적용 (커스텀 보존) | 플러그인 업데이트 후 |
+| `adt:project-absorb` | 프로젝트에서 발전한 지침을 라이브러리로 흡수 | 프로젝트 지침 개선 후 |
+| `adt:optimize-docs` | 지침 파일 줄 수 검사 및 200줄 이내 최적화 | 정기 유지보수 |
+| `adt:handoff` | 세션 종료 시 HANDOFF.md 갱신 + 커밋 + 푸시 | 세션 종료 |
+| `adt:sync-check` | blueprints ↔ rules 동기화 상태 점검 | 점검 필요 시 |
+| `adt:doc-gen` | 소스 파일의 코드 설명 문서 자동 생성/갱신 | 코드 변경 후 |
+| `adt:review` | 변경사항 코드 리뷰 (보안/성능/가독성) | 커밋 전 |
+| `adt:decision` | ADR 생성/조회 (아키텍처 결정 기록) | 주요 결정 시 |
+
+## 에이전트 파이프라인
+
+Large 프리셋에서 서브에이전트 파이프라인으로 개발 단계를 자동화한다:
+
+```
+Ideation → Product Manager → Designer → Reviewer → Implementer → Verifier → Tester
+   (sonnet)    (opus)          (opus)     (opus)      (opus)       (sonnet)   (sonnet)
+```
+
+보조 에이전트: Design Validator, Gap Detector, Code Analyzer, Report Generator, CTO Lead
+
+---
+
+## 워크플로우
+
+```
+┌─────────────────────────────────────────────────────┐
+│                    최초 1회                           │
+│  플러그인 설치 → /adt:ai-platform-defconfig           │
+└────────────────────────┬────────────────────────────┘
+                         v
+┌─────────────────────────────────────────────────────┐
+│                 프로젝트마다                          │
+│  /adt:project-init → /adt:project-configure          │
+└────────────────────────┬────────────────────────────┘
+                         v
+┌─────────────────────────────────────────────────────┐
+│                   유지보수                            │
+│  /adt:project-absorb ← 프로젝트에서 발전한 지침 흡수   │
+│  /adt:project-update → 라이브러리 최신 버전 전파       │
+│  /adt:optimize-docs  → 지침 파일 200줄 제한 유지       │
+└─────────────────────────────────────────────────────┘
+```
 
 ---
 
@@ -103,69 +111,38 @@ Claude Code에서 실행:
 
 ```
 ai-dev-toolkit/
-├── .claude/skills/        # 스킬 (이 저장소의 핵심 기능)
+├── .claude-plugin/        # 플러그인 매니페스트
+├── skills/ (11)           # 스킬
+├── agents/ (12)           # 에이전트 파이프라인
+├── templates/ (4)         # 문서 템플릿
+├── hooks/                 # 라이프사이클 훅
 ├── blueprints/            # 도구 무관 공유 지식 (Single Source of Truth)
-├── claude/                # Claude Code 지침 및 템플릿
-│   └── rules/             #   세부 규칙 파일 (paths 기반 조건부 로드)
-├── docs/                  # 사용 가이드 및 산출물
-├── workstations/          # 워크스테이션 환경 상태 + 배포 추적
-├── cursor/                # Cursor (추후 확장)
-├── copilot/               # GitHub Copilot (추후 확장)
-├── windsurf/              # Windsurf (추후 확장)
-├── VERSION                # 현재 라이브러리 버전
-├── VERSIONING.md          # 버전 정책 정의
-└── CHANGELOG.md           # 버전별 변경 이력
+├── claude/                # 배포용 템플릿 (CLAUDE.md, rules)
+├── workstations/          # 워크스테이션 환경 추적
+└── docs/                  # 사용 가이드
 ```
 
-- **`blueprints/`** — 코딩 표준, Git 워크플로우, 설계 원칙 등 모든 도구가 참조하는 공통 지식
-- **`.claude/rules/`** — blueprints를 Claude Code `paths` frontmatter 형태로 변환한 세부 규칙
-- **도구별 디렉토리** — blueprints를 해당 도구 형식에 맞게 변환한 지침
+상세 구조: [`docs/project-structure.md`](docs/project-structure.md)
 
 ---
 
-## 지원 도구
+## 다른 플러그인과의 호환
 
-| 도구 | 상태 | 글로벌 설정 | 프로젝트 설정 |
-|------|------|------------|--------------|
-| Claude Code | **활성** | `~/.claude/CLAUDE.md` + `rules/` | `CLAUDE.md` + `.claude/rules/` |
-| Cursor | 예정 | Settings UI | `.cursor/rules/` |
-| GitHub Copilot | 예정 | — | `.github/` |
-| Windsurf | 예정 | `~/.windsurf/rules/` | `.windsurf/rules/` |
-
-상세 매핑: [`TOOL_REFERENCE.md`](TOOL_REFERENCE.md)
-
----
-
-## 버전 정책
-
-**SemVer + Local** 4자리 체계: `Major.Minor.Patch.Local`
-
-| 위치 | 버전 예시 | 관리 주체 |
-|------|----------|----------|
-| 라이브러리 | `0.1.0` | 이 저장소 (`VERSION` + git tag) |
-| 배포된 프로젝트 | `0.1.0.3` | 각 프로젝트 (`CLAUDE.md` 헤더) |
-
-- **Major**: 기존 프로젝트에 수동 마이그레이션 필요
-- **Minor**: 새 지침/스킬 추가 — 선택적 채택 가능
-- **Patch**: 오타, 표현 개선
-- **Local**: 프로젝트에서 지침 수정 시 증가 — 업데이트 적용 시 리셋
-
-상세 정책: [`VERSIONING.md`](VERSIONING.md)
-
----
-
-## 새 도구 추가
-
-1. 루트에 도구명 디렉토리 생성 (예: `aider/`)
-2. `README.md` 작성 — 설정 형식, 배포 위치, 사용법
-3. `TOOL_REFERENCE.md`에 매핑 정보 추가
-4. blueprints를 해당 도구 형식으로 변환하여 지침 파일 작성
+`adt:` 네임스페이스로 격리되어 다른 플러그인(rkit 등)과 충돌 없이 독립 동작한다.
 
 ---
 
 ## 환경
 
-- Windows 네이티브 (Claude Code Desktop + Git Bash)
-- Windows + WSL2
-- 원격 서버 SSH
-- 주요 도메인: C/C++ 임베디드 시스템
+| 항목 | 요구사항 |
+|------|----------|
+| Claude Code | >= 2.1.78 |
+| OS | Linux / WSL2 / macOS / Windows (Git Bash) |
+| Git | 2.20 이상 |
+| 패키지 | `jq` (필수), `dos2unix` (WSL2만) |
+
+---
+
+## 라이선스
+
+MIT

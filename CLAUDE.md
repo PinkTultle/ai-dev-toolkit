@@ -14,14 +14,14 @@
 
 ## 1. 저장소 개요
 
-AI 코딩 어시스턴트의 **지침 라이브러리이자 플랫폼 도구**.
-워크스테이션 세팅부터 프로젝트 초기화까지 3개 스킬로 자동화된 흐름을 제공한다.
+AI 코딩 어시스턴트의 **지침 라이브러리이자 Claude Code 플러그인(`adt`)**.
+워크스테이션 세팅부터 프로젝트 초기화까지 스킬로 자동화된 흐름을 제공한다.
 
 ### 핵심 흐름
 ```
-워크스테이션 클론 → /ai-platform-defconfig (1회)
+플러그인 설치 → /adt:ai-platform-defconfig (1회)
                         ↓
-              새 프로젝트마다 → /project-init → /project-configure
+              새 프로젝트마다 → /adt:project-init → /adt:project-configure
 ```
 
 > 스킬 목록, 디렉토리 구조, 계층 설명은 [`docs/project-structure.md`](docs/project-structure.md) 참조.

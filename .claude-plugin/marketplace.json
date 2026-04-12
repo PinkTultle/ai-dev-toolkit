@@ -1,0 +1,30 @@
+{
+  "name": "PinkTultle-adt",
+  "owner": {
+    "name": "PinkTultle"
+  },
+  "metadata": {
+    "description": "AI Development Toolkit — development pipeline agents and project scaffolding",
+    "version": "0.4.0"
+  },
+  "plugins": [
+    {
+      "name": "adt",
+      "source": "./",
+      "description": "12 pipeline agents, 11 skills, document templates, blueprints knowledge system",
+      "version": "0.4.0",
+      "author": { "name": "PinkTultle" },
+      "repository": "https://github.com/PinkTultle/ai-dev-toolkit",
+      "license": "MIT",
+      "keywords": [
+        "development-pipeline",
+        "project-scaffolding",
+        "code-review",
+        "blueprints",
+        "agents",
+        "claude-code-plugin"
+      ],
+      "category": "development-tools"
+    }
+  ]
+}
