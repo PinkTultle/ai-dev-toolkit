@@ -144,6 +144,10 @@ cp claude/project_CLAUDE.md <project-root>/CLAUDE.md
 - 도구 디렉토리 추가 시 `README.md`를 반드시 포함한다
 - `TOOL_REFERENCE.md`와 각 도구 `README.md`의 정보를 동기화 상태로 유지한다
 
+### 4.8 응답 말미 규칙
+- 이 저장소는 `rkit`과 무관하므로 `rkit Feature Usage` 리포트(Used/Not Used/Recommended 3줄 블록)는 **생략**한다
+- 대신 다음 작업 제안이 있을 때만 응답 맨 끝에 `💡 다음: <추천>` 한 줄을 붙인다 (제안할 내용이 없으면 생략)
+
 ---
 
 *이 파일은 `ai-dev-toolkit` 저장소 루트에 위치하며, Claude Code가 이 저장소 작업 시 자동 참조합니다.*
