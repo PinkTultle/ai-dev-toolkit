@@ -40,7 +40,7 @@ REPO_DIR=${CLAUDE_PLUGIN_ROOT}
 1. `git show v<기반버전>:claude/project_CLAUDE.md`로 배포 시점 템플릿 추출
 2. 프로젝트 현재 CLAUDE.md와 diff
 3. 변경사항을 **항목 단위**로 분류:
-   - **placeholder 채움** — `/project-configure`가 채운 값 (흡수 대상 아님)
+   - **placeholder 채움** — `/adt:project-configure`가 채운 값 (흡수 대상 아님)
    - **규칙 수정** — 기존 규칙을 변경한 부분
    - **규칙 추가** — 프로젝트에서 새로 추가한 섹션/규칙
    - **규칙 삭제** — 템플릿에 있던 내용을 제거한 부분
@@ -85,7 +85,7 @@ REPO_DIR=${CLAUDE_PLUGIN_ROOT}
 ### 다음 단계
 - 라이브러리 변경 검토 후 커밋
 - 버전 증가 (Minor 또는 Patch) 후 태그
-- 필요 시 /project-update로 다른 프로젝트에 전파
+- 필요 시 /adt:project-update로 다른 프로젝트에 전파
 ```
 
 ## 주의사항
@@ -93,4 +93,4 @@ REPO_DIR=${CLAUDE_PLUGIN_ROOT}
 - placeholder 값(프로젝트명, 경로 등)은 흡수 대상에서 자동 제외
 - 프로젝트 고유의 특수 규칙과 범용화 가능한 규칙을 구분하여 제안
 - 흡수 후 라이브러리에 자동 커밋하지 않음 — 사용자가 검토 후 커밋
-- 흡수 완료 후 `/project-update` 실행을 안내하여 다른 프로젝트에 전파 유도
+- 흡수 완료 후 `/adt:project-update` 실행을 안내하여 다른 프로젝트에 전파 유도

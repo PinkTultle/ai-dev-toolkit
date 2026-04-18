@@ -13,7 +13,7 @@ paths:
 # 임베디드 빌드 환경
 
 > 원본: `blueprints/build-environment.md`
-> 프로젝트 rules 템플릿 — `/project-configure`가 프로젝트에 맞게 커스터마이즈하여 복제
+> 프로젝트 rules 템플릿 — `/adt:project-configure`가 프로젝트에 맞게 커스터마이즈하여 복제
 
 ## 1. 크로스 컴파일 기본 원칙
 

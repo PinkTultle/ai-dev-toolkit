@@ -4,8 +4,8 @@
 > 위치: `<프로젝트 루트>/CLAUDE.md`
 > 글로벌 규칙(`~/.claude/CLAUDE.md`)을 상속하며, 이 파일에서 오버라이드/추가합니다.
 >
-> 이 파일은 `/project-init`으로 복제된 템플릿입니다.
-> `{{...}}` placeholder는 `/project-configure` 또는 수동으로 채우세요.
+> 이 파일은 `/adt:project-init`으로 복제된 템플릿입니다.
+> `{{...}}` placeholder는 `/adt:project-configure` 또는 수동으로 채우세요.
 
 ---
 
@@ -35,7 +35,7 @@ OS/RTOS     : {{OS_RTOS}}
 ├── {{DIRECTORY_STRUCTURE}}
 ```
 
-> `/project-configure` 실행 시 실제 디렉토리 구조를 분석하여 자동 채움
+> `/adt:project-configure` 실행 시 실제 디렉토리 구조를 분석하여 자동 채움
 
 ---
 
@@ -127,7 +127,7 @@ docs/
 
 - `artifacts/` 파일명: `<번호>.<작업명>.md` — 상세 규칙은 글로벌 규칙 **3.2절** 참조
 - `stack/` : blueprints를 프로젝트에 맞게 마이그레이션한 기술 지침 + 로컬 패턴
-  - `/project-configure` 대화 과정에서 관련 blueprint를 프로젝트 맥락에 맞춰 생성
+  - `/adt:project-configure` 대화 과정에서 관련 blueprint를 프로젝트 맥락에 맞춰 생성
   - 각 파일 헤더에 원본 blueprint 출처와 마이그레이션 내역 기록
   - 프로젝트에서 발견한 로컬 패턴도 여기에 누적
   - 예: `coding-standards.md`, `git-workflow.md`, `react.md`

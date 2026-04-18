@@ -7,7 +7,7 @@ allowed-tools: Read, Bash, Glob, Grep, Write, Edit
 
 # Project Configure
 
-`/project-init`으로 복제된 템플릿을 사용자와 대화하며 프로젝트에 맞게 구체화한다.
+`/adt:project-init`으로 복제된 템플릿을 사용자와 대화하며 프로젝트에 맞게 구체화한다.
 
 ## 인자
 
@@ -60,7 +60,7 @@ REPO_DIR=${CLAUDE_PLUGIN_ROOT}
 ## 실행 흐름
 
 1. **현재 상태 파악** — 타겟 디렉토리의 `CLAUDE.md`, `.claude/` 존재 확인
-   - init이 안 되어 있으면 → 먼저 `/project-init` 실행을 안내
+   - init이 안 되어 있으면 → 먼저 `/adt:project-init` 실행을 안내
 2. **기존 프로젝트 분석** — 타겟에 이미 코드가 있으면 구조를 분석하여 제안에 활용
 3. **1문 1답 대화형 수집** — 아래 규칙을 따른다
 4. **구성 플랜 작성** — 수집된 정보로 구성 계획서를 작성하여 사용자 검토

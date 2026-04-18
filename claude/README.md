@@ -22,7 +22,7 @@ Claude Code가 `rules/` 파일을 자동 로드하므로 중복 인라인 불필
 
 **글로벌 규칙 + rules:**
 ```
-/ai-platform-defconfig
+/adt:ai-platform-defconfig
 → 심볼릭 링크 자동 생성:
   · global_CLAUDE.md → ~/.claude/CLAUDE.md
   · .claude/rules/global-*.md → ~/.claude/rules/*.md (접두사 제거)
@@ -30,10 +30,10 @@ Claude Code가 `rules/` 파일을 자동 로드하므로 중복 인라인 불필
 
 **프로젝트 규칙:**
 ```
-/project-init <target-path>
+/adt:project-init <target-path>
 → project_CLAUDE.md를 타겟에 복제
 
-/project-configure
+/adt:project-configure
 → placeholder 채움 + 기술 스택에 맞는 rules 선택 복제
 ```
 

@@ -41,7 +41,7 @@ REPO_DIR=${CLAUDE_PLUGIN_ROOT}
 | 소스 (이 저장소) | 타겟 | 설명 |
 |-----------------|------|------|
 | `claude/project_CLAUDE.md` | `<target>/CLAUDE.md` | 프로젝트 규칙 템플릿 |
-| `skills/project-configure/SKILL.md` | `<target>/.claude/skills/project-configure/SKILL.md` | 프로젝트 구성 스킬 |
+| `skills/adt:project-configure/SKILL.md` | `<target>/.claude/skills/adt:project-configure/SKILL.md` | 프로젝트 구성 스킬 |
 
 ## 실행 흐름
 
@@ -71,13 +71,13 @@ REPO_DIR=${CLAUDE_PLUGIN_ROOT}
    b. 복제된 `CLAUDE.md` 헤더의 `{{BASE_VERSION}}`을 현재 버전으로 치환
    c. `workstations/<alias>.local.json`의 `deployed_projects`에 프로젝트 항목 추가/갱신
    d. `workstations/registry.md`에 현황 갱신
-7. **결과 안내** — 복제된 파일 목록과 다음 단계(`/project-configure`) 안내
+7. **결과 안내** — 복제된 파일 목록과 다음 단계(`/adt:project-configure`) 안내
 
 ## 주의사항
 
 - 타겟 디렉토리가 존재하지 않으면 자동으로 생성(`mkdir -p`)하고, 생성했음을 사용자에게 알린 뒤 진행
 - 기존 파일을 덮어쓰기 전 반드시 확인
 - 갱신(Case 2) 시 덮어쓰기를 선택하면 기존 파일을 `.bak`으로 백업한다
-- 갱신 시 사용자가 `/project-configure`로 채운 커스텀 내용이 유실되지 않도록 주의
+- 갱신 시 사용자가 `/adt:project-configure`로 채운 커스텀 내용이 유실되지 않도록 주의
 - 복제 후 타겟 디렉토리의 git에 자동 커밋하지 않음 — 사용자가 검토 후 커밋
-- 신규 추가(Case 1)된 파일은 placeholder 상태 — `/project-configure`로 구체화 필요함을 안내
+- 신규 추가(Case 1)된 파일은 placeholder 상태 — `/adt:project-configure`로 구체화 필요함을 안내

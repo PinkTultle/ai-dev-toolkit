@@ -17,11 +17,11 @@
 **배포 방법:**
 | 대상 | 스킬 | 수동 |
 |------|------|------|
-| 글로벌 규칙 | `/ai-platform-defconfig` | 심볼릭 링크 생성 |
-| 글로벌 rules | `/ai-platform-defconfig` | `ln -sf .claude/rules/global-*.md ~/.claude/rules/` (접두사 제거) |
-| 프로젝트 규칙 | `/project-init <path>` | `cp claude/project_CLAUDE.md <project-root>/CLAUDE.md` |
-| 프로젝트 rules | `/project-configure` | 기술 스택에 맞는 파일만 복제 |
-| 프로젝트 구체화 | `/project-configure` | `{{...}}` placeholder를 대화형으로 채움 |
+| 글로벌 규칙 | `/adt:ai-platform-defconfig` | 심볼릭 링크 생성 |
+| 글로벌 rules | `/adt:ai-platform-defconfig` | `ln -sf .claude/rules/global-*.md ~/.claude/rules/` (접두사 제거) |
+| 프로젝트 규칙 | `/adt:project-init <path>` | `cp claude/project_CLAUDE.md <project-root>/CLAUDE.md` |
+| 프로젝트 rules | `/adt:project-configure` | 기술 스택에 맞는 파일만 복제 |
+| 프로젝트 구체화 | `/adt:project-configure` | `{{...}}` placeholder를 대화형으로 채움 |
 
 ---
 

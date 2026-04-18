@@ -20,8 +20,8 @@
 - `claude/global_CLAUDE.md`는 rules 인덱스 + 기술 표준 참조 테이블
 
 ### 스킬에서 참조
-- `/project-configure` 스킬이 프로젝트 기술 스택에 맞는 blueprint를 선택하여 rules + `docs/stack/`에 적용
-- `/ai-platform-defconfig`는 `environment.md`의 환경 감지 기준을 활용 + 글로벌 rules 배포
+- `/adt:project-configure` 스킬이 프로젝트 기술 스택에 맞는 blueprint를 선택하여 rules + `docs/stack/`에 적용
+- `/adt:ai-platform-defconfig`는 `environment.md`의 환경 감지 기준을 활용 + 글로벌 rules 배포
 
 ## 새 blueprint 추가
 

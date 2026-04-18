@@ -10,7 +10,7 @@ paths:
 # C/C++ 임베디드 코딩 표준
 
 > 원본: `blueprints/coding-standards.md`
-> 프로젝트 rules 템플릿 — `/project-configure`가 프로젝트에 맞게 커스터마이즈하여 복제
+> 프로젝트 rules 템플릿 — `/adt:project-configure`가 프로젝트에 맞게 커스터마이즈하여 복제
 
 ## 1. 기본 컨벤션
 

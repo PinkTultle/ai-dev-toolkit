@@ -11,7 +11,7 @@ case "$FILE" in
   */SKILL.md|*/blueprints/*.md|*/CLAUDE.md|*/.claude/rules/*.md)
     LINES=$(wc -l < "$FILE")
     if [ "$LINES" -gt 200 ]; then
-      echo "[warn] $FILE: ${LINES}줄 — 200줄 제한 초과. /optimize-docs 실행 권장"
+      echo "[warn] $FILE: ${LINES}줄 — 200줄 제한 초과. /adt:optimize-docs 실행 권장"
     fi
     ;;
 esac

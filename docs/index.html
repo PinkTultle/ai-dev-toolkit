@@ -237,31 +237,31 @@
   <h2>빠른 시작</h2>
 
   <h3>1. 클론</h3>
-  <pre><code><span class="cmd">git clone</span> &lt;repo-url&gt; ~/ai-dev-toolkit
-<span class="cmd">cd</span> ~/ai-dev-toolkit</code></pre>
+  <pre><code><span class="cmd">claude plugin marketplace add</span> PinkTultle/ai-dev-toolkit
+<span class="cmd">claude plugin install</span> adt@PinkTultle-adt</code></pre>
 
   <h3>2. 워크스테이션 세팅 (최초 1회)</h3>
   <pre><code><span class="comment"># Claude Code에서 실행</span>
-<span class="cmd">/ai-platform-defconfig</span></code></pre>
+<span class="cmd">/adt:ai-platform-defconfig</span></code></pre>
   <p style="color:var(--text-dim); font-size:0.9rem;">심볼릭 링크, 패키지 확인, MCP 설정 등을 자동 처리합니다.</p>
 
   <h3>3. 프로젝트에 적용</h3>
-  <pre><code><span class="cmd">/project-init</span> ~/my-project        <span class="comment"># AI 설정 골격 복제</span>
-<span class="cmd">/project-configure</span>                 <span class="comment"># 대화형으로 기술 스택 구체화</span></code></pre>
+  <pre><code><span class="cmd">/adt:project-init</span> ~/my-project        <span class="comment"># AI 설정 골격 복제</span>
+<span class="cmd">/adt:project-configure</span>                 <span class="comment"># 대화형으로 기술 스택 구체화</span></code></pre>
 
   <h3>핵심 워크플로우</h3>
   <div class="flow">
-    <div class="flow-step active">/ai-platform-defconfig</div>
+    <div class="flow-step active">/adt:ai-platform-defconfig</div>
     <div class="flow-arrow">&rarr;</div>
-    <div class="flow-step">/project-init</div>
+    <div class="flow-step">/adt:project-init</div>
     <div class="flow-arrow">&rarr;</div>
-    <div class="flow-step">/project-configure</div>
+    <div class="flow-step">/adt:project-configure</div>
     <div class="flow-arrow">&rarr;</div>
     <div class="flow-step">개발</div>
     <div class="flow-arrow">&rarr;</div>
-    <div class="flow-step">/project-absorb</div>
+    <div class="flow-step">/adt:project-absorb</div>
     <div class="flow-arrow">&harr;</div>
-    <div class="flow-step">/project-update</div>
+    <div class="flow-step">/adt:project-update</div>
   </div>
 </section>
 
@@ -281,12 +281,12 @@
   <table>
     <thead><tr><th>스킬</th><th>역할</th><th>실행 시점</th></tr></thead>
     <tbody>
-      <tr><td><code>/ai-platform-defconfig</code></td><td>워크스테이션 환경 구성</td><td>최초 1회</td></tr>
-      <tr><td><code>/project-init</code></td><td>AI 설정 골격 복제 + 배포 추적</td><td>프로젝트 시작</td></tr>
-      <tr><td><code>/project-configure</code></td><td>대화형 기술 스택 구체화</td><td>init 직후</td></tr>
-      <tr><td><code>/project-update</code></td><td>라이브러리 최신 버전 적용</td><td>업데이트 시</td></tr>
-      <tr><td><code>/project-absorb</code></td><td>프로젝트 지침 역흡수</td><td>지침 개선 후</td></tr>
-      <tr><td><code>/optimize-docs</code></td><td>지침 파일 200줄 제한 유지</td><td>유지보수</td></tr>
+      <tr><td><code>/adt:ai-platform-defconfig</code></td><td>워크스테이션 환경 구성</td><td>최초 1회</td></tr>
+      <tr><td><code>/adt:project-init</code></td><td>AI 설정 골격 복제 + 배포 추적</td><td>프로젝트 시작</td></tr>
+      <tr><td><code>/adt:project-configure</code></td><td>대화형 기술 스택 구체화</td><td>init 직후</td></tr>
+      <tr><td><code>/adt:project-update</code></td><td>라이브러리 최신 버전 적용</td><td>업데이트 시</td></tr>
+      <tr><td><code>/adt:project-absorb</code></td><td>프로젝트 지침 역흡수</td><td>지침 개선 후</td></tr>
+      <tr><td><code>/adt:optimize-docs</code></td><td>지침 파일 200줄 제한 유지</td><td>유지보수</td></tr>
     </tbody>
   </table>
 </section>

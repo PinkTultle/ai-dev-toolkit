@@ -5,7 +5,7 @@ Claude Code의 `.claude/rules/` 기능을 활용한 세분화된 규칙 파일.
 
 ---
 
-## 글로벌 rules (`/ai-platform-defconfig`이 `~/.claude/rules/`에 배포)
+## 글로벌 rules (`/adt:ai-platform-defconfig`이 `~/.claude/rules/`에 배포)
 
 | 소스 파일 | 배포 파일명 | 원본 blueprint | 로드 조건 |
 |-----------|------------|----------------|----------|
@@ -14,7 +14,7 @@ Claude Code의 `.claude/rules/` 기능을 활용한 세분화된 규칙 파일.
 | `global-workflow.md` | `workflow.md` | `design-principles.md` | 항상 |
 | `global-code-review.md` | `code-review.md` | (자체) | C/C++ 파일 |
 
-## 프로젝트 rules 템플릿 (`/project-configure`가 `<project>/.claude/rules/`에 선택 복제)
+## 프로젝트 rules 템플릿 (`/adt:project-configure`가 `<project>/.claude/rules/`에 선택 복제)
 
 | 소스 파일 | 배포 파일명 | 원본 blueprint | 로드 조건 |
 |-----------|------------|----------------|----------|
@@ -24,8 +24,8 @@ Claude Code의 `.claude/rules/` 기능을 활용한 세분화된 규칙 파일.
 
 ## 배포
 
-- **글로벌**: `/ai-platform-defconfig` → 파일 단위 심볼릭 링크 (`global-` 접두사 제거)
-- **프로젝트**: `/project-configure` → 기술 스택에 맞는 파일만 복제 (`project-` 접두사 제거)
+- **글로벌**: `/adt:ai-platform-defconfig` → 파일 단위 심볼릭 링크 (`global-` 접두사 제거)
+- **프로젝트**: `/adt:project-configure` → 기술 스택에 맞는 파일만 복제 (`project-` 접두사 제거)
 - **수동 글로벌**: `ln -sf $(pwd)/claude/rules/global-*.md ~/.claude/rules/` (접두사 수동 제거)
 
 ## blueprints와의 관계

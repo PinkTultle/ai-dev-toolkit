@@ -1,7 +1,7 @@
 # workstations/
 
 워크스테이션별 환경 상태 파일을 저장한다.
-`/ai-platform-defconfig` 스킬이 실행 시 이 디렉토리에 JSON 파일을 생성/갱신한다.
+`/adt:ai-platform-defconfig` 스킬이 실행 시 이 디렉토리에 JSON 파일을 생성/갱신한다.
 
 ## 파일 구조
 
@@ -125,7 +125,7 @@
 ## 갱신 규칙
 
 - defconfig 재실행 시: 공개 JSON의 `defconfig_history`에 항목 추가, 나머지 필드 최신 값으로 갱신
-- `/project-init` 실행 시: 로컬 JSON의 `deployed_projects`에 프로젝트 항목 추가/갱신
+- `/adt:project-init` 실행 시: 로컬 JSON의 `deployed_projects`에 프로젝트 항목 추가/갱신
 - `registry.md`는 위 변경 시 함께 갱신
 - 기존 이력은 보존
 - 다른 워크스테이션 참조 시: `registry.md`(현황) + 공개 JSON(구성)만으로 충분

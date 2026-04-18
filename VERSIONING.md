@@ -124,7 +124,7 @@ workstations/
 라이브러리 새 버전을 기존 프로젝트에 적용하는 프로세스.
 
 1. 라이브러리에서 새 버전 릴리스 (`v0.2.0`)
-2. 프로젝트에서 `/project-init` 재실행 (Case 2: 기존 프로젝트 갱신)
+2. 프로젝트에서 `/adt:project-init` 재실행 (Case 2: 기존 프로젝트 갱신)
 3. 프로젝트 CLAUDE.md의 기반 버전을 `v0.2.0.0`으로 갱신
 4. `deploy.json`의 `base_version`, `last_synced` 갱신
 5. `registry.md` 갱신

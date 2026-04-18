@@ -1,6 +1,6 @@
 # Claude Code 글로벌 규칙 매뉴얼
 > 모든 환경(Windows, WSL2, SSH 원격 서버)에서 일괄 적용되는 규칙입니다.
-> 위치: `~/.claude/CLAUDE.md` (심볼릭 링크 — `/ai-platform-defconfig`가 관리)
+> 위치: `~/.claude/CLAUDE.md` (심볼릭 링크 — `/adt:ai-platform-defconfig`가 관리)
 >
 > **세부 규칙**: `~/.claude/rules/` 디렉토리의 개별 파일로 자동 로드됩니다.
 > rules가 배포되지 않은 환경에서는 `~/ai-dev-toolkit/blueprints/`를 직접 참조하세요.
