@@ -9,8 +9,8 @@
 ## 마지막 작업 요약
 
 **날짜**: 2026-04-12
-**작업 내용**: Claude Code 플러그인(adt) 전환 — v0.3.0 → v0.4.0
-**버전**: v0.4.0
+**작업 내용**: Claude Code 플러그인(adt) 전환 + 잔여 정리 — v0.3.0 → v0.4.1
+**버전**: v0.4.1
 **브랜치**: `main`
 
 ### 이번 세션 완료 작업
@@ -30,15 +30,29 @@
 - [x] **Report**: `docs/04-report/plugin-migration.report.md`
 
 #### 문서 갱신
-- [x] README.md — 마켓플레이스 등록용으로 전면 재작성
+- [x] README.md — 마켓플레이스 등록용으로 전면 재작성 + 2단계 설치 절차 반영
 - [x] CLAUDE.md — 플러그인 흐름 반영
 - [x] docs/project-structure.md — 플러그인 구조 반영
-- [x] CHANGELOG.md — v0.4.0 항목 추가
-- [x] VERSION — 0.4.0
+- [x] CHANGELOG.md — v0.4.0 + v0.4.1 항목 추가
+- [x] VERSION — 0.4.0 → 0.4.1
+
+#### v0.4.1 후속 정리 (19개 파일)
+- [x] 사용자 대면 docs: usage-guide, index.html
+- [x] 템플릿: claude/project_CLAUDE.md, global_CLAUDE.md, README.md
+- [x] 스킬 간 교차 참조: project-init, project-configure, project-absorb
+- [x] rules 템플릿: .claude/rules/project-*.md, README.md
+- [x] 훅 경고 메시지: hooks/post-edit-check.sh
+- [x] 참조 문서: TOOL_REFERENCE, VERSIONING, blueprints/README, workstations/README, CLAUDE.md
+
+#### 플러그인 실설치 검증
+- [x] `claude plugin marketplace add PinkTultle/ai-dev-toolkit` 성공
+- [x] `claude plugin install adt@PinkTultle-adt` 성공 (pink-turtle)
+- [x] rkit과 공존 확인 (skills 11 + agents 12 인식)
+- [x] 재설치로 v0.4.1 최신 content 반영 완료
 
 ### 현재 상태
 
-- **버전**: v0.4.0
+- **버전**: v0.4.1
 - **브랜치**: `main`만 존재
 - **플러그인 이름**: `adt` (AI Development Toolkit)
 - **설치 명령**: `claude plugin install PinkTultle/ai-dev-toolkit`
@@ -78,10 +92,14 @@ $ claude plugin list
 ### 다음 작업 후보
 
 1. **세션 재시작 후 `adt:` 스킬 실호출 검증** — `/adt:project-init` 등 실제 호출 테스트
-2. **배포 프로젝트 v0.4.0 업데이트** — `/adt:project-update`로 기존 프로젝트 갱신
-3. **SessionStart 훅 구현** — blueprints 핵심 규칙을 세션 시작 시 컨텍스트 주입
-4. **다른 워크스테이션 defconfig 재실행** — pink-turtle-rt, pink-turtle-win에 v0.4.0 배포
-5. **README에 설치 명령 2단계 반영** — marketplace add + plugin install 둘 다 안내 필요
+2. **배포 프로젝트 v0.4.1 업데이트** — `/adt:project-update`로 기존 프로젝트 갱신
+3. **SessionStart 훅 구현** — blueprints 핵심 규칙을 세션 시작 시 컨텍스트 주입 (Design Phase 3)
+4. **다른 워크스테이션 defconfig 재실행** — pink-turtle-rt, pink-turtle-win에 v0.4.1 배포
+
+### 학습 사항
+
+- **플러그인 content 변경 시 version 증가 필수**: `claude plugin update`는 version이 변경되어야 재다운로드. 동일 version이면 cache 유지. content만 바꿀 경우에도 patch 버전 bump 필요.
+- **Git rename 추적**: `git mv` 없이도 git은 content 유사도로 rename을 자동 감지 (%로 표시). 히스토리 보존에 유용.
 
 ### 현재 저장소 구조
 
