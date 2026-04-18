@@ -5,6 +5,26 @@
 
 ---
 
+## [0.4.2] - 2026-04-19
+
+배포 프로젝트 3개(NDT-BPE_pork, aralm_program, mr-noti-bot) v0.4.1 업데이트 + 프로젝트에서 발전한 지침 3건을 라이브러리로 흡수.
+
+### Added
+- `blueprints/base-directives.md` §3 "지식 축적 규칙" — AI가 `docs/stack/`, `.claude/rules/`, CLAUDE.md 프로젝트 규칙 섹션 등에 임의로 내용을 추가하지 않고 사용자 합의 내용만 기록 (출처: aralm_program)
+- `claude/project_CLAUDE.md` §7 `docs/archive/YYYY-MM/<feature>/` + `_INDEX.md` 월별 아카이브 패턴 — feature 완료 후 PDCA 산출물을 월별로 보관 (출처: mr-noti-bot)
+- `claude/project_CLAUDE.md` §4.1 다언어 프로젝트용 네이밍 컨벤션 표 예시 주석 (출처: aralm_program)
+- 본 저장소 `CLAUDE.md` §4.8 응답 말미 규칙 — rkit Feature Usage 리포트 생략, `💡 다음: <추천>` 한 줄만 유지
+
+### Changed
+- `.claude/rules/global-communication.md` — 지식 축적 규칙 동기화
+- 배포 프로젝트 3건(NDT-BPE_pork, aralm_program, mr-noti-bot)을 v0.4.1로 갱신 (CLAUDE.md 헤더 + rules 네임스페이스 `/adt:` 통일)
+- `workstations/registry.md` 현황 반영
+
+### Note
+- 배포 프로젝트 업데이트는 CLAUDE.md 헤더 버전과 rules 네임스페이스만 갱신 — 본문 템플릿 확장은 기존 커스텀 보존을 위해 강제 반영하지 않음
+
+---
+
 ## [0.4.1] - 2026-04-12
 
 v0.4.0 플러그인 전환 후 잔여 정리. 모든 문서/템플릿의 스킬 호출 참조를 `/adt:` 네임스페이스로 통일.
