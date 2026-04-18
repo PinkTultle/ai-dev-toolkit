@@ -47,14 +47,14 @@
 
 - **CLAUDE.md 본문 미갱신**: v0.4.1 템플릿의 아키텍처/시크릿/트러블슈팅 가이드 코멘트 확장은 반영하지 않음 — 배포 프로젝트가 이미 자체 커스텀 내용으로 채워져 있어 강제 덮어쓰기 회피
 - **플러그인 로컬 복제본 잔존**: 두 프로젝트 모두 `.claude/{agents,commands,hooks,skills,templates,settings.json}` 유지 중 — 플러그인(`adt`)이 동일 내용 제공하므로 제거 가능하나 파괴적 작업이라 별도 결정 대기
-- **mr-noti-bot 업데이트 필요**: 다른 세션 종료 후 `/adt:project-update mr-noti-bot` 실행
+- **mr-noti-bot 업데이트 대기**: 현재 기능 개발 진행 중 — 해당 기능 구현 완료(브랜치 머지) 후 업데이트. 개발 도중 지침 파일 변경 시 작업 흐름 혼란 및 커밋 섞임 회피
 - **web_hook_server 실체 확인**: registry 기록과 로컬 불일치 — 경로 재확인 또는 registry에서 제거 필요
 - **SessionStart 훅 미구현**: Design Phase 3의 blueprints 컨텍스트 주입 훅은 향후 과제
 - **다른 워크스테이션 미배포**: pink-turtle-rt, pink-turtle-win에 v0.4.1 미적용
 
 ### 다음 작업 후보
 
-1. **mr-noti-bot v0.4.1 업데이트** — 다른 세션 종료 후 `/adt:project-update mr-noti-bot` 실행
+1. **mr-noti-bot v0.4.1 업데이트** — 현재 진행 중인 기능 구현 완료(브랜치 머지) 후 `/adt:project-update mr-noti-bot` 실행
 2. **web_hook_server 실체 확인 후 registry 정정** — 경로 재탐색 또는 registry 항목 제거
 3. **플러그인 로컬 복제본 정리** — NDT-BPE_pork/aralm_program의 `.claude/{agents,commands,hooks,skills,templates,settings.json}` 제거 여부 결정 (플러그인이 제공하므로 중복)
 4. **SessionStart 훅 구현** — blueprints 핵심 규칙을 세션 시작 시 컨텍스트 주입 (Design Phase 3)
