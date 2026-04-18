@@ -82,6 +82,14 @@ OS/RTOS     : {{OS_RTOS}}
 
 ### 4.1 네이밍 컨벤션
 <!-- 모듈 접두사, 함수명 규칙 등 -->
+<!-- 여러 언어/계층이 섞이는 경우 표 형식을 권장:
+| 대상 | 규칙 | 예시 |
+|------|------|------|
+| Rust 함수/변수 | snake_case | set_alarm, alarm_time |
+| Rust 타입/구조체 | PascalCase | AlarmConfig |
+| Svelte 컴포넌트 파일 | PascalCase.svelte | AlarmCard.svelte |
+| 커밋 메시지 | conventional commits | feat:, fix:, docs: |
+-->
 
 ### 4.2 설정/시크릿 파일 규칙
 <!-- 시크릿이 포함된 설정 파일의 보호 규칙을 명시하세요 -->
@@ -120,16 +128,24 @@ docs/
 │   ├── review/          ← 설계 검토 기록
 │   ├── summary/         ← 구현 요약
 │   └── test-report/     ← 테스트 결과
+├── archive/             ← 완료된 feature 보관 (선택)
+│   └── YYYY-MM/
+│       ├── _INDEX.md    ← 월별 완료 항목 목록 (Match Rate, Status)
+│       └── <feature>/   ← feature 단위 산출물 묶음
 ├── stack/               ← 기술 스택별 지침 (언어/프레임워크명.md)
 └── source/              ← 코드 설명 문서 (소스 트리 미러링)
     └── {{SOURCE_TREE}}  ← 코드 디렉토리와 동일 구조
 ```
 
 - `artifacts/` 파일명: `<번호>.<작업명>.md` — 상세 규칙은 글로벌 규칙 **3.2절** 참조
+- `archive/` : 완료된 feature의 산출물을 월별로 보관 (docs 비대화 방지)
+  - 구조: `archive/YYYY-MM/<feature-name>/{plan,design,analysis,report}.md`
+  - `_INDEX.md` : 월별 완료 feature 요약 표 (feature, Match Rate, Status, 문서 링크)
+  - 이관 시점: feature 구현/보고 완료 + 후속 작업 종료 시점
 - `stack/` : blueprints를 프로젝트에 맞게 마이그레이션한 기술 지침 + 로컬 패턴
   - `/adt:project-configure` 대화 과정에서 관련 blueprint를 프로젝트 맥락에 맞춰 생성
   - 각 파일 헤더에 원본 blueprint 출처와 마이그레이션 내역 기록
-  - 프로젝트에서 발견한 로컬 패턴도 여기에 누적
+  - **AI가 임의로 내용을 추가하지 않는다** — 사용자와 합의된 내용만 기록 (글로벌 커뮤니케이션 규칙 참조)
   - 예: `coding-standards.md`, `git-workflow.md`, `react.md`
 - `source/` : 코드 파일(모듈)과 1:1 대응하는 설명 문서
   - 코드 구현·수정 시 대응 문서를 함께 생성/갱신
