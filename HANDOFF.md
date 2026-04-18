@@ -8,47 +8,27 @@
 
 ## 마지막 작업 요약
 
-**날짜**: 2026-04-12
-**작업 내용**: Claude Code 플러그인(adt) 전환 + 잔여 정리 — v0.3.0 → v0.4.1
-**버전**: v0.4.1
+**날짜**: 2026-04-19
+**작업 내용**: 배포 프로젝트 v0.3.0 → v0.4.1 업데이트 (`/adt:project-update`)
+**버전**: v0.4.1 (변경 없음)
 **브랜치**: `main`
 
 ### 이번 세션 완료 작업
 
-#### Claude Code 플러그인 전환 (PDCA 전체 사이클 완료)
-- [x] **Plan**: `docs/01-plan/features/plugin-migration.plan.md`
-- [x] **Design**: `docs/02-design/features/plugin-migration.design.md`
-- [x] **Do**: 플러그인 구조 구현 (7단계)
-  - `.claude-plugin/plugin.json`, `marketplace.json`, `package.json` 생성
-  - `skills/` 11개 (기존 6 이전 + 커맨드 5 변환)
-  - `agents/` 12개 이전, 경로 참조 갱신
-  - `templates/` 4개 이전
-  - `hooks/hooks.json` + `post-edit-check.sh`
-  - 경로 참조: `CLAUDE_SKILL_DIR` → `CLAUDE_PLUGIN_ROOT`
-  - `.claude/{skills,agents,commands,templates,hooks,settings.json}` 삭제
-- [x] **Check**: Gap Analysis 91.9% (불일치 3건은 설계 문서 뒤처짐, 실제 버그 0)
-- [x] **Report**: `docs/04-report/plugin-migration.report.md`
+#### 배포 프로젝트 업데이트 (v0.3.0 → v0.4.1)
+- [x] **NDT-BPE_pork** (`~/side_project/NDT-BPE_pork`)
+  - CLAUDE.md 헤더 버전: `v0.3.0.0` → `v0.4.1.0`
+  - `.claude/rules/*.md` 3개 네임스페이스 통일 (`/project-configure` → `/adt:project-configure`)
+    - build-environment.md, coding-standards.md, git-workflow.md
+- [x] **aralm_program** (`~/side_project/aralm_program`)
+  - CLAUDE.md 헤더 버전: `v0.3.0.0` → `v0.4.1.0`
+  - `.claude/rules/git-workflow.md` 네임스페이스 통일
+- [x] 변경 전 원본 `.bak` 백업 생성
+- [x] `workstations/registry.md` 갱신
 
-#### 문서 갱신
-- [x] README.md — 마켓플레이스 등록용으로 전면 재작성 + 2단계 설치 절차 반영
-- [x] CLAUDE.md — 플러그인 흐름 반영
-- [x] docs/project-structure.md — 플러그인 구조 반영
-- [x] CHANGELOG.md — v0.4.0 + v0.4.1 항목 추가
-- [x] VERSION — 0.4.0 → 0.4.1
-
-#### v0.4.1 후속 정리 (19개 파일)
-- [x] 사용자 대면 docs: usage-guide, index.html
-- [x] 템플릿: claude/project_CLAUDE.md, global_CLAUDE.md, README.md
-- [x] 스킬 간 교차 참조: project-init, project-configure, project-absorb
-- [x] rules 템플릿: .claude/rules/project-*.md, README.md
-- [x] 훅 경고 메시지: hooks/post-edit-check.sh
-- [x] 참조 문서: TOOL_REFERENCE, VERSIONING, blueprints/README, workstations/README, CLAUDE.md
-
-#### 플러그인 실설치 검증
-- [x] `claude plugin marketplace add PinkTultle/ai-dev-toolkit` 성공
-- [x] `claude plugin install adt@PinkTultle-adt` 성공 (pink-turtle)
-- [x] rkit과 공존 확인 (skills 11 + agents 12 인식)
-- [x] 재설치로 v0.4.1 최신 content 반영 완료
+#### 보류/제외
+- **mr-noti-bot**: 다른 세션 활성 중 — 동시 편집 충돌 방지 위해 업데이트 보류 (v0.3.0 유지)
+- **web_hook_server**: registry에 등록되어 있으나 로컬 디스크에서 미발견
 
 ### 현재 상태
 
@@ -61,45 +41,29 @@
 - **템플릿**: 4개 (`templates/`)
 - **훅**: 1개 (`hooks/hooks.json` — PostToolUse 줄 수 검사)
 - **Rules**: `.claude/rules/`에 글로벌 4 + 프로젝트 3 (이 저장소 자체 규칙)
-- **배포 프로젝트**: 4개 (모두 v0.3.0 — 아직 v0.4.0 미배포)
+- **배포 프로젝트**: NDT-BPE_pork(v0.4.1), aralm_program(v0.4.1), mr-noti-bot(v0.3.0 보류), web_hook_server(미발견)
 
 ### 주의사항
 
-- **플러그인 실설치 검증 완료** (2026-04-12): `claude plugin install adt@PinkTultle-adt`로 pink-turtle에 설치 성공, rkit과 공존 확인 (skills 11 + agents 12 인식)
-- **배포 프로젝트 미갱신**: NDT-BPE_pork, aralm_program, mr-noti-bot은 아직 v0.3.0 (`.claude/` 구조)
+- **CLAUDE.md 본문 미갱신**: v0.4.1 템플릿의 아키텍처/시크릿/트러블슈팅 가이드 코멘트 확장은 반영하지 않음 — 배포 프로젝트가 이미 자체 커스텀 내용으로 채워져 있어 강제 덮어쓰기 회피
+- **플러그인 로컬 복제본 잔존**: 두 프로젝트 모두 `.claude/{agents,commands,hooks,skills,templates,settings.json}` 유지 중 — 플러그인(`adt`)이 동일 내용 제공하므로 제거 가능하나 파괴적 작업이라 별도 결정 대기
+- **mr-noti-bot 업데이트 필요**: 다른 세션 종료 후 `/adt:project-update mr-noti-bot` 실행
+- **web_hook_server 실체 확인**: registry 기록과 로컬 불일치 — 경로 재확인 또는 registry에서 제거 필요
 - **SessionStart 훅 미구현**: Design Phase 3의 blueprints 컨텍스트 주입 훅은 향후 과제
-- **다른 워크스테이션 미배포**: pink-turtle-rt, pink-turtle-win에 v0.4.0 미적용
-
-### 플러그인 설치 검증 결과 (2026-04-12)
-
-```
-$ claude plugin marketplace add PinkTultle/ai-dev-toolkit
-✔ Successfully added marketplace: PinkTultle-adt
-
-$ claude plugin install adt@PinkTultle-adt
-✔ Successfully installed plugin: adt@PinkTultle-adt (scope: user)
-
-$ claude plugin list
-  ❯ adt@PinkTultle-adt        Version: 0.4.0   ✔ enabled
-  ❯ rkit@solitasroh-rkit      Version: 0.9.11  ✔ enabled  ← 공존 확인
-```
-
-설치 경로: `~/.claude/plugins/cache/PinkTultle-adt/adt/0.4.0/`
-- skills/: 11개
-- agents/: 12개
-- templates/, hooks/, blueprints/ 모두 정상
+- **다른 워크스테이션 미배포**: pink-turtle-rt, pink-turtle-win에 v0.4.1 미적용
 
 ### 다음 작업 후보
 
-1. **세션 재시작 후 `adt:` 스킬 실호출 검증** — `/adt:project-init` 등 실제 호출 테스트
-2. **배포 프로젝트 v0.4.1 업데이트** — `/adt:project-update`로 기존 프로젝트 갱신
-3. **SessionStart 훅 구현** — blueprints 핵심 규칙을 세션 시작 시 컨텍스트 주입 (Design Phase 3)
-4. **다른 워크스테이션 defconfig 재실행** — pink-turtle-rt, pink-turtle-win에 v0.4.1 배포
+1. **mr-noti-bot v0.4.1 업데이트** — 다른 세션 종료 후 `/adt:project-update mr-noti-bot` 실행
+2. **web_hook_server 실체 확인 후 registry 정정** — 경로 재탐색 또는 registry 항목 제거
+3. **플러그인 로컬 복제본 정리** — NDT-BPE_pork/aralm_program의 `.claude/{agents,commands,hooks,skills,templates,settings.json}` 제거 여부 결정 (플러그인이 제공하므로 중복)
+4. **SessionStart 훅 구현** — blueprints 핵심 규칙을 세션 시작 시 컨텍스트 주입 (Design Phase 3)
+5. **다른 워크스테이션 defconfig 재실행** — pink-turtle-rt, pink-turtle-win에 v0.4.1 배포
 
 ### 학습 사항
 
-- **플러그인 content 변경 시 version 증가 필수**: `claude plugin update`는 version이 변경되어야 재다운로드. 동일 version이면 cache 유지. content만 바꿀 경우에도 patch 버전 bump 필요.
-- **Git rename 추적**: `git mv` 없이도 git은 content 유사도로 rename을 자동 감지 (%로 표시). 히스토리 보존에 유용.
+- **기존 `/adt:project-update` 흐름 관찰**: CLAUDE.md 본문 변경이 "템플릿 코멘트 확장" 수준인 경우, 배포 프로젝트는 이미 내용이 채워져 있어 헤더 버전만 갱신하는 것이 안전. 전체 본문 병합 시도는 커스텀 손실 위험이 큼.
+- **동시 세션 고려**: 활성 세션이 지침 파일을 읽고 작업 중일 때 배포 업데이트를 하면 규칙 변경이 중간에 끼어 혼란 — 활성 세션은 건너뛰는 것이 안전.
 
 ### 현재 저장소 구조
 
