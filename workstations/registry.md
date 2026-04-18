@@ -19,4 +19,4 @@
 | pink-turtle | NDT-BPE_pork | v0.4.1 | 0 | 2026-04-18 | v0.4.1 업데이트 — CLAUDE.md 헤더 + rules 3개 네임스페이스 통일 (/adt:) |
 | pink-turtle | aralm_program | v0.4.1 | 0 | 2026-04-18 | v0.4.1 업데이트 — CLAUDE.md 헤더 + rules(git) 네임스페이스 통일 (/adt:) |
 | pink-turtle | web_hook_server | v0.3.0 | 0 | 2026-04-10 | v0.3.0 업데이트 — 에이전트 11개, 템플릿, hooks, rules (로컬 미발견) |
-| pink-turtle | mr-noti-bot | v0.3.0 | 0 | 2026-04-10 | 신규 배포 (Go, GitLab MR→Slack 알림) — 다른 세션 활성으로 v0.4.1 업데이트 보류 |
+| pink-turtle | mr-noti-bot | v0.4.1 | 0 | 2026-04-19 | v0.4.1 업데이트 — CLAUDE.md 헤더 + rules(git) 네임스페이스 통일 (/adt:) |
