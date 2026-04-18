@@ -51,18 +51,37 @@
 
 ### 주의사항
 
-- **플러그인 실설치 미검증**: 구조는 완성했지만 실제 `claude plugin install`로 설치 테스트 미완료
+- **플러그인 실설치 검증 완료** (2026-04-12): `claude plugin install adt@PinkTultle-adt`로 pink-turtle에 설치 성공, rkit과 공존 확인 (skills 11 + agents 12 인식)
 - **배포 프로젝트 미갱신**: NDT-BPE_pork, aralm_program, mr-noti-bot은 아직 v0.3.0 (`.claude/` 구조)
 - **SessionStart 훅 미구현**: Design Phase 3의 blueprints 컨텍스트 주입 훅은 향후 과제
 - **다른 워크스테이션 미배포**: pink-turtle-rt, pink-turtle-win에 v0.4.0 미적용
 
+### 플러그인 설치 검증 결과 (2026-04-12)
+
+```
+$ claude plugin marketplace add PinkTultle/ai-dev-toolkit
+✔ Successfully added marketplace: PinkTultle-adt
+
+$ claude plugin install adt@PinkTultle-adt
+✔ Successfully installed plugin: adt@PinkTultle-adt (scope: user)
+
+$ claude plugin list
+  ❯ adt@PinkTultle-adt        Version: 0.4.0   ✔ enabled
+  ❯ rkit@solitasroh-rkit      Version: 0.9.11  ✔ enabled  ← 공존 확인
+```
+
+설치 경로: `~/.claude/plugins/cache/PinkTultle-adt/adt/0.4.0/`
+- skills/: 11개
+- agents/: 12개
+- templates/, hooks/, blueprints/ 모두 정상
+
 ### 다음 작업 후보
 
-1. **플러그인 실설치 테스트** — 깨끗한 환경에서 `claude plugin install` 검증
+1. **세션 재시작 후 `adt:` 스킬 실호출 검증** — `/adt:project-init` 등 실제 호출 테스트
 2. **배포 프로젝트 v0.4.0 업데이트** — `/adt:project-update`로 기존 프로젝트 갱신
 3. **SessionStart 훅 구현** — blueprints 핵심 규칙을 세션 시작 시 컨텍스트 주입
-4. **다른 워크스테이션 defconfig 재실행** — pink-turtle-rt, pink-turtle-win
-5. **rkit 동시 사용 테스트** — 두 플러그인 병행 시 충돌 여부 실검증
+4. **다른 워크스테이션 defconfig 재실행** — pink-turtle-rt, pink-turtle-win에 v0.4.0 배포
+5. **README에 설치 명령 2단계 반영** — marketplace add + plugin install 둘 다 안내 필요
 
 ### 현재 저장소 구조
 
