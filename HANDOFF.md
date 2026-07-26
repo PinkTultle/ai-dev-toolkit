@@ -11,7 +11,7 @@
 **날짜**: 2026-07-26
 **작업 내용**: v0.5.0 릴리스 — Claude Code v2.1.220 대응 (동작 결함 2건 수정 + 플랫폼 계층 blueprint 신설) + 배포 프로젝트 3개 전파
 **버전**: v0.4.2 → v0.5.0 → **v0.6.0** (v0.5.0 main 머지·태그 완료)
-**브랜치**: `docs/hygiene-followup` (PR → main 필요). v0.6.0은 main 머지·태그 완료
+**브랜치**: `docs/aralm-branch-rename` (PR → main 필요). v0.6.0은 main 머지·태그 완료
 
 ### 배경
 
@@ -95,6 +95,8 @@
       대상은 x86 리눅스 서버. `paths: Makefile,CMakeLists.txt`
 - [x] 커밋 `0333397` (push 완료). NDT의 rules는 이제 `git-workflow.md` 1개
 - [x] 전체 배포처 마커 재검사 → **0건**
+- [x] aralm_program 브랜치명 `master` → `main` 통일 (`8f618c2`) —
+      CLAUDE.md·rules·실제 브랜치 3자 일치 확인. 커밋 2개·remote 없음이라 리네임이 안전했다
 
 ### 검증 결과
 
@@ -109,7 +111,7 @@
 ### 현재 상태
 
 - **버전**: **v0.6.0** — main 머지 완료 (PR #6 `a85b8b6` / #7 `88295d9` / #8 `e5aa7a2`), 태그 `v0.5.0`·`v0.6.0` 푸시 완료
-- **브랜치**: `docs/hygiene-followup` — 위생 정리 기록용, **PR 미생성**
+- **브랜치**: `docs/aralm-branch-rename` — **PR 미생성**
 - **설치 플러그인**: `adt@PinkTultle-adt` **v0.6.0** (user scope) — 세션 재시작 시 적용
 - **스킬**: 11개 / **에이전트**: 12개 / **템플릿**: 4개 / **Blueprints**: 9개
 - **글로벌 rules**: 5개 (environment, communication, workflow, **platform**(신규), code-review)
@@ -138,14 +140,12 @@
 
 ### 다음 작업 후보
 
-1. **이 브랜치(`docs/hygiene-followup`) PR → main 머지** ← 최우선
-2. **aralm_program 브랜치명 통일** — 로컬은 `master`, CLAUDE.md는 `main` 전제.
-   커밋 2개뿐이라 `git branch -m master main`이 안전
-3. **다른 워크스테이션 defconfig 재실행** — pink-turtle-rt, pink-turtle-win (글로벌 rule 5개로 증가)
-4. **`/adt:sync-check`에 배포 프로젝트 위생 검사 추가 검토** — 지금은 라이브러리 내부
+1. **이 브랜치(`docs/aralm-branch-rename`) PR → main 머지** ← 최우선
+2. **다른 워크스테이션 defconfig 재실행** — pink-turtle-rt, pink-turtle-win (글로벌 rule 5개로 증가)
+3. **`/adt:sync-check`에 배포 프로젝트 위생 검사 추가 검토** — 지금은 라이브러리 내부
    blueprints↔rules 동기화만 본다. 배포처의 마커 잔존/복제본까지 보면 조기 발견이 가능
-5. **SessionStart 훅 구현** — blueprints 핵심 규칙 컨텍스트 주입 (v0.4.x부터 이월)
-6. **web_hook_server registry 행 삭제 판단**
+4. **SessionStart 훅 구현** — blueprints 핵심 규칙 컨텍스트 주입 (v0.4.x부터 이월)
+5. **web_hook_server registry 행 삭제 판단**
 
 ### 학습 사항
 
