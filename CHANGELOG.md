@@ -5,6 +5,36 @@
 
 ---
 
+## [0.6.0] - 2026-07-26
+
+v0.5.0 배포 프로젝트 전파 과정에서 드러난 **배포 스킬의 구조적 결함**을 수정.
+"배포했다는 기록"과 "실제 저장소 상태"가 어긋나던 원인 3가지를 제거.
+
+### Added
+- `/adt:project-configure` — **커스터마이즈 검증** 단계. rules 배포 직후
+  `{{MUST-CUSTOMIZE}}` / 미치환 placeholder / 템플릿 헤더 잔존 / CLAUDE.md↔rules 충돌을
+  검사하고, 해소 전에는 완료로 보지 않는다
+- `/adt:project-update` — **§3.5 위생 검사** 단계. 플러그인 로컬 복제본, 미커스터마이즈 마커,
+  `.bak` 잔존, CLAUDE.md↔rules 충돌을 버전 diff와 별개로 점검
+- `/adt:project-update` — **§6 커밋 단계**. 변경을 미커밋 상태로 남긴 채 종료하지 않는다.
+  push는 대상 저장소의 브랜치 규칙을 읽고 별도 확인
+
+### Changed
+- `.claude/rules/project-git-workflow.md` — 브랜치 전략 블록에 `{{MUST-CUSTOMIZE}}` 마커 추가.
+  기존에는 의견이 담긴 기본값(`develop` 통합 브랜치, main 직접 push 금지)이 평문으로 배포되어,
+  커스터마이즈가 누락돼도 티가 나지 않았다. CLAUDE.md 우선 원칙도 명시
+- `/adt:project-update` — 백업 정책 변경. **git 저장소에서는 `.bak`을 만들지 않는다**
+  (git이 백업을 담당). 이전 정책이 배포 프로젝트에 `.bak` 잔존물을 남겼다
+- `/adt:project-update` — `skills/project-configure/` 복제본 갱신 항목 삭제.
+  v0.4.0 플러그인 전환 이후 프로젝트에 스킬 복제본을 두지 않는다
+
+### Note
+- 배포 프로젝트 2곳(NDT-BPE_pork `c868871`, mr-noti-bot `526818c`)의
+  `rules/git-workflow.md`를 각 CLAUDE.md의 실제 브랜치 구조에 맞게 정정 — 두 파일이 모두
+  항상 로드되는데 브랜치 전략이 서로 모순이었다 (존재하지 않는 `develop` 참조 포함)
+
+---
+
 ## [0.5.0] - 2026-07-26
 
 Claude Code v2.1.79 → **v2.1.220** 3개월치 런타임 변화 반영. 동작하지 않던 훅과 스펙을 위반하던

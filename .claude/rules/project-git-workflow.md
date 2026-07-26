@@ -10,7 +10,12 @@ description: "Git 워크플로우 — 브랜치 전략, Conventional Commits, Wo
 
 ## 1. 브랜치 전략
 
+<!-- {{MUST-CUSTOMIZE}} 아래 블록은 예시다. 프로젝트의 실제 브랜치 구조로 교체하고
+     이 주석과 {{MUST-CUSTOMIZE}} 마커를 삭제할 것. 프로젝트 CLAUDE.md의 Git 섹션과
+     반드시 일치시킨다 — 두 파일 모두 항상 로드되므로 어긋나면 상충 지침이 된다. -->
+
 ```
+{{MUST-CUSTOMIZE}} — 아래는 예시. 실제 브랜치 구조로 교체할 것
 main          → 배포/릴리즈 (직접 push 금지)
 develop       → 통합 브랜치
 feature/xxx   → 기능 개발
@@ -19,6 +24,8 @@ refactor/xxx  → 리팩토링
 docs/xxx      → 문서
 chore/xxx     → 빌드/툴링
 ```
+
+브랜치 구조가 이 파일과 `CLAUDE.md`에서 어긋나면 **`CLAUDE.md`가 우선**한다.
 
 ## 2. 커밋 메시지 컨벤션 (Conventional Commits)
 

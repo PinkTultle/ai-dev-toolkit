@@ -112,7 +112,7 @@ ai-dev-toolkit/                     ← Claude Code 플러그인 (adt)
 ├── workstations/                   # ▼ 워크스테이션 환경 상태 + 배포 추적
 ├── CLAUDE.md                       # 프로젝트 규칙
 ├── HANDOFF.md                      # 세션 간 인수인계
-├── VERSION                         # 0.5.0
+├── VERSION                         # 0.6.0
 └── CHANGELOG.md
 ```
 

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-hooks.json",
-  "description": "adt — AI Development Toolkit v0.5.0",
+  "description": "adt — AI Development Toolkit v0.6.0",
   "hooks": {
     "PostToolUse": [
       {

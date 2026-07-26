@@ -10,8 +10,8 @@
 
 **날짜**: 2026-07-26
 **작업 내용**: v0.5.0 릴리스 — Claude Code v2.1.220 대응 (동작 결함 2건 수정 + 플랫폼 계층 blueprint 신설) + 배포 프로젝트 3개 전파
-**버전**: v0.4.2 → **v0.5.0** (main 머지 완료, 태그 `v0.5.0` 생성)
-**브랜치**: `docs/v0.5.0-propagation` (PR → main 필요)
+**버전**: v0.4.2 → v0.5.0 → **v0.6.0** (v0.5.0 main 머지·태그 완료)
+**브랜치**: `fix/rules-customization-gap` (PR → main 필요)
 
 ### 배경
 
@@ -70,6 +70,19 @@
 > aralm_program은 저장소에 커밋 자체가 하나도 없었다. HANDOFF에는 "업데이트 완료"로 기록돼
 > 있었으므로, 배포 스킬이 파일만 바꾸고 커밋을 남기지 않으면 기록과 실제가 어긋난다.
 
+#### 배포 스킬 결함 수정 (v0.6.0)
+
+전파 과정에서 "기록 ↔ 실제" 괴리의 원인 3가지가 드러나 라이브러리를 고쳤다.
+
+- [x] `project-git-workflow.md` 템플릿에 `{{MUST-CUSTOMIZE}}` 마커 — 의견이 담긴 기본값
+      (`develop` 통합 브랜치, main 직접 push 금지)이 평문으로 배포돼 커스터마이즈 누락이
+      드러나지 않았다. CLAUDE.md 우선 원칙도 명시
+- [x] `/adt:project-configure` — 커스터마이즈 검증 단계 (마커/placeholder/헤더/충돌 검사)
+- [x] `/adt:project-update` — §3.5 위생 검사 (복제본·마커·`.bak`·충돌) + §6 커밋 단계 신설
+- [x] `/adt:project-update` — git 저장소에서는 `.bak`을 만들지 않도록 백업 정책 변경
+- [x] 배포 프로젝트 2곳 `rules/git-workflow.md`를 CLAUDE.md의 실제 브랜치 구조에 맞게 정정
+      (NDT-BPE_pork `c868871`, mr-noti-bot `526818c` — 둘 다 push 완료)
+
 ### 검증 결과
 
 | 항목 | 결과 |
@@ -78,22 +91,23 @@
 | 지침 파일 200줄 제한 | 전부 이내 (최대 `design-principles.md` 185줄) |
 | 에이전트 `name` 스펙 | 12/12 kebab-case |
 | 훅 실동작 (stdin JSON 주입) | 정상 종료 + 200줄 초과 시 경고 확인 |
-| 버전 일관성 | 4개 파일 0.5.0 일치 |
+| 버전 일관성 | VERSION·plugin·marketplace·package 4개 파일 0.6.0 일치 |
 
 ### 현재 상태
 
-- **버전**: v0.5.0 — main 머지 완료(PR #6, squash `a85b8b6`), 태그 `v0.5.0` 푸시 완료
-- **브랜치**: `docs/v0.5.0-propagation` — 전파 기록 반영용, **PR 미생성**
-- **설치 플러그인**: `adt@PinkTultle-adt` v0.5.0 (user scope) — 세션 재시작 시 적용
+- **버전**: **v0.6.0** — v0.5.0은 main 머지(PR #6 `a85b8b6`) + 태그 완료, v0.6.0은 미머지
+- **브랜치**: `fix/rules-customization-gap` — **PR 미생성**
+- **설치 플러그인**: `adt@PinkTultle-adt` v0.5.0 (user scope) — v0.6.0 머지 후 `claude plugin update` 재실행 필요
 - **스킬**: 11개 / **에이전트**: 12개 / **템플릿**: 4개 / **Blueprints**: 9개
 - **글로벌 rules**: 5개 (environment, communication, workflow, **platform**(신규), code-review)
 - **배포 프로젝트**: NDT-BPE_pork · aralm_program · mr-noti-bot 모두 **v0.5.0** (전부 커밋 완료)
 
 ### 주의사항
 
-- **배포 프로젝트 2곳이 미푸시 상태** — NDT-BPE_pork(`92ceb63`), mr-noti-bot(`2cde216`)는
-  로컬 커밋만 되어 있다. 각 프로젝트에서 push 여부를 판단할 것.
-  aralm_program은 remote 자체가 없다
+- **배포 프로젝트 3개는 v0.5.0 기준이다** — v0.6.0의 스킬/템플릿 변경은 아직 전파하지 않았다.
+  다만 v0.6.0 변경은 스킬 절차 위주라 재전파 필요성은 낮다
+- **두 프로젝트의 브랜치 규칙은 실제 이력에 맞춰 정정했다** — rules 템플릿 기본값이
+  CLAUDE.md와 모순이었다. NDT/mr-noti-bot 모두 실제로는 main 직행(머지 커밋 1/83, 0/37)
 - **에이전트 이름 변경은 breaking change** — `adt:Designer Agent` → `adt:designer`.
   저장소 내부 참조와 배포 프로젝트 3개 모두 정리 완료
 - **플랫폼 계층 blueprint 3개는 런타임 의존** — 각 파일 상단에 "검증 버전: v2.1.220"을 명시했다.
@@ -111,12 +125,12 @@
 
 ### 다음 작업 후보
 
-1. **이 브랜치(`docs/v0.5.0-propagation`) PR → main 머지** ← 최우선
-2. **배포 프로젝트 2곳 push 판단** — NDT-BPE_pork, mr-noti-bot 로컬 커밋 미푸시
-3. **다른 워크스테이션 defconfig 재실행** — pink-turtle-rt, pink-turtle-win (글로벌 rule 5개로 증가)
-4. **`/adt:project-update`에 커밋 단계 추가 검토** — 이번 세션에서 드러난 기록↔실제 괴리 원인
-5. **SessionStart 훅 구현** — blueprints 핵심 규칙 컨텍스트 주입 (v0.4.x부터 이월)
-6. **web_hook_server registry 행 삭제 판단**
+1. **이 브랜치(`fix/rules-customization-gap`) PR → main 머지 → `v0.6.0` 태그** ← 최우선
+2. **다른 워크스테이션 defconfig 재실행** — pink-turtle-rt, pink-turtle-win (글로벌 rule 5개로 증가)
+3. **`/adt:sync-check`에 배포 프로젝트 위생 검사 추가 검토** — 지금은 라이브러리 내부
+   blueprints↔rules 동기화만 본다. 배포처의 마커 잔존/복제본까지 보면 조기 발견이 가능
+4. **SessionStart 훅 구현** — blueprints 핵심 규칙 컨텍스트 주입 (v0.4.x부터 이월)
+5. **web_hook_server registry 행 삭제 판단**
 
 ### 학습 사항
 
@@ -135,6 +149,12 @@
 - **플러그인 전환 후 로컬 복제본은 부채가 된다.** v0.4.0에서 플러그인으로 옮긴 뒤에도 프로젝트에
   구 사본이 남아 있었고, v0.5.0의 에이전트 이름 변경으로 스펙 위반 정의가 중복 등록되는
   상태가 됐다. 전환 시점에 정리했어야 할 일이 3개월 뒤 더 큰 문제로 돌아왔다
+- **의견이 담긴 기본값을 평문으로 배포하면 안 된다.** rules 템플릿의 브랜치 전략이
+  `develop` 통합 브랜치를 전제하고 있었는데, 어느 프로젝트에도 `develop`이 없었다.
+  평문이라 커스터마이즈가 누락돼도 티가 나지 않았고, CLAUDE.md와 정면으로 모순된 채
+  3개월간 함께 로드됐다. → 반드시 고쳐야 할 자리는 **마커로 눈에 띄게** 만든다
+- **같은 주제를 두 파일에 적으면 언젠가 어긋난다.** `CLAUDE.md`와 `.claude/rules/*.md`는
+  둘 다 항상 로드된다. 주제가 겹치면 어느 쪽이 우선인지 문서에 명시해야 한다
 
 ### 현재 저장소 구조
 
@@ -143,7 +163,7 @@
 ```
 ai-dev-toolkit/                     ← Claude Code 플러그인 (adt)
 ├── .claude-plugin/
-│   ├── plugin.json                 ← 매니페스트 (v0.5.0, engines >=2.1.202)
+│   ├── plugin.json                 ← 매니페스트 (v0.6.0, engines >=2.1.202)
 │   └── marketplace.json
 ├── package.json
 ├── skills/ (11개)                  ← 스킬 (adt: 접두사)
@@ -161,7 +181,7 @@ ai-dev-toolkit/                     ← Claude Code 플러그인 (adt)
 │   ├── project-structure.md
 │   └── usage-guide.md
 ├── workstations/
-├── VERSION                         ← 0.5.0
+├── VERSION                         ← 0.6.0
 └── CHANGELOG.md
 ```
 
