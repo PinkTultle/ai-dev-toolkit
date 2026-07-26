@@ -3,6 +3,7 @@ name: project-update
 description: 라이브러리 최신 버전을 배포된 프로젝트에 적용 — diff 비교, 커스텀 보존, 버전 갱신
 argument-hint: "[target-directory-path]"
 allowed-tools: Read, Bash, Glob, Grep, Write, Edit
+disable-model-invocation: true
 ---
 
 # Project Update

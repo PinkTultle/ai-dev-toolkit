@@ -5,6 +5,50 @@
 
 ---
 
+## [0.5.0] - 2026-07-26
+
+Claude Code v2.1.79 → **v2.1.220** 3개월치 런타임 변화 반영. 동작하지 않던 훅과 스펙을 위반하던
+에이전트 정의를 수정하고, 플랫폼 계층 지식(에이전트 실행 모델 · 메모리 · 훅)을 blueprint로 신설.
+
+### Fixed
+- **`hooks/post-edit-check.sh` — 훅이 무동작이던 문제**: `$CLAUDE_FILE_PATH` 환경변수는 존재하지
+  않는다. 훅은 stdin JSON(`.tool_input.file_path`)으로 입력을 받는다. v0.4.0 도입 이후 200줄
+  검사가 한 번도 실행되지 않았음. `jq` 미설치 환경 fallback 및 `docs/` 제외 규칙도 함께 추가
+- **에이전트 `name` 스펙 위반 12건**: `Code Analyzer Agent` → `code-analyzer` 형태로 전면 교체.
+  `name`은 소문자와 하이픈만 허용되며, `Agent(<name>)` 권한 규칙과 `SubagentStart` 훅의
+  `agent_type`이 이 값을 사용한다
+
+### Added
+- `blueprints/agent-runtime.md` — 서브에이전트/스킬 프론트매터 전체 필드, 백그라운드 실행 모델,
+  `/subtask`↔`/fork`, 중첩·동시성 상한, 모델·effort 선택 기준
+- `blueprints/memory-and-context.md` — 지침 계층(CLAUDE.md · rules · 스킬 · 훅) 배치 결정,
+  `paths` 스코프 규칙, auto memory(`~/.claude/projects/<project>/memory/`) 운용 규칙
+- `blueprints/hooks.md` — 훅 이벤트 목록, stdin JSON 입출력 계약, `matcher`/`if` 대상 좁히기,
+  작성·검증 규칙
+- `.claude/rules/global-platform.md` → `~/.claude/rules/platform.md` — 위 3개 blueprint의 요약본
+- `TOOL_REFERENCE.md` — Agent Skills 오픈 표준 절. 이식 가능한 핵심 필드와 Claude Code 확장 필드 구분
+
+### Changed
+- 에이전트 12개에 `color` 추가, 설계/검토/검증/구현 4종에 `effort: high` 지정
+- `implementer`에 `isolation: worktree` 실제 적용 — 그간 문서에만 "worktree 격리"라 기재되어 있었음
+- 파괴적·수동 실행 스킬 7개(`ai-platform-defconfig`, `project-init`, `project-configure`,
+  `project-update`, `project-absorb`, `handoff`, `optimize-docs`)에 
+  `disable-model-invocation: true` — AI 자동 호출 차단, `/adt:<name>` 수동 호출만 허용
+- `hooks.json` — `if: "Edit(**/*.md)"`로 대상 축소
+- `blueprints/design-principles.md` §3 — 에이전트명 실물 반영, effort 열 추가, 백그라운드 실행
+  게이트 규칙 추가
+- `blueprints/environment.md` — git worktree 기본 위치(`.claude/worktrees/`) 규칙 추가
+- 최소 요구 버전 `>=2.1.78` → `>=2.1.202` (v2.1.220 검증)
+- `workstations/registry.md` — 워크스테이션 3개 전체 반영, `web_hook_server` 상태 정정
+
+### Note
+- 배포 프로젝트 3개(NDT-BPE_pork, aralm_program, mr-noti-bot)에는 아직 전파하지 않음 —
+  `/adt:project-update`로 별도 진행
+- 플랫폼 계층 blueprint 3개는 런타임 동작에 의존한다. 각 파일 상단의 검증 버전을 확인하고
+  Claude Code 업그레이드 시 함께 갱신할 것
+
+---
+
 ## [0.4.2] - 2026-04-19
 
 배포 프로젝트 3개(NDT-BPE_pork, aralm_program, mr-noti-bot) v0.4.1 업데이트 + 프로젝트에서 발전한 지침 3건을 라이브러리로 흡수.

@@ -14,9 +14,10 @@
 
 | 규칙 파일 | 역할 | 로드 조건 |
 |-----------|------|----------|
-| `rules/environment.md` | 환경 감지 및 적응 (Win/WSL2/SSH) | 항상 |
-| `rules/communication.md` | 응답 언어, 커뮤니케이션 | 항상 |
+| `rules/environment.md` | 환경 감지 및 적응 (Win/WSL2/SSH, worktree 위치) | 항상 |
+| `rules/communication.md` | 응답 언어, 커뮤니케이션, 지식 축적 | 항상 |
 | `rules/workflow.md` | 개발 단계 워크플로우, 산출물 관리 | 항상 |
+| `rules/platform.md` | 서브에이전트 실행, auto memory, 훅 운용 | 항상 |
 | `rules/code-review.md` | 코드 리뷰 체크리스트 | C/C++ 파일 |
 
 ---
@@ -28,6 +29,9 @@
 
 | 주제 | 참조 파일 |
 |------|-----------|
+| 에이전트·스킬 정의 필드, 실행 모델 | `blueprints/agent-runtime.md` |
+| 지침 계층, auto memory 운용 | `blueprints/memory-and-context.md` |
+| 훅 이벤트·입출력 계약 | `blueprints/hooks.md` |
 | C/C++ 코딩 표준 | `blueprints/coding-standards.md` |
 | Git 워크플로우 | `blueprints/git-workflow.md` |
 | 임베디드 빌드 환경 | `blueprints/build-environment.md` |

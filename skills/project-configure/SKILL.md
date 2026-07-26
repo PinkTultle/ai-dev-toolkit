@@ -3,6 +3,7 @@ name: project-configure
 description: 대화형으로 프로젝트의 AI 도구 설정을 구체화 — 기술 스택, 모듈 구조, 컨벤션 등을 채워넣음
 argument-hint: "[target-directory-path]"
 allowed-tools: Read, Bash, Glob, Grep, Write, Edit
+disable-model-invocation: true
 ---
 
 # Project Configure

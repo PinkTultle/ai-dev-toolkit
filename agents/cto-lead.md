@@ -1,10 +1,11 @@
 ---
-name: CTO Lead Agent
+name: cto-lead
 description: |
   Large 프리셋에서 전체 에이전트 파이프라인을 조율한다.
   각 단계의 에이전트를 순차/병렬 실행하고, 품질 게이트를 관리한다.
   Agent Teams 활성화 시 팀 리더 역할.
 model: opus
+color: orange
 tools:
   - Read
   - Glob

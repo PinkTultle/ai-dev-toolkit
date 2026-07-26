@@ -7,11 +7,18 @@
 | 파일 | 역할 |
 |------|------|
 | `base-directives.md` | AI 공통 기본 지침 (응답 언어, 커뮤니케이션) |
-| `environment.md` | 환경 감지 및 적응 (WSL2, SSH) |
+| `environment.md` | 환경 감지 및 적응 (WSL2, SSH, worktree 위치) |
 | `design-principles.md` | 설계 우선 원칙 (계획서, 대안 제안, 문서 산출) |
+| `agent-runtime.md` | 서브에이전트·스킬 정의 필드, 백그라운드 실행 모델, 모델/effort 선택 |
+| `memory-and-context.md` | 지침 계층(CLAUDE.md, rules, 스킬), auto memory 운용 |
+| `hooks.md` | 훅 이벤트·입출력 계약·작성 규칙 |
 | `coding-standards.md` | C/C++ 임베디드 코딩 표준 |
 | `git-workflow.md` | Git 브랜치/커밋/워크트리 규칙 |
 | `build-environment.md` | 크로스 컴파일, 빌드 산출물 구조 |
+
+> `agent-runtime.md` · `memory-and-context.md` · `hooks.md`는 **플랫폼 계층** 지식이다.
+> 도구 런타임 동작에 의존하므로, 각 파일 상단에 검증한 Claude Code 버전을 명시하고
+> 런타임 업그레이드 시 함께 갱신한다.
 
 ## 사용 방식
 

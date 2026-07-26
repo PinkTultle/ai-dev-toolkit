@@ -3,6 +3,7 @@ name: project-absorb
 description: 배포된 프로젝트에서 발전한 지침을 라이브러리로 흡수 — diff 비교, 항목별 채택, blueprints 반영
 argument-hint: "[target-directory-path]"
 allowed-tools: Read, Bash, Glob, Grep, Write, Edit
+disable-model-invocation: true
 ---
 
 # Project Absorb

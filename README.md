@@ -16,7 +16,7 @@ claude plugin marketplace add PinkTultle/ai-dev-toolkit
 claude plugin install adt@PinkTultle-adt
 ```
 
-Claude Code >= 2.1.78 필요.
+Claude Code >= 2.1.202 필요 (v2.1.220에서 검증).
 
 설치 확인:
 ```bash
@@ -32,7 +32,7 @@ claude plugin list
 | **스킬** | 11개 | 워크스테이션 세팅, 프로젝트 초기화, 코드 리뷰, 문서 자동화 |
 | **에이전트** | 12개 | 개발 파이프라인 (아이디어 → 설계 → 검토 → 구현 → 검증 → 테스트) |
 | **템플릿** | 4개 | Plan, Design, Report, ADR 문서 |
-| **Blueprints** | 6개 | 코딩 표준, Git 워크플로우, 설계 원칙 등 공유 지식 |
+| **Blueprints** | 9개 | 코딩 표준, Git 워크플로우, 설계 원칙, 플랫폼 운용 등 공유 지식 |
 
 ---
 
@@ -85,11 +85,14 @@ claude plugin list
 Large 프리셋에서 서브에이전트 파이프라인으로 개발 단계를 자동화한다:
 
 ```
-Ideation → Product Manager → Designer → Reviewer → Implementer → Verifier → Tester
-   (sonnet)    (opus)          (opus)     (opus)      (opus)       (sonnet)   (sonnet)
+ideation → product-manager → designer → reviewer → implementer → verifier → tester
+ (sonnet)      (opus)         (opus)     (opus)    (opus/worktree)  (sonnet)  (sonnet)
 ```
 
-보조 에이전트: Design Validator, Gap Detector, Code Analyzer, Report Generator, CTO Lead
+보조 에이전트: `design-validator`, `gap-detector`, `code-analyzer`, `report-generator`, `cto-lead`
+
+서브에이전트는 기본 백그라운드로 실행된다. 단계 게이트가 있는 파이프라인은 완료를 확인한 뒤
+다음 단계로 넘어간다 — 상세는 [`blueprints/agent-runtime.md`](blueprints/agent-runtime.md).
 
 ---
 
@@ -145,7 +148,7 @@ ai-dev-toolkit/
 
 | 항목 | 요구사항 |
 |------|----------|
-| Claude Code | >= 2.1.78 |
+| Claude Code | >= 2.1.202 (v2.1.220 검증) |
 | OS | Linux / WSL2 / macOS / Windows (Git Bash) |
 | Git | 2.20 이상 |
 | 패키지 | `jq` (필수), `dos2unix` (WSL2만) |

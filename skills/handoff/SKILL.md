@@ -3,6 +3,7 @@ name: handoff
 description: 세션 종료 시 HANDOFF.md 갱신 + 커밋 + 푸시
 argument-hint: ""
 allowed-tools: Read, Write, Edit, Bash, Glob, Grep
+disable-model-invocation: true
 ---
 
 이번 세션의 작업 내용을 정리하여 HANDOFF.md를 갱신하고, 커밋 후 푸시한다.

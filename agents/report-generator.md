@@ -1,10 +1,11 @@
 ---
-name: Report Generator Agent
+name: report-generator
 description: |
   PDCA 사이클 완료 보고서를 자동 생성한다.
   모든 단계의 산출물을 종합하여 최종 보고서를 작성한다.
   Gap Analysis 통과 후 또는 수동으로 실행.
 model: sonnet
+color: pink
 tools:
   - Read
   - Glob

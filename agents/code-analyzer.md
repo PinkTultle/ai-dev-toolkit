@@ -1,10 +1,11 @@
 ---
-name: Code Analyzer Agent
+name: code-analyzer
 description: |
   코드 품질을 심층 분석한다. 보안, 성능, 아키텍처 위반, 중복을 검사한다.
   reviewer가 설계 수준 검토라면, code-analyzer는 코드 수준 심층 분석.
   구현 완료 후 또는 독립적으로 실행 가능.
 model: sonnet
+color: yellow
 tools:
   - Read
   - Glob

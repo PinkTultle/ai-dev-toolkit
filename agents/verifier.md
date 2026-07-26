@@ -1,10 +1,11 @@
 ---
-name: Verifier Agent
+name: verifier
 description: |
   개발 워크플로우 5단계 — 검증.
   설계 의도 대비 구현 결과를 확인하고, 변경 사항을 요약한다.
   모든 프리셋에서 실행된다.
 model: sonnet
+color: cyan
 tools:
   - Read
   - Glob

@@ -25,20 +25,25 @@ AI가 저장소 탐색 시 오리엔테이션용으로 사용한다.
 
 ## 에이전트 (12개)
 
-| 에이전트 | 위치 | 역할 | 모델 |
-|---------|------|------|------|
-| Ideation | `agents/ideation.md` | 아이디어 구체화 | sonnet |
-| Product Manager | `agents/product-manager.md` | 요구사항 구조화 | opus |
-| Designer | `agents/designer.md` | 설계 | opus |
-| Design Validator | `agents/design-validator.md` | 설계 완성도 판정 | sonnet |
-| Reviewer | `agents/reviewer.md` | 설계 검토 | opus |
-| Implementer | `agents/implementer.md` | 구현 (worktree) | opus |
-| Verifier | `agents/verifier.md` | 구현 검증 | sonnet |
-| Gap Detector | `agents/gap-detector.md` | 설계↔구현 매칭율 측정 | sonnet |
-| Code Analyzer | `agents/code-analyzer.md` | 코드 품질 심층 분석 | sonnet |
-| Tester | `agents/tester.md` | 테스트 | sonnet |
-| Report Generator | `agents/report-generator.md` | 완료 보고서 생성 | sonnet |
-| CTO Lead | `agents/cto-lead.md` | Large 팀 오케스트레이션 | opus |
+에이전트 `name`은 **소문자와 하이픈만** 쓰며 파일명과 일치한다.
+호출 시에는 플러그인 네임스페이스가 붙는다 — 예: `adt:designer`.
+
+| 에이전트 | 위치 | 역할 | 모델 | effort | 격리 |
+|---------|------|------|------|--------|------|
+| `ideation` | `agents/ideation.md` | 아이디어 구체화 | sonnet | - | - |
+| `product-manager` | `agents/product-manager.md` | 요구사항 구조화 | opus | - | - |
+| `designer` | `agents/designer.md` | 설계 | opus | high | - |
+| `design-validator` | `agents/design-validator.md` | 설계 완성도 판정 | opus | high | - |
+| `reviewer` | `agents/reviewer.md` | 설계 검토 | opus | high | - |
+| `implementer` | `agents/implementer.md` | 구현 | opus | high | **worktree** |
+| `verifier` | `agents/verifier.md` | 구현 검증 | sonnet | - | - |
+| `gap-detector` | `agents/gap-detector.md` | 설계↔구현 매칭율 측정 | opus | - | - |
+| `code-analyzer` | `agents/code-analyzer.md` | 코드 품질 심층 분석 | sonnet | - | - |
+| `tester` | `agents/tester.md` | 테스트 | sonnet | - | - |
+| `report-generator` | `agents/report-generator.md` | 완료 보고서 생성 | sonnet | - | - |
+| `cto-lead` | `agents/cto-lead.md` | Large 팀 오케스트레이션 | opus | - | - |
+
+프론트매터 필드 전체와 실행 모델은 [`blueprints/agent-runtime.md`](../blueprints/agent-runtime.md) 참조.
 
 ---
 
@@ -77,9 +82,13 @@ ai-dev-toolkit/                     ← Claude Code 플러그인 (adt)
 │   ├── hooks.json
 │   └── post-edit-check.sh
 │
-├── blueprints/                     # ▼ 도구 무관 공유 지식 (Single Source of Truth)
+├── blueprints/ (9개)               # ▼ 도구 무관 공유 지식 (Single Source of Truth)
 │   ├── base-directives.md
+│   ├── environment.md
 │   ├── design-principles.md
+│   ├── agent-runtime.md            #   플랫폼 계층 — 에이전트/스킬 실행 모델
+│   ├── memory-and-context.md       #   플랫폼 계층 — 지침 계층 + auto memory
+│   ├── hooks.md                    #   플랫폼 계층 — 훅 이벤트/계약
 │   ├── coding-standards.md
 │   ├── git-workflow.md
 │   ├── build-environment.md
@@ -103,7 +112,7 @@ ai-dev-toolkit/                     ← Claude Code 플러그인 (adt)
 ├── workstations/                   # ▼ 워크스테이션 환경 상태 + 배포 추적
 ├── CLAUDE.md                       # 프로젝트 규칙
 ├── HANDOFF.md                      # 세션 간 인수인계
-├── VERSION                         # 0.4.0
+├── VERSION                         # 0.5.0
 └── CHANGELOG.md
 ```
 

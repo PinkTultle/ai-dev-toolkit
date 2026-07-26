@@ -30,6 +30,12 @@ description: "환경 감지 및 적응 — Windows/WSL2/SSH 환경별 동작 조
 - `git worktree` 경로는 반드시 WSL2 파일시스템 내부(`~/` 또는 `/home/...`)에 위치
 - Windows 실행파일(`.exe`) 호출이 필요한 경우 명시적으로 경고 후 진행
 
+## git worktree 위치
+
+프로젝트의 `.claude/worktrees/` 밖에 worktree를 만들면 확인 프롬프트가 뜬다.
+자동화 흐름에서는 기본 위치를 그대로 쓰고, 벗어나야 하면 이유를 먼저 밝힌다.
+프로젝트가 `/mnt/c/`에 있는 WSL2 환경에서는 **worktree만 `/home/` 하위로 분리**한다.
+
 ## SSH 원격 환경
 
 - 툴체인 경로는 절대경로 사용 (환경변수 의존 최소화)

@@ -1,10 +1,13 @@
 ---
-name: Implementer Agent
+name: implementer
 description: |
   개발 워크플로우 4단계 — 구현.
   확정된 설계에 따라 코드를 작성한다.
-  worktree 격리 환경에서 실행을 권장한다.
+  `isolation: worktree`로 임시 git worktree에 격리되어 실행된다.
 model: opus
+isolation: worktree
+effort: high
+color: green
 tools:
   - Read
   - Glob
