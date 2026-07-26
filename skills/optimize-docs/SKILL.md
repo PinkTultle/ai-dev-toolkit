@@ -3,6 +3,7 @@ name: optimize-docs
 description: 지침 파일의 줄 수를 확인하고, 200줄 초과 파일을 의미 보존하며 최적화
 argument-hint: "[파일 경로 — 생략 시 전체 스캔]"
 allowed-tools: Read, Bash, Glob, Grep, Edit
+disable-model-invocation: true
 ---
 
 # Optimize Docs

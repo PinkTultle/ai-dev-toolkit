@@ -1,10 +1,12 @@
 ---
-name: Designer Agent
+name: designer
 description: |
   개발 워크플로우 2단계 — 설계.
   ideation 산출물을 기반으로 구현 접근 방식, 트레이드오프, 대안을 설계한다.
   Medium/Large 프리셋에서 실행된다.
 model: opus
+effort: high
+color: blue
 tools:
   - Read
   - Glob

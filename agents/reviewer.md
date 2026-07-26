@@ -1,10 +1,12 @@
 ---
-name: Reviewer Agent
+name: reviewer
 description: |
   개발 워크플로우 3단계 — 설계 검토.
   design 산출물을 비판적으로 검토하고, 피드백과 개선안을 제시한다.
   Large 프리셋에서 실행된다. 품질 루프의 검토자 역할.
 model: opus
+effort: high
+color: purple
 tools:
   - Read
   - Glob

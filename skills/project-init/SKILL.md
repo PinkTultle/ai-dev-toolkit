@@ -3,6 +3,7 @@ name: project-init
 description: 타겟 디렉토리에 AI 도구 설정 골격(CLAUDE.md, .claude/ 등)을 복제하여 초기 구성을 준비
 argument-hint: "[target-directory-path]"
 allowed-tools: Read, Bash, Glob, Grep, Write, Edit
+disable-model-invocation: true
 ---
 
 # Project Init

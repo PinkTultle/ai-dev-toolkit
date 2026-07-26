@@ -28,7 +28,19 @@
 
 - Windows 경로(`C:\...`)와 Linux 경로(`/mnt/c/...`) 혼용 금지 — 항상 Linux 경로 사용
 - `git worktree` 경로는 반드시 WSL2 파일시스템 내부(`~/` 또는 `/home/...`)에 위치
+  — `/mnt/c/` 경로는 성능 저하와 심볼릭 링크 문제를 일으킨다
 - Windows 실행파일(`.exe`) 호출이 필요한 경우 명시적으로 경고 후 진행
+
+### git worktree 위치
+
+프로젝트의 `.claude/worktrees/` **밖**에 worktree를 만들면 확인 프롬프트가 뜬다.
+자동화 흐름에서는 기본 위치를 그대로 쓰고, 벗어나야 한다면 이유를 먼저 밝힌다.
+
+| 상황 | 위치 |
+|------|------|
+| 기본 (에이전트 격리, 단기 작업) | `<project>/.claude/worktrees/` |
+| 장기 병렬 브랜치 작업 | `~/worktrees/<project>-<branch>` 등 홈 하위 경로 |
+| WSL2에서 프로젝트가 `/mnt/c/`에 있는 경우 | **worktree만 `/home/` 하위로 분리** |
 
 ---
 

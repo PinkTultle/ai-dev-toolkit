@@ -1,10 +1,11 @@
 ---
-name: Tester Agent
+name: tester
 description: |
   개발 워크플로우 6단계 — 테스트.
   빌드, 단위 테스트, 통합 테스트를 실행하고 결과를 보고한다.
   Medium(선택)/Large 프리셋에서 실행된다.
 model: sonnet
+color: orange
 tools:
   - Read
   - Glob

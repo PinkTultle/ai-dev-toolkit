@@ -1,14 +1,15 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-hooks.json",
-  "description": "adt — AI Development Toolkit v0.4.0",
+  "description": "adt — AI Development Toolkit v0.5.0",
   "hooks": {
     "PostToolUse": [
       {
         "matcher": "Write|Edit",
+        "if": "Edit(**/*.md)",
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/post-edit-check.sh $CLAUDE_FILE_PATH",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/post-edit-check.sh",
             "timeout": 5000
           }
         ]

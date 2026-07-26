@@ -12,6 +12,7 @@ Claude Code의 `.claude/rules/` 기능을 활용한 세분화된 규칙 파일.
 | `global-environment.md` | `environment.md` | `environment.md` | 항상 |
 | `global-communication.md` | `communication.md` | `base-directives.md` | 항상 |
 | `global-workflow.md` | `workflow.md` | `design-principles.md` | 항상 |
+| `global-platform.md` | `platform.md` | `agent-runtime.md` + `memory-and-context.md` + `hooks.md` | 항상 |
 | `global-code-review.md` | `code-review.md` | (자체) | C/C++ 파일 |
 
 ## 프로젝트 rules 템플릿 (`/adt:project-configure`가 `<project>/.claude/rules/`에 선택 복제)

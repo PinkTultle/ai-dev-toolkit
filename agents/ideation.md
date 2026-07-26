@@ -1,10 +1,11 @@
 ---
-name: Ideation Agent
+name: ideation
 description: |
   개발 워크플로우 1단계 — 아이디어 구체화.
   작업 요청을 분석하고 코드베이스를 탐색하여 목적, 범위, 제약조건을 명확화한다.
   Medium/Large 프리셋의 첫 단계로 실행된다.
 model: sonnet
+color: green
 tools:
   - Read
   - Glob

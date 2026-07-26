@@ -127,21 +127,25 @@ docs/source/          ← 소스 트리와 동일한 구조
 
 ### 3.1 단계별 에이전트 구성
 
-| 단계 | 에이전트 타입 | 모델 | 격리 | 산출물 |
-|------|-------------|------|------|--------|
-| 아이디어 구체화 | Explore | sonnet | - | ideation/ — 목적, 범위, 제약조건 |
-| 설계 | Plan | **opus** | - | design/ — 접근 방식, 트레이드오프, 대안 |
-| 설계 검토 | Plan | **opus** | - | review/ — 피드백 이력, 승인 기록 |
-| 구현 | general-purpose | **opus** | **worktree** | implementation/ + 코드 |
-| 검증 | Explore | sonnet | - | summary/ — 설계 대비 구현 비교, 한계/개선점 |
-| 테스트 | general-purpose | sonnet | - | test-report/ — 실행 결과, 실패 분석 |
+| 단계 | 에이전트 | 모델 | effort | 격리 | 산출물 |
+|------|---------|------|--------|------|--------|
+| 아이디어 구체화 | `ideation` | sonnet | - | - | ideation/ — 목적, 범위, 제약조건 |
+| 설계 | `designer` | **opus** | high | - | design/ — 접근 방식, 트레이드오프, 대안 |
+| 설계 검토 | `reviewer` | **opus** | high | - | review/ — 피드백 이력, 승인 기록 |
+| 구현 | `implementer` | **opus** | high | **worktree** | implementation/ + 코드 |
+| 검증 | `verifier` | sonnet | - | - | summary/ — 설계 대비 구현 비교, 한계/개선점 |
+| 테스트 | `tester` | sonnet | - | - | test-report/ — 실행 결과, 실패 분석 |
 
-프로젝트 CLAUDE.md에서 모델 선택을 오버라이드할 수 있다 (예: 전원 opus).
+에이전트 정의 파일의 프론트매터 필드와 모델/effort 선택 기준은 `agent-runtime.md` 참조.
+프로젝트 CLAUDE.md에서 모델·effort를 오버라이드할 수 있다.
 
 ### 3.2 핵심 규칙
 
 - 서브에이전트는 **이전 단계 산출물 파일만 참조** — 대화 맥락에 의존하지 않는다
+  (서브에이전트는 부모 세션의 auto memory를 상속받지 않는다 — `memory-and-context.md` 참조)
 - 단계 간 **사용자 확인 게이트** — 산출물 확인 → 승인 후 다음 단계 진행
+- **게이트가 있는 단계는 결과를 기다린다** — 서브에이전트는 기본적으로 백그라운드로 실행되므로,
+  다음 단계의 입력이 되는 산출물은 완료 알림을 확인한 뒤 진행한다 (`agent-runtime.md` 2절)
 - 특정 단계만 재실행 시 **별도 세션에서 해당 산출물 경로를 지정**하여 실행 가능
 - 더 나은 방법이 있으면 설계 단계에서 **능동적으로 대안을 제안**한다
 

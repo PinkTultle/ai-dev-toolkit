@@ -53,18 +53,20 @@ docs/artifacts/
 
 ### 단계별 에이전트 구성
 
-| 단계 | 에이전트 타입 | 모델 | 격리 | 산출물 |
-|------|-------------|------|------|--------|
-| 아이디어 구체화 | Explore | sonnet | - | ideation/ |
-| 설계 | Plan | **opus** | - | design/ |
-| 설계 검토 | Plan | **opus** | - | review/ |
-| 구현 | general-purpose | **opus** | **worktree** | implementation/ + 코드 |
-| 검증 | Explore | sonnet | - | summary/ |
-| 테스트 | general-purpose | sonnet | - | test-report/ |
+| 단계 | 에이전트 | 모델 | effort | 격리 | 산출물 |
+|------|---------|------|--------|------|--------|
+| 아이디어 구체화 | `ideation` | sonnet | - | - | ideation/ |
+| 설계 | `designer` | **opus** | high | - | design/ |
+| 설계 검토 | `reviewer` | **opus** | high | - | review/ |
+| 구현 | `implementer` | **opus** | high | **worktree** | implementation/ + 코드 |
+| 검증 | `verifier` | sonnet | - | - | summary/ |
+| 테스트 | `tester` | sonnet | - | - | test-report/ |
 
 - 서브에이전트는 **이전 단계 산출물 파일만 참조** — 대화 맥락에 의존하지 않는다
 - 단계 간 **사용자 확인 게이트** — 산출물 확인 → 승인 후 다음 단계 진행
-- 프로젝트 CLAUDE.md에서 모델 선택을 오버라이드할 수 있다
+- 서브에이전트는 기본 백그라운드 실행이므로, **게이트가 있는 단계는 완료를 확인한 뒤** 진행한다
+  (상세: `platform.md` 2절)
+- 프로젝트 CLAUDE.md에서 모델·effort를 오버라이드할 수 있다
 
 ### 에이전트 팀 (Large 프리셋)
 

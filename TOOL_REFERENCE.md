@@ -68,4 +68,20 @@
 | 프로젝트 설정 | `CLAUDE.md` + `.claude/rules/` | `.cursor/rules/` | `.github/` | `.windsurf/rules/` |
 | 파일 형식 | Markdown | MDC | Markdown | Markdown |
 | 다중 파일 | 다중 (`CLAUDE.md` + `rules/`) | 다중 | 다중 | 다중 |
-| 스킬/자동화 | `.claude/skills/` | - | - | - |
+| 스킬 (`SKILL.md`) | 네이티브 + 확장 필드 | 지원 | 지원 | 지원 |
+| 훅 / 서브에이전트 | 지원 | 부분 | - | - |
+
+---
+
+## Agent Skills 오픈 표준
+
+`SKILL.md`(디렉토리 + YAML frontmatter + 마크다운 본문)는 **도구 중립 오픈 표준**이다.
+Claude Code 외에도 Cursor, Gemini CLI, Kiro, Goose, Junie 등 다수 도구가 같은 파일을 읽는다.
+
+- **이식 가능한 핵심**: `name`, `description`, 본문, 참조 파일
+- **Claude Code 확장 필드**: `disable-model-invocation`, `user-invocable`, `context: fork`,
+  `agent`, `background`, `model`, `effort` — 다른 도구에서는 무시된다
+
+> 스킬을 작성할 때 **핵심 절차는 표준 필드와 본문으로** 표현하고, 확장 필드는 호출 제어 등
+> 부가 동작에만 쓴다. 그러면 같은 스킬이 다른 도구에서도 열화 없이 동작한다.
+> 필드 상세: `blueprints/agent-runtime.md` 4절.

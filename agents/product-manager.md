@@ -1,10 +1,11 @@
 ---
-name: Product Manager Agent
+name: product-manager
 description: |
   요구사항을 구조화하여 Plan 문서를 생성한다.
   ideation 에이전트의 발산적 분석을 구조화된 Plan으로 변환한다.
   Medium/Large 프리셋에서 ideation 직후 또는 대체로 실행 가능.
 model: opus
+color: blue
 tools:
   - Read
   - Glob

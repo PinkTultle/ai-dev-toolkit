@@ -3,6 +3,7 @@ name: ai-platform-defconfig
 description: 워크스테이션 최초 세팅 — 사용자 정보, 경로, 심볼릭 링크, 패키지, MCP 등 AI 플랫폼 기반 구성
 argument-hint: ""
 allowed-tools: Read, Bash, Glob, Grep, Write, Edit
+disable-model-invocation: true
 ---
 
 # AI Platform Defconfig
@@ -52,6 +53,7 @@ allowed-tools: Read, Bash, Glob, Grep, Write, Edit
 | `.claude/rules/global-environment.md` | `~/.claude/rules/environment.md` | 환경 감지 규칙 |
 | `.claude/rules/global-communication.md` | `~/.claude/rules/communication.md` | 커뮤니케이션 규칙 |
 | `.claude/rules/global-workflow.md` | `~/.claude/rules/workflow.md` | 워크플로우 규칙 |
+| `.claude/rules/global-platform.md` | `~/.claude/rules/platform.md` | 에이전트/메모리/훅 운용 |
 | `.claude/rules/global-code-review.md` | `~/.claude/rules/code-review.md` | 코드 리뷰 기준 |
 
 rules 배포 절차:
