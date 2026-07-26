@@ -9,9 +9,9 @@
 ## 마지막 작업 요약
 
 **날짜**: 2026-07-26
-**작업 내용**: v0.5.0 릴리스 — Claude Code v2.1.220 대응 (동작 결함 2건 수정 + 플랫폼 계층 blueprint 신설)
-**버전**: v0.4.2 → **v0.5.0**
-**브랜치**: `feat/cc-2.1.220-modernize` (PR → main 필요)
+**작업 내용**: v0.5.0 릴리스 — Claude Code v2.1.220 대응 (동작 결함 2건 수정 + 플랫폼 계층 blueprint 신설) + 배포 프로젝트 3개 전파
+**버전**: v0.4.2 → **v0.5.0** (main 머지 완료, 태그 `v0.5.0` 생성)
+**브랜치**: `docs/v0.5.0-propagation` (PR → main 필요)
 
 ### 배경
 
@@ -57,6 +57,19 @@
       (`design-validator`/`gap-detector`는 문서상 sonnet이었으나 실제 opus), blueprints 9개 반영
 - [x] 버전 문자열 4곳 동기화 (VERSION, plugin.json, marketplace.json, package.json)
 
+#### 배포 프로젝트 3개 전파 (v0.4.1 → v0.5.0)
+
+- [x] **플러그인 업데이트** — user scope `adt` 0.4.1 → 0.5.0 (`claude plugin update`)
+- [x] **로컬 복제본 제거** — 3개 프로젝트 각 23파일(`.claude/{agents,commands,hooks,skills,templates}`).
+      v0.3.0 시절 사본이라 에이전트 `name`이 구 형식이었고 플러그인과 중복 등록 상태였음.
+      제거 전 라이브러리와 diff 대조 — 흡수할 프로젝트 커스터마이징 없음을 확인
+- [x] `CLAUDE.md` 기반 버전 `v0.4.1.0` → `v0.5.0` + `/adt:` 네임스페이스 통일, `*.bak` 제거
+- [x] 커밋: NDT-BPE_pork `92ceb63` / mr-noti-bot `2cde216` / aralm_program `7ca83a3`(초기 커밋)
+
+> **전파 중 발견**: 4월의 v0.4.1 배포가 3개 프로젝트 모두 **커밋되지 않은 채** 방치돼 있었다.
+> aralm_program은 저장소에 커밋 자체가 하나도 없었다. HANDOFF에는 "업데이트 완료"로 기록돼
+> 있었으므로, 배포 스킬이 파일만 바꾸고 커밋을 남기지 않으면 기록과 실제가 어긋난다.
+
 ### 검증 결과
 
 | 항목 | 결과 |
@@ -69,33 +82,39 @@
 
 ### 현재 상태
 
-- **버전**: v0.5.0 (태그 미생성 — main 머지 후 생성)
-- **브랜치**: `feat/cc-2.1.220-modernize` — **PR 미생성**
+- **버전**: v0.5.0 — main 머지 완료(PR #6, squash `a85b8b6`), 태그 `v0.5.0` 푸시 완료
+- **브랜치**: `docs/v0.5.0-propagation` — 전파 기록 반영용, **PR 미생성**
+- **설치 플러그인**: `adt@PinkTultle-adt` v0.5.0 (user scope) — 세션 재시작 시 적용
 - **스킬**: 11개 / **에이전트**: 12개 / **템플릿**: 4개 / **Blueprints**: 9개
 - **글로벌 rules**: 5개 (environment, communication, workflow, **platform**(신규), code-review)
-- **배포 프로젝트**: NDT-BPE_pork(v0.4.1), aralm_program(v0.4.1), mr-noti-bot(v0.4.1)
+- **배포 프로젝트**: NDT-BPE_pork · aralm_program · mr-noti-bot 모두 **v0.5.0** (전부 커밋 완료)
 
 ### 주의사항
 
-- **에이전트 이름 변경은 breaking change** — 기존에 `adt:Designer Agent` 식으로 참조하던 곳이
-  있으면 `adt:designer`로 바꿔야 한다. 저장소 내부 참조는 전부 갱신했으나 배포 프로젝트는 미확인
+- **배포 프로젝트 2곳이 미푸시 상태** — NDT-BPE_pork(`92ceb63`), mr-noti-bot(`2cde216`)는
+  로컬 커밋만 되어 있다. 각 프로젝트에서 push 여부를 판단할 것.
+  aralm_program은 remote 자체가 없다
+- **에이전트 이름 변경은 breaking change** — `adt:Designer Agent` → `adt:designer`.
+  저장소 내부 참조와 배포 프로젝트 3개 모두 정리 완료
 - **플랫폼 계층 blueprint 3개는 런타임 의존** — 각 파일 상단에 "검증 버전: v2.1.220"을 명시했다.
   Claude Code 업그레이드 시 함께 갱신할 것
 - **`memory` 필드는 의도적으로 켜지 않았다** — 에이전트별 auto memory는 디스크에 학습을 누적하므로
   프로젝트별 합의 후 활성화하도록 blueprint에 옵션으로만 문서화
-- **배포 프로젝트 3개 미전파** — 이번 세션은 라이브러리만. `/adt:project-update`로 별도 진행
 - **web_hook_server** — 2026-07-26 재확인 결과 로컬에 없음. registry에 취소선으로 표시,
   다음 확인에서도 없으면 행 삭제
 - **다른 워크스테이션 미배포** — pink-turtle-rt, pink-turtle-win은 v0.3.0 상태.
   v0.5.0에서 글로벌 rule이 하나 늘었으므로 defconfig 재실행 필요
+- **`/adt:project-update`에 커밋 단계가 없다** — 이번에 4월 배포분이 3개 프로젝트 모두
+  미커밋으로 방치된 걸 발견했다. 스킬에 "변경 후 커밋 제안" 단계를 넣을지 검토 필요
+- **로컬에 머지된 `feat/cc-2.1.220-modernize` 브랜치 잔존** — squash 머지라 git이 미머지로
+  판단한다. 내용은 main과 동일(diff 없음). `git branch -D`로 삭제 가능
 
 ### 다음 작업 후보
 
-1. **PR 생성 → main 머지 → `v0.5.0` 태그** ← 최우선
-2. **배포 프로젝트 3개 v0.5.0 전파** — `/adt:project-update`. 에이전트 이름 변경 참조 확인 포함
+1. **이 브랜치(`docs/v0.5.0-propagation`) PR → main 머지** ← 최우선
+2. **배포 프로젝트 2곳 push 판단** — NDT-BPE_pork, mr-noti-bot 로컬 커밋 미푸시
 3. **다른 워크스테이션 defconfig 재실행** — pink-turtle-rt, pink-turtle-win (글로벌 rule 5개로 증가)
-4. **플러그인 로컬 복제본 정리** — 배포 프로젝트 3개의 `.claude/{agents,commands,hooks,skills,templates}`
-   제거 여부 결정 (v0.4.2부터 이월된 미결 항목)
+4. **`/adt:project-update`에 커밋 단계 추가 검토** — 이번 세션에서 드러난 기록↔실제 괴리 원인
 5. **SessionStart 훅 구현** — blueprints 핵심 규칙 컨텍스트 주입 (v0.4.x부터 이월)
 6. **web_hook_server registry 행 삭제 판단**
 
@@ -110,6 +129,13 @@
   플랫폼 계층은 3개월이면 낡는다. 파일 상단 버전 명시가 다음 세션의 갱신 판단 근거가 된다
 - **정기 동향 점검이 필요하다.** 3개월 공백 동안 스펙 위반 2건이 누적됐다.
   릴리스마다 changelog를 훑는 루틴이 있었다면 조기에 잡혔을 것
+
+- **배포 기록과 실제 저장소 상태는 별개다.** 4월 HANDOFF에 "3개 프로젝트 업데이트 완료"라고
+  적혀 있었지만 실제로는 파일만 바뀌고 **한 곳도 커밋되지 않았다**. aralm_program은 커밋 자체가
+  없었다. → 배포 작업의 완료 판정은 "파일 변경"이 아니라 **"커밋 존재"**로 해야 한다
+- **플러그인 전환 후 로컬 복제본은 부채가 된다.** v0.4.0에서 플러그인으로 옮긴 뒤에도 프로젝트에
+  구 사본이 남아 있었고, v0.5.0의 에이전트 이름 변경으로 스펙 위반 정의가 중복 등록되는
+  상태가 됐다. 전환 시점에 정리했어야 할 일이 3개월 뒤 더 큰 문제로 돌아왔다
 
 ### 현재 저장소 구조
 
