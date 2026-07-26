@@ -20,9 +20,9 @@
 
 | 워크스테이션 | 프로젝트 | 경로 | 기반 버전 | Local | 배포일 | 비고 |
 |-------------|---------|------|----------|-------|--------|------|
-| pink-turtle | NDT-BPE_pork | `~/side_project/NDT-BPE_pork` | **v0.5.0** | 0 | 2026-07-26 | 복제본 제거 + rules 3개 추적 시작 (`92ceb63`, 미푸시) |
-| pink-turtle | aralm_program | `~/side_project/aralm_program` | **v0.5.0** | 0 | 2026-07-26 | 초기 커밋 생성 (`7ca83a3`). remote 없음 |
-| pink-turtle | mr-noti-bot | `~/side_project/mr-noti-bot` | **v0.5.0** | 0 | 2026-07-26 | 복제본 25파일 제거 (`2cde216`, 미푸시) |
+| pink-turtle | NDT-BPE_pork | `~/side_project/NDT-BPE_pork` | **v0.5.0** | 0 | 2026-07-26 | 복제본 제거 + rules 위생 정리 (`92ceb63`·`c868871`·`0333397`, push 완료). rules는 `git-workflow.md` 1개만 |
+| pink-turtle | aralm_program | `~/side_project/aralm_program` | **v0.5.0** | 0 | 2026-07-26 | 초기 커밋 (`7ca83a3`) + rules 정정 (`d338541`). remote 없음. **로컬 브랜치가 `master`인데 CLAUDE.md는 `main` 전제 — 통일 필요** |
+| pink-turtle | mr-noti-bot | `~/side_project/mr-noti-bot` | **v0.5.0** | 0 | 2026-07-26 | 복제본 25파일 제거 + rules 정정 (`2cde216`·`526818c`, push 완료) |
 | ~~pink-turtle~~ | ~~web_hook_server~~ | (실체 없음) | ~~v0.3.0~~ | - | 2026-04-10 | **2026-07-26 확인: 로컬에 존재하지 않음.** 재확인 후에도 없으면 이 행을 삭제 |
 
 ### v0.5.0 전파 내용 (2026-07-26)
@@ -37,5 +37,18 @@
 - 프로젝트에 남기는 것: `CLAUDE.md`, `.claude/rules/`, `.claude/settings*.json`
 
 > **전파 시 발견**: 4월의 v0.4.1 배포가 3개 프로젝트 모두 **커밋되지 않은 채** 방치되어 있었다
-> (aralm_program은 커밋 자체가 없었음). 배포 스킬이 파일만 바꾸고 커밋을 남기지 않으면
-> registry 기록과 실제 저장소 상태가 어긋난다 — `/adt:project-update`에 커밋 단계 추가 검토 필요.
+> (aralm_program은 커밋 자체가 없었음). → v0.6.0에서 `/adt:project-update`에 커밋 단계 신설.
+
+### rules 위생 정리 (2026-07-26, v0.6.0 검증 절차 적용 결과)
+
+배포된 `.claude/rules/*.md`가 템플릿 기본값 그대로여서 각 프로젝트 `CLAUDE.md`와 모순인 사례를 정리.
+두 파일 모두 **항상 로드**되므로 상충 지침이 동시에 주입되고 있었다.
+
+| 프로젝트 | 파일 | 문제 | 조치 |
+|---------|------|------|------|
+| 3개 전부 | `git-workflow.md` | 템플릿 기본값이 `develop` 통합 브랜치 + main 직접 push 금지를 전제. 어느 프로젝트에도 `develop`이 없고 CLAUDE.md와 모순 | CLAUDE.md의 실제 브랜치 구조로 정정 |
+| NDT-BPE_pork | `coding-standards.md` | 템플릿과 byte 동일. 타입 PascalCase·`g_`/`k_` 접두사 강제가 CLAUDE.md §4.1 "원본 컨벤션 유지"와 모순. 예시는 모터 제어 도메인 | 제거 (CLAUDE.md §4가 대체) |
+| NDT-BPE_pork | `build-environment.md` | 템플릿과 byte 동일. 임베디드 크로스 컴파일 규칙인데 대상은 x86 스토리지 서버 | 제거 |
+
+> **교훈**: `paths` frontmatter가 걸린 rules는 해당 파일을 열 때마다 조용히 로드된다.
+> 미커스터마이즈 상태를 방치하면 무관한 도메인의 규칙이 계속 주입된다.
