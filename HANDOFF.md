@@ -11,7 +11,7 @@
 **날짜**: 2026-07-26
 **작업 내용**: v0.5.0 릴리스 — Claude Code v2.1.220 대응 (동작 결함 2건 수정 + 플랫폼 계층 blueprint 신설) + 배포 프로젝트 3개 전파
 **버전**: v0.4.2 → v0.5.0 → **v0.6.0** (v0.5.0 main 머지·태그 완료)
-**브랜치**: `fix/rules-customization-gap` (PR → main 필요)
+**브랜치**: `docs/hygiene-followup` (PR → main 필요). v0.6.0은 main 머지·태그 완료
 
 ### 배경
 
@@ -80,8 +80,21 @@
 - [x] `/adt:project-configure` — 커스터마이즈 검증 단계 (마커/placeholder/헤더/충돌 검사)
 - [x] `/adt:project-update` — §3.5 위생 검사 (복제본·마커·`.bak`·충돌) + §6 커밋 단계 신설
 - [x] `/adt:project-update` — git 저장소에서는 `.bak`을 만들지 않도록 백업 정책 변경
-- [x] 배포 프로젝트 2곳 `rules/git-workflow.md`를 CLAUDE.md의 실제 브랜치 구조에 맞게 정정
-      (NDT-BPE_pork `c868871`, mr-noti-bot `526818c` — 둘 다 push 완료)
+- [x] 배포 프로젝트 3곳 `rules/git-workflow.md`를 CLAUDE.md의 실제 브랜치 구조에 맞게 정정
+      (NDT-BPE_pork `c868871`, mr-noti-bot `526818c`, aralm_program `d338541`)
+
+#### v0.6.0 검증 절차를 즉시 적용한 결과 (rules 위생)
+
+새로 만든 마커 검사를 배포처에 돌려 2건을 추가 발견했다. 둘 다 **템플릿과 byte 단위 동일** —
+배포 후 한 번도 조정되지 않았고 `paths`가 걸려 있어 조용히 계속 로드되고 있었다.
+
+- [x] NDT-BPE_pork `coding-standards.md` 제거 — 타입 PascalCase·`g_`/`k_` 접두사 강제가
+      CLAUDE.md §4.1 "구조체/타입 혼용 상태(원본 컨벤션 유지)"와 모순. 예시는 모터 제어 도메인
+      (`MotorStatus_t`)인데 대상은 SPDK/NVMe 스토리지 프로젝트. `paths: **/*.c,**/*.h`
+- [x] NDT-BPE_pork `build-environment.md` 제거 — 임베디드 크로스 컴파일 규칙인데
+      대상은 x86 리눅스 서버. `paths: Makefile,CMakeLists.txt`
+- [x] 커밋 `0333397` (push 완료). NDT의 rules는 이제 `git-workflow.md` 1개
+- [x] 전체 배포처 마커 재검사 → **0건**
 
 ### 검증 결과
 
@@ -95,9 +108,9 @@
 
 ### 현재 상태
 
-- **버전**: **v0.6.0** — v0.5.0은 main 머지(PR #6 `a85b8b6`) + 태그 완료, v0.6.0은 미머지
-- **브랜치**: `fix/rules-customization-gap` — **PR 미생성**
-- **설치 플러그인**: `adt@PinkTultle-adt` v0.5.0 (user scope) — v0.6.0 머지 후 `claude plugin update` 재실행 필요
+- **버전**: **v0.6.0** — main 머지 완료 (PR #6 `a85b8b6` / #7 `88295d9` / #8 `e5aa7a2`), 태그 `v0.5.0`·`v0.6.0` 푸시 완료
+- **브랜치**: `docs/hygiene-followup` — 위생 정리 기록용, **PR 미생성**
+- **설치 플러그인**: `adt@PinkTultle-adt` **v0.6.0** (user scope) — 세션 재시작 시 적용
 - **스킬**: 11개 / **에이전트**: 12개 / **템플릿**: 4개 / **Blueprints**: 9개
 - **글로벌 rules**: 5개 (environment, communication, workflow, **platform**(신규), code-review)
 - **배포 프로젝트**: NDT-BPE_pork · aralm_program · mr-noti-bot 모두 **v0.5.0** (전부 커밋 완료)
@@ -125,12 +138,14 @@
 
 ### 다음 작업 후보
 
-1. **이 브랜치(`fix/rules-customization-gap`) PR → main 머지 → `v0.6.0` 태그** ← 최우선
-2. **다른 워크스테이션 defconfig 재실행** — pink-turtle-rt, pink-turtle-win (글로벌 rule 5개로 증가)
-3. **`/adt:sync-check`에 배포 프로젝트 위생 검사 추가 검토** — 지금은 라이브러리 내부
+1. **이 브랜치(`docs/hygiene-followup`) PR → main 머지** ← 최우선
+2. **aralm_program 브랜치명 통일** — 로컬은 `master`, CLAUDE.md는 `main` 전제.
+   커밋 2개뿐이라 `git branch -m master main`이 안전
+3. **다른 워크스테이션 defconfig 재실행** — pink-turtle-rt, pink-turtle-win (글로벌 rule 5개로 증가)
+4. **`/adt:sync-check`에 배포 프로젝트 위생 검사 추가 검토** — 지금은 라이브러리 내부
    blueprints↔rules 동기화만 본다. 배포처의 마커 잔존/복제본까지 보면 조기 발견이 가능
-4. **SessionStart 훅 구현** — blueprints 핵심 규칙 컨텍스트 주입 (v0.4.x부터 이월)
-5. **web_hook_server registry 행 삭제 판단**
+5. **SessionStart 훅 구현** — blueprints 핵심 규칙 컨텍스트 주입 (v0.4.x부터 이월)
+6. **web_hook_server registry 행 삭제 판단**
 
 ### 학습 사항
 
@@ -155,6 +170,11 @@
   3개월간 함께 로드됐다. → 반드시 고쳐야 할 자리는 **마커로 눈에 띄게** 만든다
 - **같은 주제를 두 파일에 적으면 언젠가 어긋난다.** `CLAUDE.md`와 `.claude/rules/*.md`는
   둘 다 항상 로드된다. 주제가 겹치면 어느 쪽이 우선인지 문서에 명시해야 한다
+- **`paths`가 걸린 rules는 조용히 로드된다.** NDT에 배포된 임베디드 빌드 규칙과 모터 제어
+  예시가 담긴 C 표준이, 해당 확장자 파일을 열 때마다 3개월간 주입되고 있었다.
+  사용자도 AI도 눈치채기 어렵다 — **자동 검사가 아니면 못 잡는다**
+- **고친 검증 절차는 즉시 돌려본다.** v0.6.0의 마커 검사를 만들자마자 배포처에 적용해
+  2건을 추가로 찾았다. 규칙만 추가하고 실행하지 않았다면 다음 세션까지 남았을 것
 
 ### 현재 저장소 구조
 
