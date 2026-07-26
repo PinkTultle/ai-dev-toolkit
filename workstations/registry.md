@@ -21,7 +21,7 @@
 | 워크스테이션 | 프로젝트 | 경로 | 기반 버전 | Local | 배포일 | 비고 |
 |-------------|---------|------|----------|-------|--------|------|
 | pink-turtle | NDT-BPE_pork | `~/side_project/NDT-BPE_pork` | **v0.5.0** | 0 | 2026-07-26 | 복제본 제거 + rules 위생 정리 (`92ceb63`·`c868871`·`0333397`, push 완료). rules는 `git-workflow.md` 1개만 |
-| pink-turtle | aralm_program | `~/side_project/aralm_program` | **v0.5.0** | 0 | 2026-07-26 | 초기 커밋 (`7ca83a3`) + rules 정정 (`d338541`). remote 없음. **로컬 브랜치가 `master`인데 CLAUDE.md는 `main` 전제 — 통일 필요** |
+| pink-turtle | aralm_program | `~/side_project/aralm_program` | **v0.5.0** | 0 | 2026-07-26 | 초기 커밋 (`7ca83a3`) + rules 정정 (`d338541`) + 브랜치명 `master`→`main` 통일 (`8f618c2`). remote 없음 |
 | pink-turtle | mr-noti-bot | `~/side_project/mr-noti-bot` | **v0.5.0** | 0 | 2026-07-26 | 복제본 25파일 제거 + rules 정정 (`2cde216`·`526818c`, push 완료) |
 | ~~pink-turtle~~ | ~~web_hook_server~~ | (실체 없음) | ~~v0.3.0~~ | - | 2026-04-10 | **2026-07-26 확인: 로컬에 존재하지 않음.** 재확인 후에도 없으면 이 행을 삭제 |
 
