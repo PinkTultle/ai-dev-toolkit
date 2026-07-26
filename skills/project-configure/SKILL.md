@@ -99,6 +99,28 @@ REPO_DIR=${CLAUDE_PLUGIN_ROOT}
 2. 조건에 맞는 rules 템플릿을 복제 (`project-` 접두사 제거)
    - 예: `project-coding-standards.md` → `<target>/.claude/rules/coding-standards.md`
 3. 복제된 rules 파일 내 프로젝트 커스터마이즈 (모듈 접두사, 브랜치 전략 등 대화에서 수집한 정보 반영)
+4. **커스터마이즈 검증** — 아래 검사를 통과할 때까지 완료로 보지 않는다
+
+### 커스터마이즈 검증 (필수)
+
+rules 배포 직후 다음을 확인한다. 하나라도 걸리면 **사용자에게 알리고 해소한 뒤** 진행한다.
+
+```bash
+# 미치환 마커 / 템플릿 헤더 잔존 검사
+grep -rn 'MUST-CUSTOMIZE\|{{.*}}\|프로젝트 rules 템플릿' <target>/.claude/rules/ <target>/CLAUDE.md
+```
+
+| 검사 | 조치 |
+|------|------|
+| `{{MUST-CUSTOMIZE}}` 잔존 | 해당 섹션을 프로젝트 실제 값으로 교체 |
+| `{{...}}` placeholder 잔존 | 대화에서 수집한 값으로 치환 |
+| `프로젝트 rules 템플릿 — ...` 헤더 잔존 | 배포본에는 불필요 — 삭제 |
+| CLAUDE.md와 rules의 내용 충돌 | **CLAUDE.md 기준으로 rules를 맞춘다** |
+
+> 마지막 항목이 특히 중요하다. `CLAUDE.md`와 `.claude/rules/*.md`는 **둘 다 항상 로드**되므로,
+> 브랜치 전략처럼 같은 주제를 다른 내용으로 적어두면 AI가 상충하는 지침을 동시에 받는다.
+> 실제로 배포 프로젝트에서 "CLAUDE.md: main 직접 커밋" ↔ "rules: main 직접 push 금지"가
+> 3개월간 공존한 사례가 있다.
 
 ### rules와 docs/stack/ 역할 분리
 
