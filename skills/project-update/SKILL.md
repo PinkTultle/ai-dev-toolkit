@@ -69,6 +69,9 @@ grep -rn 'MUST-CUSTOMIZE\|{{.*}}\|프로젝트 rules 템플릿' <target>/.claude
 
 # (c) 이전 업데이트가 남긴 백업 파일
 find <target> -name '*.bak' -not -path '*/.git/*'
+
+# (d) v0.7.0에서 제거된 파이프라인 참조 — 단계별 산출물 디렉토리, 삭제된 에이전트 이름
+grep -rnE 'docs/artifacts|ideation|designer|implementer|cto-lead|report-generator' <target>/CLAUDE.md <target>/.claude/rules/
 ```
 
 | 발견 | 조치 |
@@ -76,6 +79,7 @@ find <target> -name '*.bak' -not -path '*/.git/*'
 | (a) 로컬 복제본 | 플러그인이 동일 내용을 제공하므로 **제거를 제안**한다. 제거 전 라이브러리 최신본과 diff하여 흡수할 프로젝트 커스터마이징이 없는지 확인 — 있으면 `/adt:project-absorb` 안내 |
 | (b) 마커 잔존 | 미커스터마이즈 상태 — 사용자와 함께 실제 값으로 채운다 |
 | (c) `.bak` | 커밋 이력이 있으면 불필요 — 제거를 제안한다 |
+| (d) 옛 파이프라인 참조 | 존재하지 않는 에이전트·디렉토리를 가리킨다 — 사용자와 함께 현재 구조(`blueprints/design-principles.md` 1절)에 맞게 고친다 |
 
 **`CLAUDE.md`와 `.claude/rules/*.md`의 내용 충돌도 확인한다.** 둘 다 항상 로드되므로
 같은 주제(브랜치 전략 등)를 다르게 적어두면 AI가 상충 지침을 받는다. 충돌 시 CLAUDE.md 기준.

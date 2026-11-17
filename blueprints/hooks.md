@@ -59,7 +59,7 @@ FILE=$(printf '%s' "$INPUT" | jq -r '.tool_input.file_path // empty')
 | 위험 명령 차단 | `PreToolUse` (exit 2) |
 | 세션 시작 시 컨텍스트 주입 | `SessionStart` |
 | 지침 파일 로드 디버깅 | `InstructionsLoaded` |
-| 파이프라인 단계 완료 추적 | `SubagentStop` / `TaskCompleted` |
+| 서브에이전트 작업 완료 추적 | `SubagentStop` / `TaskCompleted` |
 
 ---
 
