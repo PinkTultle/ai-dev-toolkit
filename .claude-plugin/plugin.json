@@ -3,6 +3,10 @@
   "version": "0.6.0",
   "displayName": "adt — AI Development Toolkit",
   "description": "AI 지침 라이브러리 — 10 스킬, blueprints 지식 체계, 프로젝트 배포·추적",
+  "author": {
+    "name": "PinkTultle"
+  },
+  "license": "MIT",
   "engines": {
     "claude-code": ">=2.1.202"
   }
