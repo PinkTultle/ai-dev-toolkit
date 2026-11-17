@@ -1,7 +1,7 @@
 # 에이전트 · 스킬 실행 모델
 
 > 도구 무관 공유 지식 — 서브에이전트와 스킬의 정의·실행 규칙
-> Claude Code 기준 검증 버전: **v2.1.220**. 다른 도구는 지원 필드가 다를 수 있다.
+> Claude Code 기준 검증 버전: **v2.1.326**. 다른 도구는 지원 필드가 다를 수 있다.
 
 ---
 
@@ -18,21 +18,27 @@
 | `tools` | | 허용 도구 목록. 생략 시 전체 상속 |
 | `disallowedTools` | | 상속/지정 목록에서 제외할 도구 |
 | `model` | | `sonnet` `opus` `haiku` `fable` \| 전체 모델 ID \| `inherit` (기본) |
-| `effort` | | `low` `medium` `high` `xhigh` `max` — 세션 effort를 덮어씀 |
+| `effort` | | `low` `medium` `high` `xhigh` `max` — 세션 effort를 덮어씀. 환경변수 `CLAUDE_CODE_SUBAGENT_EFFORT`로 일괄 지정 가능 |
 | `isolation` | | `worktree` — 임시 git worktree에서 실행. 변경이 없으면 자동 정리 |
 | `background` | | `true`면 항상 백그라운드. 미지정 시 런타임이 판단 (기본 백그라운드) |
 | `permissionMode` | | `default` `acceptEdits` `auto` `dontAsk` `bypassPermissions` `plan`. **플러그인 에이전트에서는 무시됨** |
 | `maxTurns` | | 에이전트 루프 상한 |
+| `autoCompactWindow` | | 이 에이전트의 자동 압축 기준 컨텍스트 크기 |
+| `omitClaudeMd` | | `true`면 CLAUDE.md를 이 에이전트 컨텍스트에 넣지 않는다 |
 | `skills` | | 시작 시 컨텍스트에 선주입할 스킬 (설명이 아닌 전문이 주입된다) |
 | `memory` | | `user` `project` `local` — 에이전트 전용 영속 메모리 활성화 |
 | `mcpServers` | | 이 에이전트가 쓸 MCP 서버. **플러그인 에이전트에서는 무시됨** |
+| `hooks` / `initialPrompt` | | 에이전트 전용 훅 / 시작 프롬프트. **플러그인 에이전트에서는 무시됨** |
+| `experimental.cacheTtl` | | 프롬프트 캐시 유지 시간 `5m` \| `1h` |
 | `color` | | `red` `blue` `green` `yellow` `purple` `orange` `pink` `cyan` |
 
 ### 1.2 규칙
 
 - `name`은 **파일명과 일치**시킨다 — 강제는 아니지만 권한 규칙(`Agent(name)`)과 훅
   (`SubagentStart`의 `agent_type`)이 이 값을 쓰므로 불일치는 추적을 어렵게 한다
-- 플러그인으로 배포하는 에이전트에는 `permissionMode` / `mcpServers`를 넣지 않는다 — 무시된다
+- 플러그인으로 배포하는 에이전트에는 `hooks` / `mcpServers` / `permissionMode` / `initialPrompt`를
+  넣지 않는다 — 무시된다. 훅은 `hooks/hooks.json`, MCP는 `.mcp.json`에 둔다
+- 신규 모델에서는 `TodoWrite`와 `Task*` 도구를 쓸 수 없다 — 에이전트·스킬 지시가 이 도구를 전제하지 않게 쓴다
 - `memory`는 **기본으로 켜지 않는다**. 디스크에 학습 내용을 누적하므로 프로젝트별로 합의 후 활성화
 
 ---
@@ -65,9 +71,9 @@
 |------|--------|---------|
 | 중첩 생성 깊이 | 3 | `CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH` |
 | 동시 실행 수 | 20 | `CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS` |
-| 세션당 총 생성 수 | 200 | `CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION` |
 
-파이프라인이 상한에 닿을 규모라면 **단계를 나누어 순차 실행**한다. 상한에 걸린 생성은 실패한다.
+동시 실행 상한에 닿을 규모라면 **작업을 나누어 순차 실행**한다. 상한에 걸린 생성은 실패한다.
+세션당 총 생성 수 상한은 없다.
 
 ---
 
@@ -94,8 +100,12 @@ Claude Code 외 다수 도구가 읽는다. 아래 표에서 ★는 Claude Code 
 |------|------|
 | `name` | 표시 이름. 생략 시 디렉토리명 |
 | `description` | **가장 중요한 필드** — 자동 선택 근거. 핵심 use case를 맨 앞에 |
+| `when_to_use` ★ | 언제 쓸지에 대한 보충 설명. `description`과 합쳐 목록에 실린다 |
 | `argument-hint` | 자동완성 힌트 (`[file-path]`) |
 | `allowed-tools` | 이 스킬이 호출된 턴 동안 권한 확인 없이 쓸 도구 |
+| `disallowed-tools` ★ | 스킬 활성 중 쓰지 못하게 할 도구 |
+| `paths` ★ | 이 glob에 맞는 파일을 다룰 때만 스킬을 후보로 올린다 |
+| `shell` ★ | 스킬 본문의 명령 실행에 쓸 셸 |
 | `model` / `effort` ★ | 스킬 활성 중 모델·effort 오버라이드 |
 | `disable-model-invocation` ★ | `true` — AI 자동 호출 금지, `/name` 수동 호출만 |
 | `user-invocable` ★ | `false` — `/` 메뉴에서 숨김 (배경 지식용) |
@@ -112,7 +122,7 @@ Claude Code 외 다수 도구가 읽는다. 아래 표에서 ★는 Claude Code 
 ✔ "변경사항 코드 리뷰 — 보안/성능/가독성/규칙 위반 검사. 커밋 직전 실행"
 ```
 
-`description`과 부가 설명은 스킬 목록에서 **1,536자에서 잘린다** — 핵심을 앞에 둔다.
+`description`과 `when_to_use`는 합쳐서 스킬 목록에서 **1,536자에서 잘린다** — 핵심을 앞에 둔다.
 
 ### 4.2 자동 호출 금지 대상
 
@@ -121,6 +131,11 @@ Claude Code 외 다수 도구가 읽는다. 아래 표에서 ★는 Claude Code 
 - 파일을 덮어쓰거나 배포하는 스킬 (init, update, deploy)
 - 커밋·푸시를 수행하는 스킬
 - 워크스테이션 전역 설정을 바꾸는 스킬
+
+이 표시가 붙은 스킬을 AI가 쓰려 하면, 실행하지 않고 **사용자에게 `/name`으로 직접 실행해 달라고 요청**한다.
+
+`allowed-tools`나 hooks를 선언한 스킬은 예약 작업·`/loop`에서 실행 전 확인을 받는다.
+무인 실행이 필요하면 사용자가 `Skill(name)`을 `permissions.allow`에 추가한다.
 
 ---
 

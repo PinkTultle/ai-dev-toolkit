@@ -1,7 +1,7 @@
 # 지침 계층과 메모리
 
 > 도구 무관 공유 지식 — 어떤 지식을 어디에 두는가
-> Claude Code 기준 검증 버전: **v2.1.220**
+> Claude Code 기준 검증 버전: **v2.1.326**
 
 ---
 
@@ -48,10 +48,14 @@
 - `@path/to/file`로 다른 파일을 가져올 수 있으나 **컨텍스트는 줄지 않는다** — 시작 시 전부 로드된다
 - 블록 주석(`<!-- ... -->`)은 컨텍스트에 주입되기 전에 제거된다 — 유지보수 메모용으로 쓴다
 
+- `/doctor prompt-audit`로 CLAUDE.md · rules · 스킬 · 에이전트 지침을 감사할 수 있다
+- **플러그인 루트의 `CLAUDE.md`는 플러그인 사용자에게 로드되지 않는다** — 배포할 지침은 스킬이나
+  rules로 제공한다
+
 ### 2.3 다른 도구와 공유
 
-Claude Code는 `AGENTS.md`를 직접 읽지 않는다. 이미 `AGENTS.md`를 쓰는 저장소라면
-`CLAUDE.md`에서 가져온다:
+Claude Code는 **작업 디렉토리와 그 상위에 `CLAUDE.md`가 없을 때만** `AGENTS.md`를 읽는다.
+`CLAUDE.md`가 있는 저장소에서 `AGENTS.md`도 함께 쓰려면 `CLAUDE.md`에서 가져온다:
 
 ```markdown
 @AGENTS.md
@@ -109,6 +113,8 @@ AI가 세션을 넘어 스스로 축적하는 학습 노트. 사람이 쓰는 CL
 - `<project>`는 git 저장소 기준 — 모든 워크트리가 하나의 메모리를 공유한다
 - **머신 로컬**이다. 다른 워크스테이션과 동기화되지 않는다
 - 끄기: `/memory` 토글, `autoMemoryEnabled: false`, `CLAUDE_CODE_DISABLE_AUTO_MEMORY=1`
+- 메인 대화의 auto memory는 서브에이전트에 로드되지 않는다 (포크만 상속). 서브에이전트 전용 메모리는
+  정의 파일의 `memory` 필드로 켠다
 
 ### 4.2 운용 규칙
 

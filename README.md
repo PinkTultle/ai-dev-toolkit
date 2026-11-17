@@ -16,7 +16,7 @@ claude plugin marketplace add PinkTultle/ai-dev-toolkit
 claude plugin install adt@PinkTultle-adt
 ```
 
-Claude Code >= 2.1.202 필요 (v2.1.220에서 검증).
+Claude Code >= 2.1.202 필요 (v2.1.325에서 검증).
 
 설치 확인:
 ```bash
@@ -143,7 +143,7 @@ ai-dev-toolkit/
 
 | 항목 | 요구사항 |
 |------|----------|
-| Claude Code | >= 2.1.202 (v2.1.220 검증) |
+| Claude Code | >= 2.1.202 (v2.1.325 검증) |
 | OS | Linux / WSL2 / macOS / Windows (Git Bash) |
 | Git | 2.20 이상 |
 | 패키지 | `jq` (필수), `dos2unix` (WSL2만) |
