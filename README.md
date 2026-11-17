@@ -29,9 +29,9 @@ claude plugin list
 
 | 구분 | 수량 | 역할 |
 |------|------|------|
-| **스킬** | 11개 | 워크스테이션 세팅, 프로젝트 초기화, 코드 리뷰, 문서 자동화 |
-| **에이전트** | 12개 | 개발 파이프라인 (아이디어 → 설계 → 검토 → 구현 → 검증 → 테스트) |
-| **템플릿** | 4개 | Plan, Design, Report, ADR 문서 |
+| **스킬** | 10개 | 워크스테이션 세팅, 프로젝트 초기화·갱신·흡수, 문서 자동화 |
+| **에이전트** | 1개 | `gap-detector` — 설계 문서 대비 구현 일치도 측정 |
+| **템플릿** | 1개 | ADR 문서 |
 | **Blueprints** | 9개 | 코딩 표준, Git 워크플로우, 설계 원칙, 플랫폼 운용 등 공유 지식 |
 
 ---
@@ -46,6 +46,9 @@ claude plugin list
 
 글로벌 규칙, deny 설정, MCP 등을 자동 구성한다.
 
+> **개발 절차는 `superpowers` 플러그인과 함께 쓴다.** `adt`는 요구사항 구체화 → 설계 → 구현 → 검토
+> 절차를 직접 제공하지 않는다. superpowers가 없으면 Claude Code 기본 plan mode를 쓴다.
+
 ### 2. 프로젝트에 적용
 
 ```
@@ -56,7 +59,6 @@ claude plugin list
 ### 3. 개발 중 활용
 
 ```
-/adt:review                   # 코드 리뷰
 /adt:doc-gen src/main.c       # 코드 설명 문서 생성
 /adt:decision "API 인증 방식"  # ADR 생성
 /adt:handoff                  # 세션 종료 시 인수인계
@@ -77,22 +79,15 @@ claude plugin list
 | `adt:handoff` | 세션 종료 시 HANDOFF.md 갱신 + 커밋 + 푸시 | 세션 종료 |
 | `adt:sync-check` | blueprints ↔ rules 동기화 상태 점검 | 점검 필요 시 |
 | `adt:doc-gen` | 소스 파일의 코드 설명 문서 자동 생성/갱신 | 코드 변경 후 |
-| `adt:review` | 변경사항 코드 리뷰 (보안/성능/가독성) | 커밋 전 |
 | `adt:decision` | ADR 생성/조회 (아키텍처 결정 기록) | 주요 결정 시 |
 
-## 에이전트 파이프라인
+## 에이전트
 
-Large 프리셋에서 서브에이전트 파이프라인으로 개발 단계를 자동화한다:
+| 에이전트 | 역할 | 실행 시점 |
+|---------|------|----------|
+| `adt:gap-detector` | 설계 문서의 항목을 코드에서 하나씩 찾아 일치 여부를 판정하고 매칭율을 낸다 | 구현을 마친 뒤 |
 
-```
-ideation → product-manager → designer → reviewer → implementer → verifier → tester
- (sonnet)      (opus)         (opus)     (opus)    (opus/worktree)  (sonnet)  (sonnet)
-```
-
-보조 에이전트: `design-validator`, `gap-detector`, `code-analyzer`, `report-generator`, `cto-lead`
-
-서브에이전트는 기본 백그라운드로 실행된다. 단계 게이트가 있는 파이프라인은 완료를 확인한 뒤
-다음 단계로 넘어간다 — 상세는 [`blueprints/agent-runtime.md`](blueprints/agent-runtime.md).
+설계 문서 경로를 함께 넘긴다. 넘기지 않으면 `docs/superpowers/specs/`의 최신 문서를 쓴다.
 
 ---
 
@@ -124,9 +119,9 @@ ideation → product-manager → designer → reviewer → implementer → verif
 ```
 ai-dev-toolkit/
 ├── .claude-plugin/        # 플러그인 매니페스트
-├── skills/ (11)           # 스킬
-├── agents/ (12)           # 에이전트 파이프라인
-├── templates/ (4)         # 문서 템플릿
+├── skills/ (10)           # 스킬
+├── agents/ (1)            # 에이전트 (gap-detector)
+├── templates/ (1)         # 문서 템플릿 (ADR)
 ├── hooks/                 # 라이프사이클 훅
 ├── blueprints/            # 도구 무관 공유 지식 (Single Source of Truth)
 ├── claude/                # 배포용 템플릿 (CLAUDE.md, rules)

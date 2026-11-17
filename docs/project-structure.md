@@ -5,7 +5,7 @@ AI가 저장소 탐색 시 오리엔테이션용으로 사용한다.
 
 ---
 
-## 스킬 (11개)
+## 스킬 (10개)
 
 | 스킬 | 위치 | 역할 |
 |------|------|------|
@@ -18,30 +18,19 @@ AI가 저장소 탐색 시 오리엔테이션용으로 사용한다.
 | `/adt:handoff` | `skills/handoff/` | 세션 종료 시 HANDOFF.md 갱신 + 커밋 + 푸시 |
 | `/adt:sync-check` | `skills/sync-check/` | blueprints ↔ rules 동기화 상태 점검 |
 | `/adt:doc-gen` | `skills/doc-gen/` | 소스 파일의 코드 설명 문서 자동 생성/갱신 |
-| `/adt:review` | `skills/review/` | 변경사항 코드 리뷰 (보안/성능/가독성) |
 | `/adt:decision` | `skills/decision/` | ADR 생성/조회 (아키텍처 결정 기록) |
 
 ---
 
-## 에이전트 (12개)
+## 에이전트 (1개)
 
-에이전트 `name`은 **소문자와 하이픈만** 쓰며 파일명과 일치한다.
-호출 시에는 플러그인 네임스페이스가 붙는다 — 예: `adt:designer`.
+개발 절차(구체화 → 설계 → 구현 → 검토)를 수행하는 에이전트는 두지 않는다 — `superpowers` 플러그인에 맡긴다
+([ADR-002](decisions/ADR-002-slim-down-delegate-process-to-superpowers.md)).
+호출 시에는 플러그인 네임스페이스가 붙는다 — `adt:gap-detector`.
 
-| 에이전트 | 위치 | 역할 | 모델 | effort | 격리 |
-|---------|------|------|------|--------|------|
-| `ideation` | `agents/ideation.md` | 아이디어 구체화 | sonnet | - | - |
-| `product-manager` | `agents/product-manager.md` | 요구사항 구조화 | opus | - | - |
-| `designer` | `agents/designer.md` | 설계 | opus | high | - |
-| `design-validator` | `agents/design-validator.md` | 설계 완성도 판정 | opus | high | - |
-| `reviewer` | `agents/reviewer.md` | 설계 검토 | opus | high | - |
-| `implementer` | `agents/implementer.md` | 구현 | opus | high | **worktree** |
-| `verifier` | `agents/verifier.md` | 구현 검증 | sonnet | - | - |
-| `gap-detector` | `agents/gap-detector.md` | 설계↔구현 매칭율 측정 | opus | - | - |
-| `code-analyzer` | `agents/code-analyzer.md` | 코드 품질 심층 분석 | sonnet | - | - |
-| `tester` | `agents/tester.md` | 테스트 | sonnet | - | - |
-| `report-generator` | `agents/report-generator.md` | 완료 보고서 생성 | sonnet | - | - |
-| `cto-lead` | `agents/cto-lead.md` | Large 팀 오케스트레이션 | opus | - | - |
+| 에이전트 | 위치 | 역할 | 모델 | effort |
+|---------|------|------|------|--------|
+| `gap-detector` | `agents/gap-detector.md` | 설계 문서 ↔ 구현 매칭율 측정 | opus | high |
 
 프론트매터 필드 전체와 실행 모델은 [`blueprints/agent-runtime.md`](../blueprints/agent-runtime.md) 참조.
 
@@ -56,7 +45,7 @@ ai-dev-toolkit/                     ← Claude Code 플러그인 (adt)
 │   └── marketplace.json            # 마켓플레이스 메타데이터
 ├── package.json                    # NPM 메타데이터
 │
-├── skills/ (11개)                  # ▼ 플러그인 스킬
+├── skills/ (10개)                  # ▼ 플러그인 스킬
 │   ├── ai-platform-defconfig/SKILL.md
 │   ├── project-init/SKILL.md
 │   ├── project-configure/SKILL.md
@@ -66,17 +55,13 @@ ai-dev-toolkit/                     ← Claude Code 플러그인 (adt)
 │   ├── handoff/SKILL.md            #   (커맨드→스킬 변환)
 │   ├── sync-check/SKILL.md
 │   ├── doc-gen/SKILL.md
-│   ├── review/SKILL.md
 │   └── decision/SKILL.md
 │
-├── agents/ (12개)                  # ▼ 플러그인 에이전트
-│   ├── ideation.md ~ cto-lead.md
+├── agents/ (1개)                   # ▼ 플러그인 에이전트
+│   └── gap-detector.md
 │
-├── templates/ (4개)                # ▼ 문서 템플릿
-│   ├── plan.template.md
-│   ├── design.template.md
-│   ├── report.template.md
-│   └── decision.template.md
+├── templates/ (1개)                # ▼ 문서 템플릿
+│   └── decision.template.md        #   /adt:decision이 사용
 │
 ├── hooks/                          # ▼ 플러그인 훅
 │   ├── hooks.json
@@ -104,15 +89,18 @@ ai-dev-toolkit/                     ← Claude Code 플러그인 (adt)
 │       ├── global-*.md
 │       └── project-*.md
 │
-├── docs/                           # ▼ 사용 가이드 및 산출물
+├── docs/                           # ▼ 사용 가이드 및 문서
 │   ├── usage-guide.md
 │   ├── project-structure.md        #   이 파일
-│   └── decisions/                  #   ADR 시스템
+│   ├── decisions/                  #   ADR 시스템
+│   ├── superpowers/                #   설계서(specs/) · 구현 계획(plans/)
+│   └── archive/                    #   완료된 작업 문서 월별 보관
 │
 ├── workstations/                   # ▼ 워크스테이션 환경 상태 + 배포 추적
 ├── CLAUDE.md                       # 프로젝트 규칙
 ├── HANDOFF.md                      # 세션 간 인수인계
-├── VERSION                         # 0.6.0
+├── VERSION
+├── LICENSE
 └── CHANGELOG.md
 ```
 
@@ -127,8 +115,8 @@ ai-dev-toolkit/                     ← Claude Code 플러그인 (adt)
 **skills/** — 플러그인 스킬 (실행 가능한 액션)
 - `adt:` 네임스페이스로 호출 (예: `/adt:project-init`)
 
-**agents/** — 플러그인 에이전트 (서브에이전트 파이프라인)
-- `adt:` 네임스페이스로 노출
+**agents/** — 플러그인 에이전트
+- `adt:` 네임스페이스로 노출. 다른 도구가 대신하지 못하는 것만 둔다
 
-**templates/** — 산출물 문서 템플릿
-- 스킬/에이전트가 참조하여 문서 생성
+**templates/** — 문서 템플릿
+- 스킬이 참조하여 문서 생성
