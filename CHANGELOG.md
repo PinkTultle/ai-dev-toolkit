@@ -49,6 +49,8 @@
   - 훅: `PreModelSwitch`/`PostModelSwitch`, 공통 입력 필드, `last_assistant_message`, 출력 10,000자 상한,
     `onFailure`, `if` 제약, `${CLAUDE_PLUGIN_DATA}`
   - 메모리: `AGENTS.md` 조건부 로드, `/doctor prompt-audit`, 플러그인 루트 `CLAUDE.md` 미로드
+- `/adt:ai-platform-defconfig` — 전역 gitignore 단계. `.rkit/`, `.superpowers/`, `.claude/worktrees/`를
+  워크스테이션 전역 gitignore에 등록한다 (없는 줄만 추가, 프로젝트 `.gitignore`는 건드리지 않음)
 - `LICENSE` (MIT), `plugin.json`의 `author` · `license`
 - `docs/superpowers/` — 설계서와 구현 계획
 
