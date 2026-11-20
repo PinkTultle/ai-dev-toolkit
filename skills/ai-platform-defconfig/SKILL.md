@@ -70,11 +70,29 @@ rules 배포 절차:
 - fallback 사용 시 사용자에게 안내: "파일 복사로 대체합니다. 원본 변경 시 수동 동기화 또는 defconfig 재실행이 필요합니다."
 - 상태 파일에 `"method": "copy"` 기록 (symlink과 구분)
 
-### 5. MCP 서버 설정
+### 5. 전역 gitignore
+AI 도구가 프로젝트마다 만드는 작업 폴더를 **전역 gitignore**에 등록한다.
+프로젝트의 `.gitignore`는 건드리지 않는다 — 개인 도구 항목이 팀 저장소에 커밋되지 않게 한다.
+
+- 대상 파일: `git config --global --get core.excludesFile` 값. 비어 있으면 git 기본 위치인
+  `${XDG_CONFIG_HOME:-$HOME/.config}/git/ignore` (없으면 디렉토리와 함께 생성)
+- 등록 항목:
+
+  | 항목 | 만드는 도구 |
+  |------|------------|
+  | `.rkit/` | rkit 플러그인 런타임 상태 |
+  | `.superpowers/` | superpowers 계획 실행 작업 기록 |
+  | `.claude/worktrees/` | Claude Code 기본 worktree 위치 |
+
+- 파일에 **없는 줄만 추가**한다 (재실행해도 중복되지 않는다). 기존 줄은 지우거나 고치지 않는다
+- 추가할 줄을 사용자에게 보여 주고 확인받은 뒤 쓴다
+- 이미 git이 추적 중인 파일에는 효과가 없다 — 그런 프로젝트가 있으면 `git rm --cached` 안내만 한다
+
+### 6. MCP 서버 설정
 `~/.claude/settings.json`의 MCP 서버 설정을 확인한다.
 사용자에게 필요한 MCP 서버 목록을 물어보고, 설정을 안내한다.
 
-### 6. Claude Code 설정 확인
+### 7. Claude Code 설정 확인
 `~/.claude/settings.json`의 현재 설정을 확인하고 표시한다.
 
 ## 실행 흐름
@@ -85,12 +103,13 @@ rules 배포 절차:
    - 기존 `workstations/<alias>.json`이 있으면 이전 상태를 표시
 4. **패키지 확인** — 3번 항목 체크, 미설치 목록 안내
 5. **심볼릭 링크** — 4번 항목 확인/생성
-6. **MCP/설정** — 5~6번 항목 확인/안내
-7. **상태 파일 저장** — 2개 파일 생성/갱신 (스키마: `workstations/README.md` 참조)
+6. **전역 gitignore** — 5번 항목. 추가할 줄을 보여 주고 확인 후 반영
+7. **MCP/설정** — 6~7번 항목 확인/안내
+8. **상태 파일 저장** — 2개 파일 생성/갱신 (스키마: `workstations/README.md` 참조)
    - `workstations/<alias>.json` (공개) — 패키지, 링크, MCP, 이력
    - `workstations/<alias>.local.json` (gitignore) — hostname, 사용자, 경로, 배포 프로젝트
    - 기존 파일이 있으면 `defconfig_history`에 항목 추가, 나머지 필드 갱신
-8. **결과 요약** — 수행된 작업과 현재 상태를 정리하여 출력
+9. **결과 요약** — 수행된 작업과 현재 상태를 정리하여 출력
    - HANDOFF.md 워크스테이션 테이블도 갱신
 
 ## 주의사항
