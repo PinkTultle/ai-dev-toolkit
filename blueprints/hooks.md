@@ -1,7 +1,7 @@
 # 훅 (Hooks)
 
 > 도구 무관 공유 지식 — 라이프사이클 자동화
-> Claude Code 기준 검증 버전: **v2.1.220**
+> Claude Code 기준 검증 버전: **v2.1.326**
 
 훅은 **AI의 판단과 무관하게** 정해진 시점에 실행되는 셸 명령이다.
 "반드시 지켜져야 하는 것"은 지침이 아니라 훅으로 강제한다.
@@ -33,7 +33,27 @@ FILE=$(printf '%s' "$INPUT" | jq -r '.tool_input.file_path // empty')
 
 - 경고성 검사는 반드시 `exit 0` — 개발 흐름을 막지 않는다
 - `timeout`을 명시한다 (밀리초). 훅이 멈추면 세션이 멈춘다
-- 플러그인 훅의 스크립트 경로는 `${CLAUDE_PLUGIN_ROOT}` 기준으로 쓴다
+- `onFailure: "block"`을 주면 훅 실행 실패를 `exit 2`와 같이 차단으로 다룬다
+
+### 1.1 공통 입력 필드
+
+`session_id` `prompt_id` `transcript_path` `cwd` `scratchpad_dir` `permission_mode` `effort`
+`hook_event_name`. 서브에이전트 안에서는 `agent_id` `agent_type`이 더해진다.
+
+- `Stop` / `SubagentStop`에서 마지막 응답은 **`last_assistant_message`** 로 읽는다 — transcript를 파싱하지 않는다
+
+### 1.2 출력
+
+- `hookSpecificOutput.additionalContext` — AI 컨텍스트에 주입. `systemMessage` — 사용자에게 보이는 경고
+- `additionalContext` · `systemMessage` · stdout은 각각 **10,000자**까지. 넘으면 파일로 저장되고
+  2,000자 미리보기와 경로만 전달된다
+
+### 1.3 플러그인 훅의 경로와 상태
+
+- 스크립트 경로는 `${CLAUDE_PLUGIN_ROOT}` 기준으로 쓴다. 셸 형식 명령에서는 **큰따옴표로 감싸거나
+  exec 형식**(`"command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/..."]`)을 쓴다 — 경로에 공백이 있으면 쪼개진다
+- **상태 파일은 `${CLAUDE_PLUGIN_DATA}`**(`~/.claude/plugins/data/<id>/`)에 둔다. 플러그인 업데이트 후에도
+  유지된다. `${CLAUDE_PLUGIN_ROOT}`(업데이트 시 바뀜)나 프로젝트 디렉토리에 상태를 쓰지 않는다
 
 ---
 
@@ -47,6 +67,7 @@ FILE=$(printf '%s' "$INPUT" | jq -r '.tool_input.file_path // empty')
 | 권한 | `PermissionRequest` `PermissionDenied` |
 | 에이전트/작업 | `SubagentStart` `SubagentStop` `TaskCreated` `TaskCompleted` `TeammateIdle` |
 | 컨텍스트 | `PreCompact` `PostCompact` `InstructionsLoaded` |
+| 모델 | `PreModelSwitch` `PostModelSwitch` |
 | 환경 | `CwdChanged` `DirectoryAdded` `FileChanged` `ConfigChange` |
 | 워크트리 | `WorktreeCreate` `WorktreeRemove` |
 | 기타 | `Notification` `MessageDisplay` `Elicitation` `ElicitationResult` |
@@ -59,7 +80,7 @@ FILE=$(printf '%s' "$INPUT" | jq -r '.tool_input.file_path // empty')
 | 위험 명령 차단 | `PreToolUse` (exit 2) |
 | 세션 시작 시 컨텍스트 주입 | `SessionStart` |
 | 지침 파일 로드 디버깅 | `InstructionsLoaded` |
-| 파이프라인 단계 완료 추적 | `SubagentStop` / `TaskCompleted` |
+| 서브에이전트 작업 완료 추적 | `SubagentStop` / `TaskCompleted` |
 
 ---
 
@@ -76,7 +97,9 @@ FILE=$(printf '%s' "$INPUT" | jq -r '.tool_input.file_path // empty')
 
 ### 3.2 `if`
 
-권한 규칙 문법으로 한 번 더 좁힌다. 도구 이벤트에서만 쓸 수 있다.
+권한 규칙 문법으로 한 번 더 좁힌다. **규칙 1개만** 쓸 수 있고(`&&`, `||`, 목록 불가),
+도구 이벤트 5종(`PreToolUse` `PostToolUse` `PostToolUseFailure` `PermissionRequest` `PermissionDenied`)에서만
+평가된다. 그 외 이벤트에 `if`를 붙이면 훅이 실행되지 않는다.
 
 | 조건 | 의미 |
 |------|------|
@@ -98,7 +121,7 @@ FILE=$(printf '%s' "$INPUT" | jq -r '.tool_input.file_path // empty')
         "if": "Edit(**/*.md)",
         "hooks": [
           { "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/check.sh",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/check.sh\"",
             "timeout": 5000 }
         ]
       }
