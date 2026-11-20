@@ -5,6 +5,65 @@
 
 ---
 
+## [0.7.0] - 2026-11-17
+
+**슬림화 — 개발 절차를 superpowers에 위임** ([ADR-002](docs/decisions/ADR-002-slim-down-delegate-process-to-superpowers.md)).
+`adt`는 지침 라이브러리·프로젝트 배포 추적 등 고유 영역만 남긴다. Claude Code v2.1.326 사양 반영.
+
+> **호환성 깨짐**: 에이전트 11개와 스킬 1개가 삭제됐다. `adt:designer` 등을 호출하던 흐름과
+> `docs/artifacts/` 단계별 산출물 규칙은 더 이상 유효하지 않다. v0.x 기간이므로 Minor로 올린다.
+
+### Removed
+- 에이전트 11개 — `ideation`, `product-manager`, `designer`, `design-validator`, `reviewer`,
+  `implementer`, `cto-lead`, `code-analyzer`, `verifier`, `tester`, `report-generator`.
+  superpowers의 brainstorming / writing-plans / executing-plans / requesting-code-review 등이 대신한다
+- `/adt:review` — 내장 `/code-review`, superpowers와 중복
+- 템플릿 3개 — `plan`, `design`, `report` (삭제된 에이전트만 참조)
+- `blueprints/design-principles.md`와 글로벌 rule `workflow.md`의 Small/Medium/Large 단계 프리셋,
+  `docs/artifacts/` 단계별 산출물 디렉토리, 서브에이전트 파이프라인·에이전트 팀·품질 루프
+- `docs/index.html` 소개 페이지
+- 저장소 `CLAUDE.md` §4.8 (글로벌 규칙으로 승격)
+
+### Changed
+- `gap-detector` — 입력을 "전달받은 설계 문서 경로 → `docs/superpowers/specs/` 최신 문서 → 없으면
+  경로 요청" 순으로 변경. 결과를 파일로 쓰지 않고 응답으로 돌려준다. `effort: high`
+- 설계 우선 원칙 — 절차 자체는 전담 도구(superpowers, 없으면 기본 plan mode)에 맡기고,
+  설계 문서 위치도 절차 도구가 정한 곳을 따른다
+- `claude/project_CLAUDE.md` §7 — 설계 문서 위치를 고정하지 않음. archive 패턴을
+  "완료된 작업의 설계서·계획서 보관"으로 단순화 (`{plan,design,analysis,report}.md` 구조·Match Rate 열 삭제)
+- `/adt:project-update` §3.5 위생 검사 — (d) v0.7.0에서 제거된 파이프라인 참조 점검 추가
+- `/adt:project-configure` §5 — 프리셋 분류 대신 "반드시 설계를 거칠 작업 유형"을 묻는다
+- 기존 PDCA 산출물(`plugin-migration.*`)을 `docs/archive/2026-04/`로 이동
+- 플러그인 설명 문구·키워드 — "10 스킬, blueprints 지식 체계, 프로젝트 배포·추적"
+
+### Added
+- 글로벌 규칙 — 다음 작업 제안이 있을 때만 응답 끝에 `💡 다음: <추천>` 한 줄
+  (`blueprints/base-directives.md`, `.claude/rules/global-communication.md`)
+- `blueprints/README.md` — 외부 플러그인·프로젝트에서 지식을 가져올 때의 규칙
+  (필요가 생겼을 때만, 출처 표기, `paths` 스코프 필수)
+- 플랫폼 blueprint 3종 + `global-platform.md` — v2.1.326 기준 갱신:
+  - 서브에이전트: `omitClaudeMd`, `autoCompactWindow`, `experimental.cacheTtl`,
+    `CLAUDE_CODE_SUBAGENT_EFFORT`, 플러그인 에이전트에서 무시되는 필드 4개. 세션당 200개 생성 상한 삭제
+  - 스킬: `when_to_use`, `disallowed-tools`, `paths`, `shell`. 자동 호출 금지 스킬의 동작 변화,
+    예약 작업·`/loop`에서의 확인 프롬프트
+  - 훅: `PreModelSwitch`/`PostModelSwitch`, 공통 입력 필드, `last_assistant_message`, 출력 10,000자 상한,
+    `onFailure`, `if` 제약, `${CLAUDE_PLUGIN_DATA}`
+  - 메모리: `AGENTS.md` 조건부 로드, `/doctor prompt-audit`, 플러그인 루트 `CLAUDE.md` 미로드
+- `LICENSE` (MIT), `plugin.json`의 `author` · `license`
+- `docs/superpowers/` — 설계서와 구현 계획
+
+### Fixed
+- `hooks/hooks.json` — `${CLAUDE_PLUGIN_ROOT}`를 따옴표 없이 써서 설치 경로에 공백이 있으면
+  훅 명령이 쪼개지던 문제 (`claude plugin validate` 경고)
+
+### Note
+- 설계 원칙으로 명시: `adt`는 프로젝트 디렉토리에 숨김 상태 폴더·상태 파일을 만들지 않는다
+- `claude plugin validate . --strict`에 남는 항목은 루트 `CLAUDE.md` 경고(저장소 작업용 규칙이라 유지)와
+  디렉토리 등재용 `ICON_MISSING`뿐이다
+- 배포 프로젝트 3개와 다른 워크스테이션에는 아직 전파하지 않았다
+
+---
+
 ## [0.6.0] - 2026-07-26
 
 v0.5.0 배포 프로젝트 전파 과정에서 드러난 **배포 스킬의 구조적 결함**을 수정.

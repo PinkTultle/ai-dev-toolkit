@@ -118,30 +118,25 @@ OS/RTOS     : {{OS_RTOS}}
 
 ---
 
-## 7. 산출물 및 지침 디렉토리
+## 7. 문서 및 지침 디렉토리
 
 ```
 docs/
-├── artifacts/           ← 작업 단위 산출물 (번호.작업명.md)
-│   ├── ideation/        ← 아이디어 구체화
-│   ├── design/          ← 설계 계획서
-│   ├── review/          ← 설계 검토 기록
-│   ├── summary/         ← 구현 요약
-│   └── test-report/     ← 테스트 결과
-├── archive/             ← 완료된 feature 보관 (선택)
+├── archive/             ← 완료된 작업의 설계서·계획서 보관 (선택)
 │   └── YYYY-MM/
-│       ├── _INDEX.md    ← 월별 완료 항목 목록 (Match Rate, Status)
-│       └── <feature>/   ← feature 단위 산출물 묶음
+│       ├── _INDEX.md    ← 월별 완료 항목 목록
+│       └── <feature>/   ← 작업 단위 문서 묶음
 ├── stack/               ← 기술 스택별 지침 (언어/프레임워크명.md)
 └── source/              ← 코드 설명 문서 (소스 트리 미러링)
     └── {{SOURCE_TREE}}  ← 코드 디렉토리와 동일 구조
 ```
 
-- `artifacts/` 파일명: `<번호>.<작업명>.md` — 상세 규칙은 글로벌 규칙 **3.2절** 참조
-- `archive/` : 완료된 feature의 산출물을 월별로 보관 (docs 비대화 방지)
-  - 구조: `archive/YYYY-MM/<feature-name>/{plan,design,analysis,report}.md`
-  - `_INDEX.md` : 월별 완료 feature 요약 표 (feature, Match Rate, Status, 문서 링크)
-  - 이관 시점: feature 구현/보고 완료 + 후속 작업 종료 시점
+- 설계서·계획서 위치는 **절차 도구가 정한 곳을 따른다** — 이 템플릿은 위치를 고정하지 않는다
+  (예: superpowers 사용 시 `docs/superpowers/specs/`, `docs/superpowers/plans/`)
+- `archive/` : 완료된 작업의 설계서·계획서를 월별로 옮겨 보관 (docs 비대화 방지)
+  - 구조: `archive/YYYY-MM/<feature-name>/` 아래에 해당 작업의 문서를 그대로 옮긴다
+  - `_INDEX.md` : 월별 완료 작업 요약 표 (작업명, 한 줄 요약, 문서 링크, 비고)
+  - 이관 시점: 구현 완료 + 후속 작업 종료 시점
 - `stack/` : blueprints를 프로젝트에 맞게 마이그레이션한 기술 지침 + 로컬 패턴
   - `/adt:project-configure` 대화 과정에서 관련 blueprint를 프로젝트 맥락에 맞춰 생성
   - 각 파일 헤더에 원본 blueprint 출처와 마이그레이션 내역 기록

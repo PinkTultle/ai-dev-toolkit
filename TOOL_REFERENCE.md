@@ -70,6 +70,7 @@
 | 다중 파일 | 다중 (`CLAUDE.md` + `rules/`) | 다중 | 다중 | 다중 |
 | 스킬 (`SKILL.md`) | 네이티브 + 확장 필드 | 지원 | 지원 | 지원 |
 | 훅 / 서브에이전트 | 지원 | 부분 | - | - |
+| `AGENTS.md` | `CLAUDE.md`가 없을 때만 읽음 | 미확인 | 미확인 | 미확인 |
 
 ---
 
@@ -80,7 +81,8 @@ Claude Code 외에도 Cursor, Gemini CLI, Kiro, Goose, Junie 등 다수 도구�
 
 - **이식 가능한 핵심**: `name`, `description`, 본문, 참조 파일
 - **Claude Code 확장 필드**: `disable-model-invocation`, `user-invocable`, `context: fork`,
-  `agent`, `background`, `model`, `effort` — 다른 도구에서는 무시된다
+  `agent`, `background`, `model`, `effort`, `when_to_use`, `disallowed-tools`, `paths`, `shell`
+  — 다른 도구에서는 무시된다
 
 > 스킬을 작성할 때 **핵심 절차는 표준 필드와 본문으로** 표현하고, 확장 필드는 호출 제어 등
 > 부가 동작에만 쓴다. 그러면 같은 스킬이 다른 도구에서도 열화 없이 동작한다.

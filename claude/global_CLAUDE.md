@@ -16,7 +16,7 @@
 |-----------|------|----------|
 | `rules/environment.md` | 환경 감지 및 적응 (Win/WSL2/SSH, worktree 위치) | 항상 |
 | `rules/communication.md` | 응답 언어, 커뮤니케이션, 지식 축적 | 항상 |
-| `rules/workflow.md` | 개발 단계 워크플로우, 산출물 관리 | 항상 |
+| `rules/workflow.md` | 설계 우선 원칙, 코드 설명 문서, 기술 부채 표기 | 항상 |
 | `rules/platform.md` | 서브에이전트 실행, auto memory, 훅 운용 | 항상 |
 | `rules/code-review.md` | 코드 리뷰 체크리스트 | C/C++ 파일 |
 

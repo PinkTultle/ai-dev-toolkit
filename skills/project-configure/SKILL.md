@@ -50,8 +50,8 @@ REPO_DIR=${CLAUDE_PLUGIN_ROOT}
 - Git hooks 필요 여부
 
 ### 5. 개발 워크플로우
-- 작업 유형별 프리셋 분류 기준 커스터마이즈 (기본: blueprints/design-principles.md의 기준)
-  - 예: "DB 스키마 변경은 항상 Large" 등 프로젝트 고유 규칙
+- 반드시 설계를 거쳐야 하는 작업 유형 (기본: blueprints/design-principles.md 1절의 기준)
+  - 예: "DB 스키마 변경은 항상 설계 문서 작성 후 진행" 등 프로젝트 고유 규칙
 - 테스트 전략 (단위/통합/E2E)
 
 ### 6. AI 도구 추가 설정

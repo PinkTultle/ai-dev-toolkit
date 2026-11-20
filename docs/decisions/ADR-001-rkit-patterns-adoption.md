@@ -1,7 +1,7 @@
 # ADR-001: rkit 패턴 채택 — 템플릿, Hooks, ADR 도입
 
 - **날짜**: 2026-04-10
-- **상태**: **채택**
+- **상태**: **채택** — 채택 항목 4와 항목 1의 Plan·Design·Report 템플릿은 [ADR-002](ADR-002-slim-down-delegate-process-to-superpowers.md)로 대체됨
 - **결정자**: inseok + Claude
 
 ## 맥락
