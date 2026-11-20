@@ -52,11 +52,12 @@
 
 ### 현재 상태
 
-- **버전**: **v0.7.0** — `feat/slim-revival` 브랜치, **main 미머지·태그 없음**
+- **버전**: **v0.7.0** — 2026-11-20 `main`에 머지 (PR #12 슬림화, #13 전역 gitignore). **태그 없음**
 - **스킬**: 10개 / **에이전트**: 1개 / **템플릿**: 1개 / **Blueprints**: 9개
 - **글로벌 rules**: 5개 (environment, communication, workflow, platform, code-review)
 - **이 워크스테이션(`pink-turtle-rt`)**: 원래 체크아웃 `~/my_ai_manual`은 로컬 `main`(v0.4.2)에 머물러 있다.
-  `~/.claude/rules/`에는 링크 4개뿐이고 `platform.md`가 없다 (defconfig 2026-03-24 이후 미실행)
+  `~/.claude/rules/`에는 링크 4개뿐이고 `platform.md`가 없다 (defconfig 2026-03-24 이후 미실행).
+  전역 gitignore(`~/.config/git/ignore`)에는 `.rkit/`, `.superpowers/`, `.claude/worktrees/`를 수동으로 넣어 두었다
 - **배포 프로젝트**: NDT-BPE_pork · aralm_program · mr-noti-bot 모두 v0.5.0 (`pink-turtle`에 있음)
 
 ### 주의사항
@@ -76,9 +77,9 @@
 
 ### 다음 작업 후보
 
-머지 후 순서대로 (전부 사용자가 직접 하는 일):
+순서대로 (전부 사용자가 직접 하는 일):
 
-1. **PR 머지 후 원래 체크아웃을 `main`으로 fast-forward** — 이때 글로벌 규칙이 새 내용으로 바뀐다
+1. **원래 체크아웃을 `main`으로 fast-forward** — 이때 글로벌 규칙이 새 내용으로 바뀐다
 2. **`/adt:ai-platform-defconfig` 재실행** — `platform.md` 링크 생성. 이후 `workstations/registry.md`의
    `pink-turtle-rt` 행을 v0.7.0으로 갱신
 3. **rkit 비활성화** + 작업 트리의 `.rkit/` 삭제 (`.gitignore`의 `.rkit/` 항목은 유지)
