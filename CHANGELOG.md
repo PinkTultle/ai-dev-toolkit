@@ -5,6 +5,14 @@
 
 ---
 
+## [0.7.1] - 2026-11-25
+
+### Fixed
+- 스킬의 저장소 경로(`REPO_DIR`) 결정 — 플러그인으로 설치하면 `${CLAUDE_PLUGIN_ROOT}`가 플러그인 캐시를
+  가리켜, 글로벌 규칙 링크와 `workstations/` 기록이 업데이트 때 사라지는 위치에 만들어질 수 있었다.
+  이제 `~/.claude/CLAUDE.md` 링크 대상 → git 작업 트리인 플러그인 루트 → 사용자에게 질문 순으로 클론 경로를 정한다
+  (`ai-platform-defconfig`, `project-init`, `project-update`, `project-absorb`, `project-configure`)
+
 ## [0.7.0] - 2026-11-17
 
 **슬림화 — 개발 절차를 superpowers에 위임** ([ADR-002](docs/decisions/ADR-002-slim-down-delegate-process-to-superpowers.md)).

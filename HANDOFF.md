@@ -52,12 +52,14 @@
 
 ### 현재 상태
 
-- **버전**: **v0.7.0** — 2026-11-20 `main`에 머지 (PR #12 슬림화, #13 전역 gitignore). **태그 없음**
+- **버전**: **v0.7.1** — v0.7.0은 2026-11-20 `main` 머지(PR #12, #13), 2026-11-25 태그 `v0.7.0`.
+  v0.7.1은 스킬의 저장소 경로 결정 수정 (태그 없음)
 - **스킬**: 10개 / **에이전트**: 1개 / **템플릿**: 1개 / **Blueprints**: 9개
 - **글로벌 rules**: 5개 (environment, communication, workflow, platform, code-review)
-- **이 워크스테이션(`pink-turtle-rt`)**: 원래 체크아웃 `~/my_ai_manual`은 로컬 `main`(v0.4.2)에 머물러 있다.
-  `~/.claude/rules/`에는 링크 4개뿐이고 `platform.md`가 없다 (defconfig 2026-03-24 이후 미실행).
-  전역 gitignore(`~/.config/git/ignore`)에는 `.rkit/`, `.superpowers/`, `.claude/worktrees/`를 수동으로 넣어 두었다
+- **이 워크스테이션(`pink-turtle-rt`)** (2026-11-25 기준): 원래 체크아웃 `~/my_ai_manual`은 `main`(v0.7.0).
+  `~/.claude/rules/` 링크 5개 모두 연결됨 (`platform.md`는 수동 생성). rkit 비활성화,
+  `adt` 플러그인 설치(`adt@PinkTultle-adt`, user scope). 전역 gitignore에 `.rkit/`, `.superpowers/`,
+  `.claude/worktrees/` 등록. **`workstations/pink-turtle-rt.json`과 `registry.md`는 아직 옛 기록**이다
 - **배포 프로젝트**: NDT-BPE_pork · aralm_program · mr-noti-bot 모두 v0.5.0 (`pink-turtle`에 있음)
 
 ### 주의사항
@@ -77,14 +79,11 @@
 
 ### 다음 작업 후보
 
-순서대로 (전부 사용자가 직접 하는 일):
-
-1. **원래 체크아웃을 `main`으로 fast-forward** — 이때 글로벌 규칙이 새 내용으로 바뀐다
-2. **`/adt:ai-platform-defconfig` 재실행** — `platform.md` 링크 생성. 이후 `workstations/registry.md`의
-   `pink-turtle-rt` 행을 v0.7.0으로 갱신
-3. **rkit 비활성화** + 작업 트리의 `.rkit/` 삭제 (`.gitignore`의 `.rkit/` 항목은 유지)
-4. **태그 `v0.7.0`**
-5. **다른 워크스테이션·배포 프로젝트 3개 전파** — `/adt:project-update`의 위생 검사 (d)가
+1. **v0.7.1 머지 후 플러그인 업데이트 → `/adt:ai-platform-defconfig` 재실행** — 상태 파일이
+   `~/my_ai_manual/workstations/`에 쓰이는지 확인하고 `registry.md`의 `pink-turtle-rt` 행 갱신.
+   v0.7.0의 스킬은 저장소 경로를 플러그인 캐시로 잡으므로 그 버전으로는 실행하지 않는다
+2. **태그 `v0.7.1`**
+3. **다른 워크스테이션·배포 프로젝트 3개 전파** — `/adt:project-update`의 위생 검사 (d)가
    옛 파이프라인 참조를 잡아 준다
 
 그 외:

@@ -17,9 +17,15 @@ disable-model-invocation: true
 
 ## 이 저장소 경로
 
-```
-REPO_DIR=${CLAUDE_PLUGIN_ROOT}
-```
+`REPO_DIR`은 `ai-dev-toolkit` 저장소의 **git 클론 경로**다. 아래 순서로 정한다:
+
+1. `~/.claude/CLAUDE.md`가 심볼릭 링크면 그 대상(`<REPO_DIR>/claude/global_CLAUDE.md`)에서 역산한다
+2. 아니면 `${CLAUDE_PLUGIN_ROOT}`가 git 작업 트리일 때 그 경로를 쓴다
+   (`git -C "${CLAUDE_PLUGIN_ROOT}" rev-parse --is-inside-work-tree`)
+3. 둘 다 아니면 사용자에게 클론 경로를 묻는다. 클론이 없으면 `git clone` 안내 후 중단한다
+
+플러그인 캐시(`~/.claude/plugins/cache/...`)는 `REPO_DIR`로 쓰지 않는다 — 플러그인 업데이트 때
+교체되어 심볼릭 링크가 끊기고 `workstations/` 기록이 사라진다. 정한 경로는 사용자에게 보여 주고 확인받는다.
 
 ## 사전 조건
 
