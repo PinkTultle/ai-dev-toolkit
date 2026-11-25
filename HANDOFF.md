@@ -11,7 +11,7 @@
 **날짜**: 2026-11-17
 **작업 내용**: v0.7.0 — 슬림화(개발 절차를 superpowers에 위임) + Claude Code v2.1.326 대응
 **버전**: v0.6.0 → **v0.7.0**
-**브랜치**: `feat/slim-revival` (PR → main 필요)
+**브랜치**: `main`에 머지 완료 (PR #12, #13)
 **작업 워크스테이션**: `pink-turtle-rt`
 
 ### 배경
@@ -52,12 +52,13 @@
 
 ### 현재 상태
 
-- **버전**: **v0.7.0** — 2026-11-20 `main`에 머지 (PR #12 슬림화, #13 전역 gitignore). **태그 없음**
+- **버전**: **v0.7.0** — 2026-11-20 `main`에 머지 (PR #12 슬림화, #13 전역 gitignore). 태그 `v0.7.0` 있음 (원격 포함)
 - **스킬**: 10개 / **에이전트**: 1개 / **템플릿**: 1개 / **Blueprints**: 9개
 - **글로벌 rules**: 5개 (environment, communication, workflow, platform, code-review)
-- **이 워크스테이션(`pink-turtle-rt`)**: 원래 체크아웃 `~/my_ai_manual`은 로컬 `main`(v0.4.2)에 머물러 있다.
-  `~/.claude/rules/`에는 링크 4개뿐이고 `platform.md`가 없다 (defconfig 2026-03-24 이후 미실행).
-  전역 gitignore(`~/.config/git/ignore`)에는 `.rkit/`, `.superpowers/`, `.claude/worktrees/`를 수동으로 넣어 두었다
+- **이 워크스테이션(`pink-turtle-rt`)**: 2026-11-25 defconfig 재실행 완료. 원래 체크아웃 `~/my_ai_manual`은
+  `main`(v0.7.0), 글로벌 링크 6개(`CLAUDE.md` + rules 5개, `platform.md` 포함) 정상,
+  전역 gitignore(`~/.config/git/ignore`)에 `.rkit/`, `.superpowers/`, `.claude/worktrees/` 등록 확인.
+  새로 만든 것은 없다 — 전부 이미 올바른 상태였다
 - **배포 프로젝트**: NDT-BPE_pork · aralm_program · mr-noti-bot 모두 v0.5.0 (`pink-turtle`에 있음)
 
 ### 주의사항
@@ -67,8 +68,8 @@
   그래서 이번 구현은 `.claude/worktrees/slim-revival`에서 했다
 - **superpowers 의존** — 개발 절차는 superpowers가 수행한다. 없으면 기본 plan mode로 대체된다고
   규칙에 적어 두었지만, 실사용 검증은 superpowers가 있는 환경에서만 했다
-- **rkit은 아직 켜져 있다.** 저장소 `CLAUDE.md` §4.8(rkit 리포트 생략 지시)을 지웠으므로,
-  rkit을 끄기 전까지 이 저장소에서 rkit의 Feature Usage 리포트 지시가 다시 살아난다
+- **rkit은 `pink-turtle-rt`에서 비활성 상태다** (2026-11-25 확인, `enabledPlugins`에서 `false`).
+  작업 트리의 `.rkit/` 폴더와 `~/.claude/settings.json`의 rkit용 `skillOverrides`·`pluginConfigs`는 남아 있다
 - **`engines`는 `>=2.1.202` 유지** — v2.1.323부터 범위 밖 버전에서는 플러그인이 로드되지 않는다
 - **`usage-guide.md`는 손대지 않았다** — 삭제된 이름은 없지만 v0.3.x 시절 설명(프로젝트에 스킬 복제 등)이
   남아 있어 별도 정리가 필요하다
@@ -79,19 +80,21 @@
 
 순서대로 (전부 사용자가 직접 하는 일):
 
-1. **원래 체크아웃을 `main`으로 fast-forward** — 이때 글로벌 규칙이 새 내용으로 바뀐다
-2. **`/adt:ai-platform-defconfig` 재실행** — `platform.md` 링크 생성. 이후 `workstations/registry.md`의
-   `pink-turtle-rt` 행을 v0.7.0으로 갱신
-3. **rkit 비활성화** + 작업 트리의 `.rkit/` 삭제 (`.gitignore`의 `.rkit/` 항목은 유지)
-4. **태그 `v0.7.0`**
-5. **다른 워크스테이션·배포 프로젝트 3개 전파** — `/adt:project-update`의 위생 검사 (d)가
-   옛 파이프라인 참조를 잡아 준다
+1. ~~원래 체크아웃을 `main`으로 fast-forward~~ — 완료 (2026-11-25)
+2. ~~`/adt:ai-platform-defconfig` 재실행~~ — 완료 (2026-11-25, `pink-turtle-rt`)
+3. rkit 잔재 정리 — 작업 트리의 `.rkit/` 삭제 (`.gitignore`의 `.rkit/` 항목은 유지),
+   settings의 rkit용 `skillOverrides`·`pluginConfigs` 제거
+4. ~~태그 `v0.7.0`~~ — 완료
+5. **다른 워크스테이션(`pink-turtle`, `pink-turtle-win`)·배포 프로젝트 전파** — `/adt:project-update`의
+   위생 검사 (d)가 옛 파이프라인 참조를 잡아 준다. `pink-turtle-rt`의 `web_hook_server`(v0.3.0)도 대상
+6. **`~/.claude/settings.json`의 `permissions.allow` 정리 (`pink-turtle-rt`)** — 일회성 명령이 그대로
+   쌓여 있고, 그중 `ldapsearch` 항목 5건에 계정 비밀번호가 평문으로 들어 있다. 항목 삭제 + 비밀번호 변경
 
 그 외:
 
-6. `docs/usage-guide.md` 현행화
-7. 타 도구(cursor 등) 지침을 유지할지 정리할지 판단
-8. web_hook_server registry 행 삭제 판단 (7월부터 이월)
+7. `docs/usage-guide.md` 현행화
+8. 타 도구(cursor 등) 지침을 유지할지 정리할지 판단
+9. ~~web_hook_server registry 행 삭제 판단~~ — `pink-turtle-rt`에 실재함을 확인해 행을 정정 (2026-11-25)
 
 ### 학습 사항
 
@@ -115,5 +118,5 @@
 | 별칭 | 환경 | 상태 파일 | defconfig 최종 실행일 | 라이브러리 버전 |
 |------|------|----------|---------------------|----------------|
 | pink-turtle | WSL2 (Ubuntu-20.04) | `workstations/pink-turtle.json` | 2026-04-12 | v0.5.0 |
-| pink-turtle-rt | WSL2 (Ubuntu-20.04) | `workstations/pink-turtle-rt.json` | 2026-03-24 | v0.3.0 |
+| pink-turtle-rt | WSL2 (Ubuntu-20.04) | `workstations/pink-turtle-rt.json` | 2026-11-25 | v0.7.0 |
 | pink-turtle-win | MINGW64 (Git Bash, Win11) | `workstations/pink-turtle-win.json` | 2026-03-26 | v0.3.0 |
