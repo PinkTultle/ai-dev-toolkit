@@ -11,7 +11,7 @@
 **날짜**: 2026-11-17
 **작업 내용**: v0.7.0 — 슬림화(개발 절차를 superpowers에 위임) + Claude Code v2.1.326 대응
 **버전**: v0.6.0 → **v0.7.0**
-**브랜치**: `feat/slim-revival` (PR → main 필요)
+**브랜치**: `main`에 머지 완료 (PR #12, #13)
 **작업 워크스테이션**: `pink-turtle-rt`
 
 ### 배경
@@ -52,14 +52,14 @@
 
 ### 현재 상태
 
-- **버전**: **v0.7.1** — v0.7.0은 2026-11-20 `main` 머지(PR #12, #13), 2026-11-25 태그 `v0.7.0`.
+- **버전**: **v0.7.1** — v0.7.0은 2026-11-20 `main` 머지(PR #12, #13), 태그 `v0.7.0` 있음 (원격 포함).
   v0.7.1은 스킬의 저장소 경로 결정 수정 (태그 없음)
 - **스킬**: 10개 / **에이전트**: 1개 / **템플릿**: 1개 / **Blueprints**: 9개
 - **글로벌 rules**: 5개 (environment, communication, workflow, platform, code-review)
-- **이 워크스테이션(`pink-turtle-rt`)** (2026-11-25 기준): 원래 체크아웃 `~/my_ai_manual`은 `main`(v0.7.0).
-  `~/.claude/rules/` 링크 5개 모두 연결됨 (`platform.md`는 수동 생성). rkit 비활성화,
-  `adt` 플러그인 설치(`adt@PinkTultle-adt`, user scope). 전역 gitignore에 `.rkit/`, `.superpowers/`,
-  `.claude/worktrees/` 등록. **`workstations/pink-turtle-rt.json`과 `registry.md`는 아직 옛 기록**이다
+- **이 워크스테이션(`pink-turtle-rt`)**: 2026-11-25 defconfig 재실행 완료. 원래 체크아웃 `~/my_ai_manual`은
+  `main`(v0.7.0), 글로벌 링크 6개(`CLAUDE.md` + rules 5개, `platform.md` 포함) 정상,
+  전역 gitignore(`~/.config/git/ignore`)에 `.rkit/`, `.superpowers/`, `.claude/worktrees/` 등록 확인.
+  rkit 비활성화, `adt` 플러그인 설치(`adt@PinkTultle-adt`, user scope)
 - **배포 프로젝트**: NDT-BPE_pork · aralm_program · mr-noti-bot 모두 v0.5.0 (`pink-turtle`에 있음)
 
 ### 주의사항
@@ -69,8 +69,8 @@
   그래서 이번 구현은 `.claude/worktrees/slim-revival`에서 했다
 - **superpowers 의존** — 개발 절차는 superpowers가 수행한다. 없으면 기본 plan mode로 대체된다고
   규칙에 적어 두었지만, 실사용 검증은 superpowers가 있는 환경에서만 했다
-- **rkit은 아직 켜져 있다.** 저장소 `CLAUDE.md` §4.8(rkit 리포트 생략 지시)을 지웠으므로,
-  rkit을 끄기 전까지 이 저장소에서 rkit의 Feature Usage 리포트 지시가 다시 살아난다
+- **rkit은 `pink-turtle-rt`에서 비활성 상태다** (2026-11-25 확인, `enabledPlugins`에서 `false`).
+  작업 트리의 `.rkit/` 폴더와 `~/.claude/settings.json`의 rkit용 `skillOverrides`·`pluginConfigs`는 남아 있다
 - **`engines`는 `>=2.1.202` 유지** — v2.1.323부터 범위 밖 버전에서는 플러그인이 로드되지 않는다
 - **`usage-guide.md`는 손대지 않았다** — 삭제된 이름은 없지만 v0.3.x 시절 설명(프로젝트에 스킬 복제 등)이
   남아 있어 별도 정리가 필요하다
@@ -79,18 +79,23 @@
 
 ### 다음 작업 후보
 
-1. **v0.7.1 머지 후 플러그인 업데이트 → `/adt:ai-platform-defconfig` 재실행** — 상태 파일이
-   `~/my_ai_manual/workstations/`에 쓰이는지 확인하고 `registry.md`의 `pink-turtle-rt` 행 갱신.
-   v0.7.0의 스킬은 저장소 경로를 플러그인 캐시로 잡으므로 그 버전으로는 실행하지 않는다
-2. **태그 `v0.7.1`**
-3. **다른 워크스테이션·배포 프로젝트 3개 전파** — `/adt:project-update`의 위생 검사 (d)가
-   옛 파이프라인 참조를 잡아 준다
+1. ~~원래 체크아웃을 `main`으로 fast-forward~~ — 완료 (2026-11-25)
+2. ~~`/adt:ai-platform-defconfig` 재실행~~ — 완료 (2026-11-25, `pink-turtle-rt`). v0.7.0 스킬은 저장소 경로를
+   플러그인 캐시로 감지했고, 링크는 수동 판단으로 `~/my_ai_manual`을 유지했다. v0.7.1에서 수정
+3. rkit 잔재 정리 — 작업 트리의 `.rkit/` 삭제 (`.gitignore`의 `.rkit/` 항목은 유지),
+   settings의 rkit용 `skillOverrides`·`pluginConfigs` 제거
+4. ~~태그 `v0.7.0`~~ — 완료. **태그 `v0.7.1`**은 남음
+5. **플러그인 업데이트 후 v0.7.1 스킬 실사용 확인** — 저장소 경로가 `~/my_ai_manual`로 잡히는지
+6. **다른 워크스테이션(`pink-turtle`, `pink-turtle-win`)·배포 프로젝트 전파** — `/adt:project-update`의
+   위생 검사 (d)가 옛 파이프라인 참조를 잡아 준다. `pink-turtle-rt`의 `web_hook_server`(v0.3.0)도 대상
+7. `~/.claude/settings.json`의 `permissions.allow`에 일회성 명령이 쌓여 있다 (`pink-turtle-rt`).
+   `ldapsearch` 항목의 평문 비밀번호는 **사용자 결정으로 그대로 둔다** (2026-11-25)
 
 그 외:
 
-6. `docs/usage-guide.md` 현행화
-7. 타 도구(cursor 등) 지침을 유지할지 정리할지 판단
-8. web_hook_server registry 행 삭제 판단 (7월부터 이월)
+7. `docs/usage-guide.md` 현행화
+8. 타 도구(cursor 등) 지침을 유지할지 정리할지 판단
+9. ~~web_hook_server registry 행 삭제 판단~~ — `pink-turtle-rt`에 실재함을 확인해 행을 정정 (2026-11-25)
 
 ### 학습 사항
 
@@ -114,5 +119,5 @@
 | 별칭 | 환경 | 상태 파일 | defconfig 최종 실행일 | 라이브러리 버전 |
 |------|------|----------|---------------------|----------------|
 | pink-turtle | WSL2 (Ubuntu-20.04) | `workstations/pink-turtle.json` | 2026-04-12 | v0.5.0 |
-| pink-turtle-rt | WSL2 (Ubuntu-20.04) | `workstations/pink-turtle-rt.json` | 2026-03-24 | v0.3.0 |
+| pink-turtle-rt | WSL2 (Ubuntu-20.04) | `workstations/pink-turtle-rt.json` | 2026-11-25 | v0.7.0 |
 | pink-turtle-win | MINGW64 (Git Bash, Win11) | `workstations/pink-turtle-win.json` | 2026-03-26 | v0.3.0 |
