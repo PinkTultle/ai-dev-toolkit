@@ -10,11 +10,11 @@
 | 별칭 | 환경 | defconfig 최종 실행일 | 라이브러리 버전 | 상태 파일 |
 |------|------|---------------------|----------------|----------|
 | pink-turtle | WSL2 (Ubuntu-20.04) | 2026-04-12 | v0.5.0 | `pink-turtle.json` |
-| pink-turtle-rt | WSL2 (Ubuntu-20.04) | 2026-03-24 | v0.3.0 | `pink-turtle-rt.json` |
+| pink-turtle-rt | WSL2 (Ubuntu-20.04) | 2026-11-25 | v0.7.0 | `pink-turtle-rt.json` |
 | pink-turtle-win | MINGW64 (Git Bash, Win11) | 2026-03-26 | v0.3.0 | `pink-turtle-win.json` |
 
-> `pink-turtle-rt` / `pink-turtle-win`은 v0.5.0 미배포 — 각 워크스테이션에서
-> `/adt:ai-platform-defconfig` 재실행 필요 (v0.5.0에서 글로벌 rule `platform.md`가 추가됨).
+> `pink-turtle-win`은 v0.5.0 미배포, `pink-turtle`은 v0.7.0 미배포 — 각 워크스테이션에서
+> `/adt:ai-platform-defconfig` 재실행 필요 (v0.5.0에서 글로벌 rule `platform.md`, v0.7.0에서 전역 gitignore 단계가 추가됨).
 
 ## 배포 프로젝트 현황
 
@@ -23,7 +23,7 @@
 | pink-turtle | NDT-BPE_pork | `~/side_project/NDT-BPE_pork` | **v0.5.0** | 0 | 2026-07-26 | 복제본 제거 + rules 위생 정리 (`92ceb63`·`c868871`·`0333397`, push 완료). rules는 `git-workflow.md` 1개만 |
 | pink-turtle | aralm_program | `~/side_project/aralm_program` | **v0.5.0** | 0 | 2026-07-26 | 초기 커밋 (`7ca83a3`) + rules 정정 (`d338541`) + 브랜치명 `master`→`main` 통일 (`8f618c2`). remote 없음 |
 | pink-turtle | mr-noti-bot | `~/side_project/mr-noti-bot` | **v0.5.0** | 0 | 2026-07-26 | 복제본 25파일 제거 + rules 정정 (`2cde216`·`526818c`, push 완료) |
-| ~~pink-turtle~~ | ~~web_hook_server~~ | (실체 없음) | ~~v0.3.0~~ | - | 2026-04-10 | **2026-07-26 확인: 로컬에 존재하지 않음.** 재확인 후에도 없으면 이 행을 삭제 |
+| pink-turtle-rt | web_hook_server | `~/test/web_hook_server` | v0.3.0 | 0 | 2026-04-10 | **2026-11-25 확인: `pink-turtle-rt`에 실재** (`CLAUDE.md` 기반 v0.3.0). 2026-07-26의 "실체 없음"은 `pink-turtle`에서 확인한 결과였다. v0.7.0 미전파 |
 
 ### v0.5.0 전파 내용 (2026-07-26)
 
