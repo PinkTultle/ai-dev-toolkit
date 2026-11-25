@@ -28,7 +28,18 @@ disable-model-invocation: true
 ### 1. 사용자 정보
 - 사용자명: !`whoami`
 - 홈 디렉토리: !`echo $HOME`
-- 이 저장소 경로: `${CLAUDE_PLUGIN_ROOT}`
+- 이 저장소 경로(`REPO_DIR`): 아래 "저장소 경로 결정"에 따른다
+
+#### 저장소 경로 결정
+`REPO_DIR`은 `ai-dev-toolkit` 저장소의 **git 클론 경로**다. 아래 순서로 정한다:
+
+1. `~/.claude/CLAUDE.md`가 심볼릭 링크면 그 대상(`<REPO_DIR>/claude/global_CLAUDE.md`)에서 역산한다
+2. 아니면 `${CLAUDE_PLUGIN_ROOT}`가 git 작업 트리일 때 그 경로를 쓴다
+   (`git -C "${CLAUDE_PLUGIN_ROOT}" rev-parse --is-inside-work-tree`)
+3. 둘 다 아니면 사용자에게 클론 경로를 묻는다. 클론이 없으면 `git clone` 안내 후 중단한다
+
+플러그인 캐시(`~/.claude/plugins/cache/...`)는 `REPO_DIR`로 쓰지 않는다 — 플러그인 업데이트 때
+교체되어 심볼릭 링크가 끊기고 `workstations/` 기록이 사라진다. 정한 경로는 사용자에게 보여 주고 확인받는다.
 
 ### 2. 환경 감지
 - OS/플랫폼: !`uname -a`
@@ -47,7 +58,7 @@ disable-model-invocation: true
 ### 4. 심볼릭 링크 설정
 현재 상태를 확인하고, 필요 시 생성/갱신한다:
 
-| 소스 (이 저장소) | 타겟 | 용도 |
+| 소스 (`REPO_DIR` 기준) | 타겟 | 용도 |
 |-----------------|------|------|
 | `claude/global_CLAUDE.md` | `~/.claude/CLAUDE.md` | Claude Code 글로벌 규칙 (인덱스) |
 | `.claude/rules/global-environment.md` | `~/.claude/rules/environment.md` | 환경 감지 규칙 |
@@ -105,7 +116,7 @@ AI 도구가 프로젝트마다 만드는 작업 폴더를 **전역 gitignore**�
 5. **심볼릭 링크** — 4번 항목 확인/생성
 6. **전역 gitignore** — 5번 항목. 추가할 줄을 보여 주고 확인 후 반영
 7. **MCP/설정** — 6~7번 항목 확인/안내
-8. **상태 파일 저장** — 2개 파일 생성/갱신 (스키마: `workstations/README.md` 참조)
+8. **상태 파일 저장** — `REPO_DIR/workstations/`에 2개 파일 생성/갱신 (스키마: `workstations/README.md` 참조)
    - `workstations/<alias>.json` (공개) — 패키지, 링크, MCP, 이력
    - `workstations/<alias>.local.json` (gitignore) — hostname, 사용자, 경로, 배포 프로젝트
    - 기존 파일이 있으면 `defconfig_history`에 항목 추가, 나머지 필드 갱신

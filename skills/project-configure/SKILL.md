@@ -17,9 +17,12 @@ disable-model-invocation: true
 ## 매뉴얼 저장소(blueprints) 참조
 
 ```
-# 원본 (ai-dev-toolkit 내부에서 실행 시) — project-init이 복제할 때 절대 경로로 치환됨
-REPO_DIR=${CLAUDE_PLUGIN_ROOT}
+# project-init이 복제할 때 절대 경로로 치환됨
+REPO_DIR=<ai-dev-toolkit 클론 경로>
 ```
+
+치환되지 않은 상태(플러그인에서 직접 실행)라면 `~/.claude/CLAUDE.md` 심볼릭 링크의 대상에서 역산하고,
+링크가 없으면 `${CLAUDE_PLUGIN_ROOT}`를 쓴다 (이 스킬은 `blueprints/`를 읽기만 한다).
 
 이 경로의 `blueprints/` 디렉토리에서 참고 자료를 검색하여 프로젝트에 적합한 내용을 제안한다.
 경로가 유효하지 않으면 사용자에게 매뉴얼 저장소 위치를 확인한다.

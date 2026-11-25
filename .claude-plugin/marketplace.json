@@ -5,14 +5,14 @@
   },
   "metadata": {
     "description": "AI Development Toolkit — instruction library and project scaffolding",
-    "version": "0.7.0"
+    "version": "0.7.1"
   },
   "plugins": [
     {
       "name": "adt",
       "source": "./",
       "description": "10 skills, blueprints knowledge system, project scaffolding and tracking",
-      "version": "0.7.0",
+      "version": "0.7.1",
       "author": {
         "name": "PinkTultle"
       },

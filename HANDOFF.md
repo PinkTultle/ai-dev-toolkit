@@ -52,13 +52,14 @@
 
 ### 현재 상태
 
-- **버전**: **v0.7.0** — 2026-11-20 `main`에 머지 (PR #12 슬림화, #13 전역 gitignore). 태그 `v0.7.0` 있음 (원격 포함)
+- **버전**: **v0.7.1** — v0.7.0은 2026-11-20 `main` 머지(PR #12, #13), 태그 `v0.7.0` 있음 (원격 포함).
+  v0.7.1은 스킬의 저장소 경로 결정 수정 (태그 없음)
 - **스킬**: 10개 / **에이전트**: 1개 / **템플릿**: 1개 / **Blueprints**: 9개
 - **글로벌 rules**: 5개 (environment, communication, workflow, platform, code-review)
 - **이 워크스테이션(`pink-turtle-rt`)**: 2026-11-25 defconfig 재실행 완료. 원래 체크아웃 `~/my_ai_manual`은
   `main`(v0.7.0), 글로벌 링크 6개(`CLAUDE.md` + rules 5개, `platform.md` 포함) 정상,
   전역 gitignore(`~/.config/git/ignore`)에 `.rkit/`, `.superpowers/`, `.claude/worktrees/` 등록 확인.
-  새로 만든 것은 없다 — 전부 이미 올바른 상태였다
+  rkit 비활성화, `adt` 플러그인 설치(`adt@PinkTultle-adt`, user scope)
 - **배포 프로젝트**: NDT-BPE_pork · aralm_program · mr-noti-bot 모두 v0.5.0 (`pink-turtle`에 있음)
 
 ### 주의사항
@@ -78,17 +79,17 @@
 
 ### 다음 작업 후보
 
-순서대로 (전부 사용자가 직접 하는 일):
-
 1. ~~원래 체크아웃을 `main`으로 fast-forward~~ — 완료 (2026-11-25)
-2. ~~`/adt:ai-platform-defconfig` 재실행~~ — 완료 (2026-11-25, `pink-turtle-rt`)
+2. ~~`/adt:ai-platform-defconfig` 재실행~~ — 완료 (2026-11-25, `pink-turtle-rt`). v0.7.0 스킬은 저장소 경로를
+   플러그인 캐시로 감지했고, 링크는 수동 판단으로 `~/my_ai_manual`을 유지했다. v0.7.1에서 수정
 3. rkit 잔재 정리 — 작업 트리의 `.rkit/` 삭제 (`.gitignore`의 `.rkit/` 항목은 유지),
    settings의 rkit용 `skillOverrides`·`pluginConfigs` 제거
-4. ~~태그 `v0.7.0`~~ — 완료
-5. **다른 워크스테이션(`pink-turtle`, `pink-turtle-win`)·배포 프로젝트 전파** — `/adt:project-update`의
+4. ~~태그 `v0.7.0`~~ — 완료. **태그 `v0.7.1`**은 남음
+5. **플러그인 업데이트 후 v0.7.1 스킬 실사용 확인** — 저장소 경로가 `~/my_ai_manual`로 잡히는지
+6. **다른 워크스테이션(`pink-turtle`, `pink-turtle-win`)·배포 프로젝트 전파** — `/adt:project-update`의
    위생 검사 (d)가 옛 파이프라인 참조를 잡아 준다. `pink-turtle-rt`의 `web_hook_server`(v0.3.0)도 대상
-6. **`~/.claude/settings.json`의 `permissions.allow` 정리 (`pink-turtle-rt`)** — 일회성 명령이 그대로
-   쌓여 있고, 그중 `ldapsearch` 항목 5건에 계정 비밀번호가 평문으로 들어 있다. 항목 삭제 + 비밀번호 변경
+7. `~/.claude/settings.json`의 `permissions.allow`에 일회성 명령이 쌓여 있다 (`pink-turtle-rt`).
+   `ldapsearch` 항목의 평문 비밀번호는 **사용자 결정으로 그대로 둔다** (2026-11-25)
 
 그 외:
 
